@@ -1,8 +1,8 @@
-package com.example.gamepath.convertisorCustom;
+package be.gamepath.projectgamepath.convertisorCustom;
 
-import com.example.gamepath.connexion.EMF;
-import com.example.gamepath.entities.LanguageEntity;
-import com.example.gamepath.service.LanguageService;
+import be.gamepath.projectgamepath.connexion.EMF;
+import be.gamepath.projectgamepath.entities.LanguageEntity;
+import be.gamepath.projectgamepath.service.LanguageService;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

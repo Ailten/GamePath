@@ -1,4 +1,4 @@
-package com.example.gamepath.connexion;
+package be.gamepath.projectgamepath.connexion;
 
 import org.apache.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package com.example.gamepath.connexion;
+package be.gamepath.projectgamepath.connexion;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

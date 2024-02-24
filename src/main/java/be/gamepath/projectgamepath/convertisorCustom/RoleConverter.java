@@ -1,8 +1,8 @@
-package com.example.gamepath.convertisorCustom;
+package be.gamepath.projectgamepath.convertisorCustom;
 
-import com.example.gamepath.connexion.EMF;
-import com.example.gamepath.entities.RoleEntity;
-import com.example.gamepath.service.RoleService;
+import be.gamepath.projectgamepath.connexion.EMF;
+import be.gamepath.projectgamepath.entities.RoleEntity;
+import be.gamepath.projectgamepath.service.RoleService;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

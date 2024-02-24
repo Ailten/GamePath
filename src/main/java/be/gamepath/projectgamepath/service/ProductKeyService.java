@@ -1,6 +1,6 @@
-package com.example.gamepath.service;
+package be.gamepath.projectgamepath.service;
 
-import com.example.gamepath.entities.ProductKeyEntity;
+import be.gamepath.projectgamepath.entities.ProductKeyEntity;
 
 import javax.persistence.EntityManager;
 import java.util.List;

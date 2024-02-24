@@ -1,6 +1,6 @@
-package com.example.gamepath.service;
+package be.gamepath.projectgamepath.service;
 
-import com.example.gamepath.entities.PermissionEntity;
+import be.gamepath.projectgamepath.entities.PermissionEntity;
 
 import javax.persistence.EntityManager;
 import java.util.List;

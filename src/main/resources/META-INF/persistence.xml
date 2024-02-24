@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
-             version="3.0">
-    <persistence-unit name="default">
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+    <persistence-unit name="gamepath" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>java:comp/env/jdbc/gamepath</jta-data-source>
+        <class>be.gamepath.projectgamepath.entities.BasketEntity</class>
+        <class>be.gamepath.projectgamepath.entities.BasketProductTheoricEntity</class>
+        <class>be.gamepath.projectgamepath.entities.CategoryEntity</class>
+        <class>be.gamepath.projectgamepath.entities.LanguageEntity</class>
+        <class>be.gamepath.projectgamepath.entities.OperatingSystemEntity</class>
+        <class>be.gamepath.projectgamepath.entities.OrderEntity</class>
+        <class>be.gamepath.projectgamepath.entities.PegiEntity</class>
+        <class>be.gamepath.projectgamepath.entities.PermissionEntity</class>
+        <class>be.gamepath.projectgamepath.entities.PictureProductEntity</class>
+        <class>be.gamepath.projectgamepath.entities.ProductKeyEntity</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoricCategoryEntity</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoricEntity</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoricLanguageEntity</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoricOperatingSystemEntity</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoricPegiEntity</class>
+        <class>be.gamepath.projectgamepath.entities.RoleEntity</class>
+        <class>be.gamepath.projectgamepath.entities.RolePermissionEntity</class>
+        <class>be.gamepath.projectgamepath.entities.SocietyProducerEntity</class>
+        <class>be.gamepath.projectgamepath.entities.UserEntity</class>
+        <class>be.gamepath.projectgamepath.entities.UserProductTheoricEntity</class>
 
     </persistence-unit>
 </persistence>

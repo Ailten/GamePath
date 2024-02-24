@@ -1,6 +1,6 @@
-package com.example.gamepath.service;
+package be.gamepath.projectgamepath.service;
 
-import com.example.gamepath.entities.SocietyProducerEntity;
+import be.gamepath.projectgamepath.entities.SocietyProducerEntity;
 
 import javax.persistence.EntityManager;
 import java.util.List;

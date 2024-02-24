@@ -1,4 +1,4 @@
-package com.example.gamepath.connexion;
+package be.gamepath.projectgamepath.connexion;
 
 import java.util.List;
 import java.util.Map;

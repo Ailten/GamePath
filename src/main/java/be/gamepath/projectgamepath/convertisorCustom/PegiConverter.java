@@ -1,8 +1,8 @@
-package com.example.gamepath.convertisorCustom;
+package be.gamepath.projectgamepath.convertisorCustom;
 
-import com.example.gamepath.connexion.EMF;
-import com.example.gamepath.entities.PegiEntity;
-import com.example.gamepath.service.PegiService;
+import be.gamepath.projectgamepath.connexion.EMF;
+import be.gamepath.projectgamepath.entities.PegiEntity;
+import be.gamepath.projectgamepath.service.PegiService;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

@@ -1,4 +1,4 @@
-package com.example.gamepath.entities;
+package be.gamepath.projectgamepath.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
