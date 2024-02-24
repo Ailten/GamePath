@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.SocietyProducerEntity;
+import be.gamepath.projectgamepath.entities.SocietyProducer;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class SocietyProducerService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public SocietyProducerEntity selectById(EntityManager em, int id)
+    public SocietyProducer selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("SocietyProducerEntity.SelectById", SocietyProducerEntity.class)
+        return em.createNamedQuery("SocietyProducerEntity.SelectById", SocietyProducer.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class SocietyProducerService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<SocietyProducerEntity> selectMany(EntityManager em)
+    public List<SocietyProducer> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("SocietyProducerEntity.SelectMany", SocietyProducerEntity.class)
+        return em.createNamedQuery("SocietyProducerEntity.SelectMany", SocietyProducer.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class SocietyProducerService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public SocietyProducerEntity insert(EntityManager em, SocietyProducerEntity entityToInsert)
+    public SocietyProducer insert(EntityManager em, SocietyProducer entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class SocietyProducerService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public SocietyProducerEntity update(EntityManager em, SocietyProducerEntity entityToUpdate)
+    public SocietyProducer update(EntityManager em, SocietyProducer entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class SocietyProducerService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, SocietyProducerEntity entityToDelete){
+    public void delete(EntityManager em, SocietyProducer entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

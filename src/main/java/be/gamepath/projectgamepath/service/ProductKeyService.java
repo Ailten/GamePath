@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.ProductKeyEntity;
+import be.gamepath.projectgamepath.entities.ProductKey;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class ProductKeyService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public ProductKeyEntity selectById(EntityManager em, int id)
+    public ProductKey selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("ProductKeyEntity.SelectById", ProductKeyEntity.class)
+        return em.createNamedQuery("ProductKeyEntity.SelectById", ProductKey.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class ProductKeyService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<ProductKeyEntity> selectMany(EntityManager em)
+    public List<ProductKey> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("ProductKeyEntity.SelectMany", ProductKeyEntity.class)
+        return em.createNamedQuery("ProductKeyEntity.SelectMany", ProductKey.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class ProductKeyService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public ProductKeyEntity insert(EntityManager em, ProductKeyEntity entityToInsert)
+    public ProductKey insert(EntityManager em, ProductKey entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class ProductKeyService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public ProductKeyEntity update(EntityManager em, ProductKeyEntity entityToUpdate)
+    public ProductKey update(EntityManager em, ProductKey entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class ProductKeyService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, ProductKeyEntity entityToDelete){
+    public void delete(EntityManager em, ProductKey entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

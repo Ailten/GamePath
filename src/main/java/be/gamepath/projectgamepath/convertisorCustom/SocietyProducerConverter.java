@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.SocietyProducerEntity;
+import be.gamepath.projectgamepath.entities.SocietyProducer;
 import be.gamepath.projectgamepath.service.SocietyProducerService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class SocietyProducerConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public SocietyProducerEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public SocietyProducer getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class SocietyProducerConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static SocietyProducerEntity getAsObjectStatic(String value)
+    public static SocietyProducer getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class SocietyProducerConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         SocietyProducerService societyProducerService = new SocietyProducerService();
-        SocietyProducerEntity societyProducer;
+        SocietyProducer societyProducer;
         try{
             societyProducer = societyProducerService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class SocietyProducerConverter implements Converter {
         if(value==null){
             return "0";
         }
-        SocietyProducerEntity societyProducer = (SocietyProducerEntity) value;
-        return String.valueOf(societyProducer.getIdSocietyProducer());
+        SocietyProducer societyProducer = (SocietyProducer) value;
+        return String.valueOf(societyProducer.getId());
     }
 
 }

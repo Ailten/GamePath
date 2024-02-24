@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.RolePermissionEntity;
-import be.gamepath.projectgamepath.entities.UserEntity;
+import be.gamepath.projectgamepath.entities.RolePermission;
+import be.gamepath.projectgamepath.entities.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -14,9 +14,9 @@ public class UserService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public UserEntity selectById(EntityManager em, int id)
+    public User selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("UserEntity.SelectById", UserEntity.class)
+        return em.createNamedQuery("UserEntity.SelectById", User.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -28,9 +28,9 @@ public class UserService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<UserEntity> selectMany(EntityManager em)
+    public List<User> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("UserEntity.SelectMany", UserEntity.class)
+        return em.createNamedQuery("UserEntity.SelectMany", User.class)
                 .getResultList();
     }
 
@@ -40,7 +40,7 @@ public class UserService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public UserEntity insert(EntityManager em, UserEntity entityToInsert)
+    public User insert(EntityManager em, User entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -53,7 +53,7 @@ public class UserService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public UserEntity update(EntityManager em, UserEntity entityToUpdate)
+    public User update(EntityManager em, User entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -65,15 +65,15 @@ public class UserService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, UserEntity entityToDelete){
+    public void delete(EntityManager em, User entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);
         em.flush();
     }
 
-    public List<RolePermissionEntity> selectRolePermissionOfUser(EntityManager em, int idUser){
-        return em.createNamedQuery("UserEntity.SelectRolePermissionOfUser", RolePermissionEntity.class)
+    public List<RolePermission> selectRolePermissionOfUser(EntityManager em, int idUser){
+        return em.createNamedQuery("UserEntity.SelectRolePermissionOfUser", RolePermission.class)
                 .setParameter("idUser", idUser)
                 .getResultList();
     }

@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.PermissionEntity;
+import be.gamepath.projectgamepath.entities.Permission;
 import be.gamepath.projectgamepath.service.PermissionService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class PermissionConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public PermissionEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public Permission getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class PermissionConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static PermissionEntity getAsObjectStatic(String value)
+    public static Permission getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class PermissionConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         PermissionService permissionService = new PermissionService();
-        PermissionEntity permission;
+        Permission permission;
         try{
             permission = permissionService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class PermissionConverter implements Converter {
         if(value==null){
             return "0";
         }
-        PermissionEntity permission = (PermissionEntity) value;
-        return String.valueOf(permission.getIdPermission());
+        Permission permission = (Permission) value;
+        return String.valueOf(permission.getId());
     }
 
 }

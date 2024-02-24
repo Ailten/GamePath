@@ -6,19 +6,19 @@ import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "OperatingSystemEntity.SelectById",
-                query = "select os from OperatingSystemEntity os " +
-                        "where (os.idOperatingSystem = :id)"),
-        @NamedQuery(name= "OperatingSystemEntity.SelectMany",
-                query = "select os from OperatingSystemEntity os "),
+        @NamedQuery(name= "Pegi.SelectById",
+                query = "select p from Pegi p " +
+                        "where (p.id = :id)"),
+        @NamedQuery(name= "Pegi.SelectMany",
+                query = "select p from Pegi p "),
 })
 @Entity
-@Table(name = "operatingsystem", schema = "gamepath", catalog = "")
-public class OperatingSystemEntity {
+@Table(name = "pegi", schema = "gamepath", catalog = "")
+public class Pegi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idOperatingSystem", nullable = false)
-    private int idOperatingSystem;
+    @Column(name = "idPegi", nullable = false)
+    private int id;
     @NotNull
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
     @Column(name = "title", nullable = false, length = 60)
@@ -28,12 +28,12 @@ public class OperatingSystemEntity {
     @Column(name = "urlImage", nullable = false, length = 255)
     private String urlImage;
 
-    public int getIdOperatingSystem() {
-        return idOperatingSystem;
+    public int getId() {
+        return id;
     }
 
-    public void setIdOperatingSystem(int idOperatingSystem) {
-        this.idOperatingSystem = idOperatingSystem;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -56,12 +56,12 @@ public class OperatingSystemEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OperatingSystemEntity that = (OperatingSystemEntity) o;
-        return idOperatingSystem == that.idOperatingSystem;
+        Pegi that = (Pegi) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOperatingSystem, title, urlImage);
+        return Objects.hash(id, title, urlImage);
     }
 }

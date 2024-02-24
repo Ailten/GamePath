@@ -6,19 +6,19 @@ import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "SocietyProducerEntity.SelectById",
-                query = "select sp from SocietyProducerEntity sp " +
-                        "where (sp.idSocietyProducer = :id)"),
-        @NamedQuery(name= "SocietyProducerEntity.SelectMany",
-                query = "select sp from SocietyProducerEntity sp "),
+        @NamedQuery(name= "SocietyProducer.SelectById",
+                query = "select sp from SocietyProducer sp " +
+                        "where (sp.id = :id)"),
+        @NamedQuery(name= "SocietyProducer.SelectMany",
+                query = "select sp from SocietyProducer sp "),
 })
 @Entity
 @Table(name = "societyproducer", schema = "gamepath", catalog = "")
-public class SocietyProducerEntity {
+public class SocietyProducer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idSocietyProducer", nullable = false)
-    private int idSocietyProducer;
+    private int id;
 
     @NotNull
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
@@ -38,12 +38,12 @@ public class SocietyProducerEntity {
     @Column(name = "numeroTVA", nullable = false)
     private int numeroTva;
 
-    public int getIdSocietyProducer() {
-        return idSocietyProducer;
+    public int getId() {
+        return id;
     }
 
-    public void setIdSocietyProducer(int idSocietyProducer) {
-        this.idSocietyProducer = idSocietyProducer;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -82,12 +82,12 @@ public class SocietyProducerEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SocietyProducerEntity that = (SocietyProducerEntity) o;
-        return idSocietyProducer == that.idSocietyProducer;
+        SocietyProducer that = (SocietyProducer) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idSocietyProducer, title, email, phone, numeroTva);
+        return Objects.hash(id, title, email, phone, numeroTva);
     }
 }

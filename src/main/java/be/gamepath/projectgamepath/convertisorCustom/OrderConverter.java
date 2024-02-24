@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.OrderEntity;
+import be.gamepath.projectgamepath.entities.Order;
 import be.gamepath.projectgamepath.service.OrderService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class OrderConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public OrderEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public Order getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class OrderConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static OrderEntity getAsObjectStatic(String value)
+    public static Order getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class OrderConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         OrderService orderService = new OrderService();
-        OrderEntity order;
+        Order order;
         try{
             order = orderService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class OrderConverter implements Converter {
         if(value==null){
             return "0";
         }
-        OrderEntity order = (OrderEntity) value;
-        return String.valueOf(order.getIdOrder());
+        Order order = (Order) value;
+        return String.valueOf(order.getId());
     }
 
 }

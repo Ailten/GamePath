@@ -1,8 +1,7 @@
 package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.UserEntity;
-import be.gamepath.projectgamepath.service.RoleService;
+import be.gamepath.projectgamepath.entities.User;
 import be.gamepath.projectgamepath.service.UserService;
 import be.gamepath.projectgamepath.utility.Utility;
 
@@ -16,12 +15,12 @@ import java.io.Serializable;
 @SessionScoped
 public class ConnectionBean implements Serializable {
 
-    private UserEntity userConnected;
+    private User userConnected;
 
-    public UserEntity getUser() {
+    public User getUser() {
         return userConnected;
     }
-    public void setUser(UserEntity user) {
+    public void setUser(User user) {
         this.userConnected = user;
     }
 
@@ -33,7 +32,7 @@ public class ConnectionBean implements Serializable {
     /**
      * Initialize list role into an user
      */
-    public static void initListRolePermission(UserEntity user)
+    public static void initListRolePermission(User user)
     {
         EntityManager em = EMF.getEM();
         UserService userService = new UserService();
@@ -42,7 +41,7 @@ public class ConnectionBean implements Serializable {
         {
             transaction.begin();
             //Call of the service that will use the NamedQuery of the "RolePermission" entity.
-            user.listRolePermission = userService.selectRolePermissionOfUser(em, user.getIdUser().getId());
+            user.listRolePermission = userService.selectRolePermissionOfUser(em, user.getId());
             transaction.commit();
         }
         catch(Exception e)
@@ -61,7 +60,7 @@ public class ConnectionBean implements Serializable {
 
     //ask is user log has permissions send.
     public boolean verifyPermissionUser(String permissionName){
-        if(this.userConnected == null || this.userConnected.getIdUser()==0)
+        if(this.userConnected == null || this.userConnected.getId()==0)
             return false;
         return this.userConnected.verifyPermission(permissionName);
     }

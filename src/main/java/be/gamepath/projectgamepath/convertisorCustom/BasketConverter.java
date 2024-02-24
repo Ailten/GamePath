@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.entities.BasketEntity;
+import be.gamepath.projectgamepath.entities.Basket;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.service.BasketService;
 
@@ -15,7 +15,7 @@ public class BasketConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public BasketEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public Basket getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class BasketConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static BasketEntity getAsObjectStatic(String value)
+    public static Basket getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class BasketConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         BasketService basketService = new BasketService();
-        BasketEntity basket;
+        Basket basket;
         try{
             basket = basketService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class BasketConverter implements Converter {
         if(value==null){
             return "0";
         }
-        BasketEntity basket = (BasketEntity) value;
-        return String.valueOf(basket.getIdBasket());
+        Basket basket = (Basket) value;
+        return String.valueOf(basket.getId());
     }
 
 }

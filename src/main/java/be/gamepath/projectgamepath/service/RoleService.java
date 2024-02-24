@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.RoleEntity;
+import be.gamepath.projectgamepath.entities.Role;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class RoleService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public RoleEntity selectById(EntityManager em, int id)
+    public Role selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("RoleEntity.SelectById", RoleEntity.class)
+        return em.createNamedQuery("RoleEntity.SelectById", Role.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class RoleService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<RoleEntity> selectMany(EntityManager em)
+    public List<Role> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("RoleEntity.SelectMany", RoleEntity.class)
+        return em.createNamedQuery("RoleEntity.SelectMany", Role.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class RoleService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public RoleEntity insert(EntityManager em, RoleEntity entityToInsert)
+    public Role insert(EntityManager em, Role entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class RoleService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public RoleEntity update(EntityManager em, RoleEntity entityToUpdate)
+    public Role update(EntityManager em, Role entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class RoleService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, RoleEntity entityToDelete){
+    public void delete(EntityManager em, Role entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

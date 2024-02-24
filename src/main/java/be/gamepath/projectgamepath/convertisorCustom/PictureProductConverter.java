@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.PictureProductEntity;
+import be.gamepath.projectgamepath.entities.PictureProduct;
 import be.gamepath.projectgamepath.service.PictureProductService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class PictureProductConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public PictureProductEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public PictureProduct getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class PictureProductConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static PictureProductEntity getAsObjectStatic(String value)
+    public static PictureProduct getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class PictureProductConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         PictureProductService pictureProductService = new PictureProductService();
-        PictureProductEntity pictureProduct;
+        PictureProduct pictureProduct;
         try{
             pictureProduct = pictureProductService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class PictureProductConverter implements Converter {
         if(value==null){
             return "0";
         }
-        PictureProductEntity pictureProduct = (PictureProductEntity) value;
-        return String.valueOf(pictureProduct.getIdPictureProduct());
+        PictureProduct pictureProduct = (PictureProduct) value;
+        return String.valueOf(pictureProduct.getId());
     }
 
 }

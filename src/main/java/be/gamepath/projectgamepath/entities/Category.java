@@ -6,30 +6,30 @@ import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "CategoryEntity.SelectById",
-                query = "select c from CategoryEntity c " +
-                        "where (c.idCategory = :id)"),
-        @NamedQuery(name= "CategoryEntity.SelectMany",
-                query = "select c from CategoryEntity c "),
+        @NamedQuery(name= "Category.SelectById",
+                query = "select c from Category c " +
+                        "where (c.id = :id)"),
+        @NamedQuery(name= "Category.SelectMany",
+                query = "select c from Category c "),
 })
 @Entity
 @Table(name = "category", schema = "gamepath", catalog = "")
-public class CategoryEntity {
+public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idCategory", nullable = false)
-    private int idCategory;
+    private int id;
     @NotNull
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
     @Column(name = "title", nullable = false, length = 60)
     private String title;
 
-    public int getIdCategory() {
-        return idCategory;
+    public int getId() {
+        return id;
     }
 
-    public void setIdCategory(int idCategory) {
-        this.idCategory = idCategory;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -44,12 +44,12 @@ public class CategoryEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CategoryEntity that = (CategoryEntity) o;
-        return idCategory == that.idCategory;
+        Category that = (Category) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCategory, title);
+        return Objects.hash(id, title);
     }
 }

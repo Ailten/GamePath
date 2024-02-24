@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.LanguageEntity;
+import be.gamepath.projectgamepath.entities.Language;
 import be.gamepath.projectgamepath.service.LanguageService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class LanguageConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public LanguageEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public Language getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class LanguageConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static LanguageEntity getAsObjectStatic(String value)
+    public static Language getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class LanguageConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         LanguageService languageService = new LanguageService();
-        LanguageEntity language;
+        Language language;
         try{
             language = languageService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class LanguageConverter implements Converter {
         if(value==null){
             return "0";
         }
-        LanguageEntity language = (LanguageEntity) value;
-        return String.valueOf(language.getIdLanguage());
+        Language language = (Language) value;
+        return String.valueOf(language.getId());
     }
 
 }

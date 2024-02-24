@@ -6,30 +6,31 @@ import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "PermissionEntity.SelectById",
-                query = "select p from PermissionEntity p " +
-                        "where (p.idPermission = :id)"),
-        @NamedQuery(name= "PermissionEntity.SelectMany",
-                query = "select p from PermissionEntity p "),
+        @NamedQuery(name= "Role.SelectById",
+                query = "select r from Role r " +
+                        "where (r.id = :id)"),
+        @NamedQuery(name= "Role.SelectMany",
+                query = "select r from Role r "),
 })
 @Entity
-@Table(name = "permission", schema = "gamepath", catalog = "")
-public class PermissionEntity {
+@Table(name = "role", schema = "gamepath", catalog = "")
+public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idPermission", nullable = false)
-    private int idPermission;
+    @Column(name = "idRole", nullable = false)
+    private int id;
+
     @NotNull
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
     @Column(name = "title", nullable = false, length = 60)
     private String title;
 
-    public int getIdPermission() {
-        return idPermission;
+    public int getId() {
+        return id;
     }
 
-    public void setIdPermission(int idPermission) {
-        this.idPermission = idPermission;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -44,12 +45,12 @@ public class PermissionEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PermissionEntity that = (PermissionEntity) o;
-        return idPermission == that.idPermission;
+        Role that = (Role) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idPermission, title);
+        return Objects.hash(id, title);
     }
 }

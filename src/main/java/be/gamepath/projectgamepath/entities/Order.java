@@ -8,23 +8,23 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "OrderEntity.SelectById",
-                query = "select o from OrderEntity o " +
-                        "where (o.idOrder = :id)"),
-        @NamedQuery(name= "OrderEntity.SelectMany",
-                query = "select o from OrderEntity o "),
+        @NamedQuery(name= "Order.SelectById",
+                query = "select o from Order o " +
+                        "where (o.id = :id)"),
+        @NamedQuery(name= "Order.SelectMany",
+                query = "select o from Order o "),
 })
 @Entity
 @Table(name = "order", schema = "gamepath", catalog = "")
-public class OrderEntity {
+public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idOrder", nullable = false)
-    private int idOrder;
+    private int id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idUser", nullable = false)
-    private UserEntity idUser;
+    private User user;
     @NotNull
     @Column(name = "validateBasketDate", nullable = false)
     private Timestamp validateBasketDate;
@@ -34,20 +34,20 @@ public class OrderEntity {
     @Column(name = "payementType", nullable = false)
     private PayementType payementType;
 
-    public int getIdOrder() {
-        return idOrder;
+    public int getId() {
+        return id;
     }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public UserEntity getIdUser() {
-        return idUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(UserEntity idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Timestamp getValidateBasketDate() {
@@ -70,12 +70,12 @@ public class OrderEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderEntity that = (OrderEntity) o;
-        return idOrder == that.idOrder;
+        Order that = (Order) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOrder, idUser, validateBasketDate, payementType);
+        return Objects.hash(id, user, validateBasketDate, payementType);
     }
 }

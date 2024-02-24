@@ -6,19 +6,19 @@ import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "LanguageEntity.SelectById",
-                query = "select l from LanguageEntity l " +
-                        "where (l.idLanguage = :id)"),
-        @NamedQuery(name= "LanguageEntity.SelectMany",
-                query = "select l from LanguageEntity l "),
+        @NamedQuery(name= "OperatingSystem.SelectById",
+                query = "select os from OperatingSystem os " +
+                        "where (os.id = :id)"),
+        @NamedQuery(name= "OperatingSystem.SelectMany",
+                query = "select os from OperatingSystem os "),
 })
 @Entity
-@Table(name = "language", schema = "gamepath", catalog = "")
-public class LanguageEntity {
+@Table(name = "operatingsystem", schema = "gamepath", catalog = "")
+public class OperatingSystem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idLanguage", nullable = false)
-    private int idLanguage;
+    @Column(name = "idOperatingSystem", nullable = false)
+    private int id;
     @NotNull
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
     @Column(name = "title", nullable = false, length = 60)
@@ -28,12 +28,12 @@ public class LanguageEntity {
     @Column(name = "urlImage", nullable = false, length = 255)
     private String urlImage;
 
-    public int getIdLanguage() {
-        return idLanguage;
+    public int getId() {
+        return id;
     }
 
-    public void setIdLanguage(int idLanguage) {
-        this.idLanguage = idLanguage;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -56,12 +56,12 @@ public class LanguageEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LanguageEntity that = (LanguageEntity) o;
-        return idLanguage == that.idLanguage;
+        OperatingSystem that = (OperatingSystem) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idLanguage, title, urlImage);
+        return Objects.hash(id, title, urlImage);
     }
 }

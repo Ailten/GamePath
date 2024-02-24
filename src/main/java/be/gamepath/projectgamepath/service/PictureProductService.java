@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.PictureProductEntity;
+import be.gamepath.projectgamepath.entities.PictureProduct;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class PictureProductService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public PictureProductEntity selectById(EntityManager em, int id)
+    public PictureProduct selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("PictureProductEntity.SelectById", PictureProductEntity.class)
+        return em.createNamedQuery("PictureProductEntity.SelectById", PictureProduct.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class PictureProductService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<PictureProductEntity> selectMany(EntityManager em)
+    public List<PictureProduct> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("PictureProductEntity.SelectMany", PictureProductEntity.class)
+        return em.createNamedQuery("PictureProductEntity.SelectMany", PictureProduct.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class PictureProductService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public PictureProductEntity insert(EntityManager em, PictureProductEntity entityToInsert)
+    public PictureProduct insert(EntityManager em, PictureProduct entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class PictureProductService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public PictureProductEntity update(EntityManager em, PictureProductEntity entityToUpdate)
+    public PictureProduct update(EntityManager em, PictureProduct entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class PictureProductService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, PictureProductEntity entityToDelete){
+    public void delete(EntityManager em, PictureProduct entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

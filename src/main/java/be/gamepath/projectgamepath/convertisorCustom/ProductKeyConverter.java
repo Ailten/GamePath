@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.ProductKeyEntity;
+import be.gamepath.projectgamepath.entities.ProductKey;
 import be.gamepath.projectgamepath.service.ProductKeyService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class ProductKeyConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public ProductKeyEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public ProductKey getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class ProductKeyConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static ProductKeyEntity getAsObjectStatic(String value)
+    public static ProductKey getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class ProductKeyConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         ProductKeyService productKeyService = new ProductKeyService();
-        ProductKeyEntity productKey;
+        ProductKey productKey;
         try{
             productKey = productKeyService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class ProductKeyConverter implements Converter {
         if(value==null){
             return "0";
         }
-        ProductKeyEntity productKey = (ProductKeyEntity) value;
-        return String.valueOf(productKey.getIdProductKey());
+        ProductKey productKey = (ProductKey) value;
+        return String.valueOf(productKey.getId());
     }
 
 }

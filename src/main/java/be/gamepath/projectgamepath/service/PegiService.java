@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.PegiEntity;
+import be.gamepath.projectgamepath.entities.Pegi;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class PegiService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public PegiEntity selectById(EntityManager em, int id)
+    public Pegi selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("PegiEntity.SelectById", PegiEntity.class)
+        return em.createNamedQuery("PegiEntity.SelectById", Pegi.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class PegiService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<PegiEntity> selectMany(EntityManager em)
+    public List<Pegi> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("PegiEntity.SelectMany", PegiEntity.class)
+        return em.createNamedQuery("PegiEntity.SelectMany", Pegi.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class PegiService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public PegiEntity insert(EntityManager em, PegiEntity entityToInsert)
+    public Pegi insert(EntityManager em, Pegi entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class PegiService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public PegiEntity update(EntityManager em, PegiEntity entityToUpdate)
+    public Pegi update(EntityManager em, Pegi entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class PegiService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, PegiEntity entityToDelete){
+    public void delete(EntityManager em, Pegi entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

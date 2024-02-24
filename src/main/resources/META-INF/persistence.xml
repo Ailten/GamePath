@@ -6,26 +6,26 @@
     <persistence-unit name="gamepath" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>java:comp/env/jdbc/gamepath</jta-data-source>
-        <class>be.gamepath.projectgamepath.entities.BasketEntity</class>
-        <class>be.gamepath.projectgamepath.entities.BasketProductTheoricEntity</class>
-        <class>be.gamepath.projectgamepath.entities.CategoryEntity</class>
-        <class>be.gamepath.projectgamepath.entities.LanguageEntity</class>
-        <class>be.gamepath.projectgamepath.entities.OperatingSystemEntity</class>
-        <class>be.gamepath.projectgamepath.entities.OrderEntity</class>
-        <class>be.gamepath.projectgamepath.entities.PegiEntity</class>
-        <class>be.gamepath.projectgamepath.entities.PermissionEntity</class>
-        <class>be.gamepath.projectgamepath.entities.PictureProductEntity</class>
-        <class>be.gamepath.projectgamepath.entities.ProductKeyEntity</class>
-        <class>be.gamepath.projectgamepath.entities.ProductTheoricCategoryEntity</class>
-        <class>be.gamepath.projectgamepath.entities.ProductTheoricEntity</class>
-        <class>be.gamepath.projectgamepath.entities.ProductTheoricLanguageEntity</class>
-        <class>be.gamepath.projectgamepath.entities.ProductTheoricOperatingSystemEntity</class>
-        <class>be.gamepath.projectgamepath.entities.ProductTheoricPegiEntity</class>
-        <class>be.gamepath.projectgamepath.entities.RoleEntity</class>
-        <class>be.gamepath.projectgamepath.entities.RolePermissionEntity</class>
-        <class>be.gamepath.projectgamepath.entities.SocietyProducerEntity</class>
-        <class>be.gamepath.projectgamepath.entities.UserEntity</class>
-        <class>be.gamepath.projectgamepath.entities.UserProductTheoricEntity</class>
+        <class>be.gamepath.projectgamepath.entities.Basket</class>
+        <class>be.gamepath.projectgamepath.entities.BasketProductTheoric</class>
+        <class>be.gamepath.projectgamepath.entities.Category</class>
+        <class>be.gamepath.projectgamepath.entities.Language</class>
+        <class>be.gamepath.projectgamepath.entities.OperatingSystem</class>
+        <class>be.gamepath.projectgamepath.entities.Order</class>
+        <class>be.gamepath.projectgamepath.entities.Pegi</class>
+        <class>be.gamepath.projectgamepath.entities.Permission</class>
+        <class>be.gamepath.projectgamepath.entities.PictureProduct</class>
+        <class>be.gamepath.projectgamepath.entities.ProductKey</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoricCategory</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoric</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoricLanguage</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoricOperatingSystem</class>
+        <class>be.gamepath.projectgamepath.entities.ProductTheoricPegi</class>
+        <class>be.gamepath.projectgamepath.entities.Role</class>
+        <class>be.gamepath.projectgamepath.entities.RolePermission</class>
+        <class>be.gamepath.projectgamepath.entities.SocietyProducer</class>
+        <class>be.gamepath.projectgamepath.entities.User</class>
+        <class>be.gamepath.projectgamepath.entities.UserProductTheoric</class>
 
     </persistence-unit>
 </persistence>

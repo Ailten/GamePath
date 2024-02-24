@@ -10,27 +10,27 @@ import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "ProductKeyEntity.SelectById",
-                query = "select pk from ProductKeyEntity pk " +
-                        "where (pk.idProductKey = :id)"),
-        @NamedQuery(name= "ProductKeyEntity.SelectMany",
-                query = "select pk from ProductKeyEntity pk "),
+        @NamedQuery(name= "ProductKey.SelectById",
+                query = "select pk from ProductKey pk " +
+                        "where (pk.id = :id)"),
+        @NamedQuery(name= "ProductKey.SelectMany",
+                query = "select pk from ProductKey pk "),
 })
 @Entity
 @Table(name = "productkey", schema = "gamepath", catalog = "")
-public class ProductKeyEntity {
+public class ProductKey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idProductKey", nullable = false)
-    private int idProductKey;
+    private int id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idOrder", nullable = false)
-    private OrderEntity idOrder;
+    private Order order;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idProductTheoric", nullable = false)
-    private ProductTheoricEntity idProductTheoric;
+    private ProductTheoric productTheoric;
     @NotNull
     @Pattern(regexp = "^[0-9]{255}$") //TODO: set a valide regex.
     @Column(name = "key", nullable = false, length = 255)
@@ -53,28 +53,28 @@ public class ProductKeyEntity {
     @Column(name = "isValid", nullable = false)
     private byte isValid;
 
-    public int getIdProductKey() {
-        return idProductKey;
+    public int getId() {
+        return id;
     }
 
-    public void setIdProductKey(int idProductKey) {
-        this.idProductKey = idProductKey;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public OrderEntity getIdOrder() {
-        return idOrder;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setIdOrder(OrderEntity idOrder) {
-        this.idOrder = idOrder;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public ProductTheoricEntity getIdProductTheoric() {
-        return idProductTheoric;
+    public ProductTheoric getProductTheoric() {
+        return productTheoric;
     }
 
-    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
-        this.idProductTheoric = idProductTheoric;
+    public void setProductTheoric(ProductTheoric productTheoric) {
+        this.productTheoric = productTheoric;
     }
 
     public String getKey() {
@@ -121,12 +121,12 @@ public class ProductKeyEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductKeyEntity that = (ProductKeyEntity) o;
-        return idProductKey == that.idProductKey;
+        ProductKey that = (ProductKey) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProductKey, idOrder, idProductTheoric, key, currentPriceHtva, currentTva, currentReduction, isValid);
+        return Objects.hash(id, order, productTheoric, key, currentPriceHtva, currentTva, currentReduction, isValid);
     }
 }

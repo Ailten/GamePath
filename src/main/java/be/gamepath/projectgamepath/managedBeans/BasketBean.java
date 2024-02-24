@@ -1,17 +1,15 @@
 package be.gamepath.projectgamepath.managedBeans;
 
-import be.gamepath.projectgamepath.entities.BasketEntity;
+import be.gamepath.projectgamepath.entities.Basket;
 import be.gamepath.projectgamepath.utility.CrudManaging;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import java.io.Serializable;
 
 @Named
 @SessionScoped
-public class BasketBean extends CrudManaging<BasketEntity> implements Serializable {
+public class BasketBean extends CrudManaging<Basket> implements Serializable {
 
     /*
 

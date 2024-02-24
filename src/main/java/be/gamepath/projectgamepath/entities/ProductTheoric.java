@@ -12,23 +12,23 @@ import java.sql.Date;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "ProductTheoricEntity.SelectById",
-                query = "select pt from ProductTheoricEntity pt " +
-                        "where (pt.idProductTheoric = :id)"),
-        @NamedQuery(name= "ProductTheoricEntity.SelectMany",
-                query = "select pt from ProductTheoricEntity pt "),
+        @NamedQuery(name= "ProductTheoric.SelectById",
+                query = "select pt from ProductTheoric pt " +
+                        "where (pt.id = :id)"),
+        @NamedQuery(name= "ProductTheoric.SelectMany",
+                query = "select pt from ProductTheoric pt "),
 })
 @Entity
 @Table(name = "producttheoric", schema = "gamepath", catalog = "")
-public class ProductTheoricEntity {
+public class ProductTheoric {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idProductTheoric", nullable = false)
-    private int idProductTheoric;
+    private int id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idSocietyProducer", nullable = false)
-    private SocietyProducerEntity idSocietyProducer;
+    private SocietyProducer societyProducer;
 
     @NotNull
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
@@ -62,20 +62,20 @@ public class ProductTheoricEntity {
     @Column(name = "isActive", nullable = false)
     private byte isActive;
 
-    public int getIdProductTheoric() {
-        return idProductTheoric;
+    public int getId() {
+        return id;
     }
 
-    public void setIdProductTheoric(int idProductTheoric) {
-        this.idProductTheoric = idProductTheoric;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public SocietyProducerEntity getIdSocietyProducer() {
-        return idSocietyProducer;
+    public SocietyProducer getSocietyProducer() {
+        return societyProducer;
     }
 
-    public void setIdSocietyProducer(SocietyProducerEntity idSocietyProducer) {
-        this.idSocietyProducer = idSocietyProducer;
+    public void setSocietyProducer(SocietyProducer societyProducer) {
+        this.societyProducer = societyProducer;
     }
 
     public String getTitle() {
@@ -146,12 +146,12 @@ public class ProductTheoricEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductTheoricEntity that = (ProductTheoricEntity) o;
-        return idProductTheoric == that.idProductTheoric;
+        ProductTheoric that = (ProductTheoric) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProductTheoric, idSocietyProducer, title, priceHtva, tva, reduction, multiPlayer, releaseDate, description, isActive);
+        return Objects.hash(id, societyProducer, title, priceHtva, tva, reduction, multiPlayer, releaseDate, description, isActive);
     }
 }

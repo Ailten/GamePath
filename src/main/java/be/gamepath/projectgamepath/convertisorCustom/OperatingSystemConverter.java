@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.OperatingSystemEntity;
+import be.gamepath.projectgamepath.entities.OperatingSystem;
 import be.gamepath.projectgamepath.service.OperatingSystemService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class OperatingSystemConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public OperatingSystemEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public OperatingSystem getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class OperatingSystemConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static OperatingSystemEntity getAsObjectStatic(String value)
+    public static OperatingSystem getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class OperatingSystemConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         OperatingSystemService operatingSystemService = new OperatingSystemService();
-        OperatingSystemEntity operatingSystem;
+        OperatingSystem operatingSystem;
         try{
             operatingSystem = operatingSystemService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class OperatingSystemConverter implements Converter {
         if(value==null){
             return "0";
         }
-        OperatingSystemEntity operatingSystem = (OperatingSystemEntity) value;
-        return String.valueOf(operatingSystem.getIdOperatingSystem());
+        OperatingSystem operatingSystem = (OperatingSystem) value;
+        return String.valueOf(operatingSystem.getId());
     }
 
 }

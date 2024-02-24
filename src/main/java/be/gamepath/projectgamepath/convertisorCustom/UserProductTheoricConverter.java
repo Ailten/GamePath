@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.UserProductTheoricEntity;
+import be.gamepath.projectgamepath.entities.UserProductTheoric;
 import be.gamepath.projectgamepath.service.UserProductTheoricService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class UserProductTheoricConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public UserProductTheoricEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public UserProductTheoric getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class UserProductTheoricConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static UserProductTheoricEntity getAsObjectStatic(String value)
+    public static UserProductTheoric getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class UserProductTheoricConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         UserProductTheoricService userProductTheoricService = new UserProductTheoricService();
-        UserProductTheoricEntity userProductTheoric;
+        UserProductTheoric userProductTheoric;
         try{
             userProductTheoric = userProductTheoricService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class UserProductTheoricConverter implements Converter {
         if(value==null){
             return "0";
         }
-        UserProductTheoricEntity userProductTheoric = (UserProductTheoricEntity) value;
-        return String.valueOf(userProductTheoric.getIdUserProductTheoric());
+        UserProductTheoric userProductTheoric = (UserProductTheoric) value;
+        return String.valueOf(userProductTheoric.getId());
     }
 
 }

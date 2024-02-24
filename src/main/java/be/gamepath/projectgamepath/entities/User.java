@@ -10,28 +10,28 @@ import java.util.List;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "UserEntity.SelectById",
-                query = "select u from UserEntity u " +
-                        "where (u.idUser = :id)"),
-        @NamedQuery(name= "UserEntity.SelectMany",
-                query = "select u from UserEntity u "),
-        @NamedQuery(name= "UserEntity.SelectRolePermissionOfUser",
-                query = "select rp from RoleEntity r " +
-                        "join RolePermissionEntity rp on (r.idRole = rp.idRole.idRole) "+
-                        "join UserEntity u on (r.idRole = u.idRole.idRole) "+
-                        "where (u.idUser = :idUser)"),
+        @NamedQuery(name= "User.SelectById",
+                query = "select u from User u " +
+                        "where (u.id = :id)"),
+        @NamedQuery(name= "User.SelectMany",
+                query = "select u from User u "),
+        @NamedQuery(name= "User.SelectRolePermissionOfUser",
+                query = "select rp from Role r " +
+                        "join RolePermission rp on (r.id = rp.role.id) "+
+                        "join User u on (r.id = u.role.id) "+
+                        "where (u.id = :idUser)"),
 })
 @Entity
 @Table(name = "user", schema = "gamepath", catalog = "")
-public class UserEntity {
+public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idUser", nullable = false)
-    private int idUser;
+    private int id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idRole", nullable = false)
-    private RoleEntity idRole;
+    private Role role;
     @NotNull
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") //source : https://regexr.com/3e48o
     @Column(name = "email", nullable = false, length = 255)
@@ -62,20 +62,20 @@ public class UserEntity {
     @Column(name = "isActive", nullable = false)
     private byte isActive;
 
-    public int getIdUser() {
-        return idUser;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public RoleEntity getIdRole() {
-        return idRole;
+    public Role getRole() {
+        return role;
     }
 
-    public void setIdRole(RoleEntity idRole) {
-        this.idRole = idRole;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getEmail() {
@@ -146,13 +146,13 @@ public class UserEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
-        return idUser == that.idUser;
+        User that = (User) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUser, idRole, email, password, lastName, firstName, phone, birthDate, registrationDate, isActive);
+        return Objects.hash(id, role, email, password, lastName, firstName, phone, birthDate, registrationDate, isActive);
     }
 
 
@@ -160,10 +160,10 @@ public class UserEntity {
 
 
     @Transient
-    public List<RolePermissionEntity> listRolePermission;
+    public List<RolePermission> listRolePermission;
 
     @Transient
-    public List<RolePermissionEntity> getListRolePermission() {
+    public List<RolePermission> getListRolePermission() {
         if (this.listRolePermission == null)
             ConnectionBean.initListRolePermission(this);
         return this.listRolePermission;
@@ -178,8 +178,9 @@ public class UserEntity {
     public boolean verifyPermission(String permissionTitle)
     {
         return this.getListRolePermission().stream()
-                .filter(rp -> rp.getIdPermission().getTitle().equals(permissionTitle))
+                .filter(rp -> rp.getPermission().getTitle().equals(permissionTitle))
                 .findFirst()
                 .orElse(null) != null;
     }
+
 }

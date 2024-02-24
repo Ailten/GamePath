@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.PermissionEntity;
+import be.gamepath.projectgamepath.entities.Permission;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class PermissionService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public PermissionEntity selectById(EntityManager em, int id)
+    public Permission selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("PermissionEntity.SelectById", PermissionEntity.class)
+        return em.createNamedQuery("PermissionEntity.SelectById", Permission.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class PermissionService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<PermissionEntity> selectMany(EntityManager em)
+    public List<Permission> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("PermissionEntity.SelectMany", PermissionEntity.class)
+        return em.createNamedQuery("PermissionEntity.SelectMany", Permission.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class PermissionService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public PermissionEntity insert(EntityManager em, PermissionEntity entityToInsert)
+    public Permission insert(EntityManager em, Permission entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class PermissionService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public PermissionEntity update(EntityManager em, PermissionEntity entityToUpdate)
+    public Permission update(EntityManager em, Permission entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class PermissionService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, PermissionEntity entityToDelete){
+    public void delete(EntityManager em, Permission entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

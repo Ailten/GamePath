@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.LanguageEntity;
+import be.gamepath.projectgamepath.entities.Language;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class LanguageService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public LanguageEntity selectById(EntityManager em, int id)
+    public Language selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("LanguageEntity.SelectById", LanguageEntity.class)
+        return em.createNamedQuery("LanguageEntity.SelectById", Language.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class LanguageService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<LanguageEntity> selectMany(EntityManager em)
+    public List<Language> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("LanguageEntity.SelectMany", LanguageEntity.class)
+        return em.createNamedQuery("LanguageEntity.SelectMany", Language.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class LanguageService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public LanguageEntity insert(EntityManager em, LanguageEntity entityToInsert)
+    public Language insert(EntityManager em, Language entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class LanguageService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public LanguageEntity update(EntityManager em, LanguageEntity entityToUpdate)
+    public Language update(EntityManager em, Language entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class LanguageService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, LanguageEntity entityToDelete){
+    public void delete(EntityManager em, Language entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

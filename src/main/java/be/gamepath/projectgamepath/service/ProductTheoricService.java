@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.ProductTheoricEntity;
+import be.gamepath.projectgamepath.entities.ProductTheoric;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class ProductTheoricService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public ProductTheoricEntity selectById(EntityManager em, int id)
+    public ProductTheoric selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("ProductTheoricEntity.SelectById", ProductTheoricEntity.class)
+        return em.createNamedQuery("ProductTheoricEntity.SelectById", ProductTheoric.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class ProductTheoricService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<ProductTheoricEntity> selectMany(EntityManager em)
+    public List<ProductTheoric> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("ProductTheoricEntity.SelectMany", ProductTheoricEntity.class)
+        return em.createNamedQuery("ProductTheoricEntity.SelectMany", ProductTheoric.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class ProductTheoricService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public ProductTheoricEntity insert(EntityManager em, ProductTheoricEntity entityToInsert)
+    public ProductTheoric insert(EntityManager em, ProductTheoric entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class ProductTheoricService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public ProductTheoricEntity update(EntityManager em, ProductTheoricEntity entityToUpdate)
+    public ProductTheoric update(EntityManager em, ProductTheoric entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class ProductTheoricService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, ProductTheoricEntity entityToDelete){
+    public void delete(EntityManager em, ProductTheoric entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

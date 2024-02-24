@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.OrderEntity;
+import be.gamepath.projectgamepath.entities.Order;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class OrderService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public OrderEntity selectById(EntityManager em, int id)
+    public Order selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("OrderEntity.SelectById", OrderEntity.class)
+        return em.createNamedQuery("OrderEntity.SelectById", Order.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class OrderService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<OrderEntity> selectMany(EntityManager em)
+    public List<Order> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("OrderEntity.SelectMany", OrderEntity.class)
+        return em.createNamedQuery("OrderEntity.SelectMany", Order.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class OrderService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public OrderEntity insert(EntityManager em, OrderEntity entityToInsert)
+    public Order insert(EntityManager em, Order entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class OrderService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public OrderEntity update(EntityManager em, OrderEntity entityToUpdate)
+    public Order update(EntityManager em, Order entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class OrderService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, OrderEntity entityToDelete){
+    public void delete(EntityManager em, Order entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

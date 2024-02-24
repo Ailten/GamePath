@@ -6,19 +6,19 @@ import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "PegiEntity.SelectById",
-                query = "select p from PegiEntity p " +
-                        "where (p.idPegi = :id)"),
-        @NamedQuery(name= "PegiEntity.SelectMany",
-                query = "select p from PegiEntity p "),
+        @NamedQuery(name= "Language.SelectById",
+                query = "select l from Language l " +
+                        "where (l.id = :id)"),
+        @NamedQuery(name= "Language.SelectMany",
+                query = "select l from Language l "),
 })
 @Entity
-@Table(name = "pegi", schema = "gamepath", catalog = "")
-public class PegiEntity {
+@Table(name = "language", schema = "gamepath", catalog = "")
+public class Language {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idPegi", nullable = false)
-    private int idPegi;
+    @Column(name = "idLanguage", nullable = false)
+    private int id;
     @NotNull
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
     @Column(name = "title", nullable = false, length = 60)
@@ -28,12 +28,12 @@ public class PegiEntity {
     @Column(name = "urlImage", nullable = false, length = 255)
     private String urlImage;
 
-    public int getIdPegi() {
-        return idPegi;
+    public int getId() {
+        return id;
     }
 
-    public void setIdPegi(int idPegi) {
-        this.idPegi = idPegi;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -56,12 +56,12 @@ public class PegiEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PegiEntity that = (PegiEntity) o;
-        return idPegi == that.idPegi;
+        Language that = (Language) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idPegi, title, urlImage);
+        return Objects.hash(id, title, urlImage);
     }
 }

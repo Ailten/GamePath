@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.OperatingSystemEntity;
+import be.gamepath.projectgamepath.entities.OperatingSystem;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class OperatingSystemService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public OperatingSystemEntity selectById(EntityManager em, int id)
+    public OperatingSystem selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("OperatingSystemEntity.SelectById", OperatingSystemEntity.class)
+        return em.createNamedQuery("OperatingSystemEntity.SelectById", OperatingSystem.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class OperatingSystemService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<OperatingSystemEntity> selectMany(EntityManager em)
+    public List<OperatingSystem> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("OperatingSystemEntity.SelectMany", OperatingSystemEntity.class)
+        return em.createNamedQuery("OperatingSystemEntity.SelectMany", OperatingSystem.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class OperatingSystemService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public OperatingSystemEntity insert(EntityManager em, OperatingSystemEntity entityToInsert)
+    public OperatingSystem insert(EntityManager em, OperatingSystem entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class OperatingSystemService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public OperatingSystemEntity update(EntityManager em, OperatingSystemEntity entityToUpdate)
+    public OperatingSystem update(EntityManager em, OperatingSystem entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class OperatingSystemService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, OperatingSystemEntity entityToDelete){
+    public void delete(EntityManager em, OperatingSystem entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

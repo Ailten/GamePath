@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.CategoryEntity;
+import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.service.CategoryService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class CategoryConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public CategoryEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public Category getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class CategoryConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static CategoryEntity getAsObjectStatic(String value)
+    public static Category getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class CategoryConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         CategoryService categoryService = new CategoryService();
-        CategoryEntity category;
+        Category category;
         try{
             category = categoryService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class CategoryConverter implements Converter {
         if(value==null){
             return "0";
         }
-        CategoryEntity category = (CategoryEntity) value;
-        return String.valueOf(category.getIdCategory());
+        Category category = (Category) value;
+        return String.valueOf(category.getId());
     }
 
 }

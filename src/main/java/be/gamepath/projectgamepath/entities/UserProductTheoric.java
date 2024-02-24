@@ -7,26 +7,26 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @NamedQueries(value = {
-        @NamedQuery(name= "UserProductTheoricEntity.SelectById",
-                query = "select upt from UserProductTheoricEntity upt " +
-                        "where (upt.idUserProductTheoric = :id)"),
-        @NamedQuery(name= "UserProductTheoricEntity.SelectMany",
-                query = "select upt from UserProductTheoricEntity upt "),
+        @NamedQuery(name= "UserProductTheoric.SelectById",
+                query = "select upt from UserProductTheoric upt " +
+                        "where (upt.id = :id)"),
+        @NamedQuery(name= "UserProductTheoric.SelectMany",
+                query = "select upt from UserProductTheoric upt "),
 })
 @Entity
 @Table(name = "userproducttheoric", schema = "gamepath", catalog = "")
-public class UserProductTheoricEntity {
+public class UserProductTheoric {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idUserProductTheoric", nullable = false)
-    private int idUserProductTheoric;
+    private int id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idUser", nullable = false)
-    private UserEntity idUser;
+    private User user;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idProductTheoric", nullable = false)
-    private ProductTheoricEntity idProductTheoric;
+    private ProductTheoric productTheoric;
 
     @NotNull
     @Column(name = "unlockDate", nullable = false)
@@ -36,28 +36,28 @@ public class UserProductTheoricEntity {
     @Column(name = "keyUsed", nullable = false, length = 255)
     private String keyUsed;
 
-    public int getIdUserProductTheoric() {
-        return idUserProductTheoric;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUserProductTheoric(int idUserProductTheoric) {
-        this.idUserProductTheoric = idUserProductTheoric;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public UserEntity getIdUser() {
-        return idUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(UserEntity idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public ProductTheoricEntity getIdProductTheoric() {
-        return idProductTheoric;
+    public ProductTheoric getProductTheoric() {
+        return productTheoric;
     }
 
-    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
-        this.idProductTheoric = idProductTheoric;
+    public void setProductTheoric(ProductTheoric productTheoric) {
+        this.productTheoric = productTheoric;
     }
 
     public Timestamp getUnlockDate() {
@@ -80,12 +80,12 @@ public class UserProductTheoricEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserProductTheoricEntity that = (UserProductTheoricEntity) o;
-        return idUserProductTheoric == that.idUserProductTheoric;
+        UserProductTheoric that = (UserProductTheoric) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUserProductTheoric, idUser, idProductTheoric, unlockDate, keyUsed);
+        return Objects.hash(id, user, productTheoric, unlockDate, keyUsed);
     }
 }

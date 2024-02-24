@@ -1,15 +1,11 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.UserEntity;
 import be.gamepath.projectgamepath.enumeration.Tva;
-import be.gamepath.projectgamepath.service.UserService;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("TvaConverter")
 public class TvaConverter implements Converter {

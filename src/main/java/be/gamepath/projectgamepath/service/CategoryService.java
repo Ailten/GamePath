@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.CategoryEntity;
+import be.gamepath.projectgamepath.entities.Category;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class CategoryService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public CategoryEntity selectById(EntityManager em, int id)
+    public Category selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("CategoryEntity.SelectById", CategoryEntity.class)
+        return em.createNamedQuery("CategoryEntity.SelectById", Category.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class CategoryService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<CategoryEntity> selectMany(EntityManager em)
+    public List<Category> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("CategoryEntity.SelectMany", CategoryEntity.class)
+        return em.createNamedQuery("CategoryEntity.SelectMany", Category.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class CategoryService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public CategoryEntity insert(EntityManager em, CategoryEntity entityToInsert)
+    public Category insert(EntityManager em, Category entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class CategoryService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public CategoryEntity update(EntityManager em, CategoryEntity entityToUpdate)
+    public Category update(EntityManager em, Category entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class CategoryService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, CategoryEntity entityToDelete){
+    public void delete(EntityManager em, Category entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

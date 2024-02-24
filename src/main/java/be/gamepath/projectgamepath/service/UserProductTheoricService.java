@@ -1,6 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
-import be.gamepath.projectgamepath.entities.UserProductTheoricEntity;
+import be.gamepath.projectgamepath.entities.UserProductTheoric;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,9 +13,9 @@ public class UserProductTheoricService {
      * @param id primary key of entity.
      * @return entity find.
      */
-    public UserProductTheoricEntity selectById(EntityManager em, int id)
+    public UserProductTheoric selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("UserProductTheoricEntity.SelectById", UserProductTheoricEntity.class)
+        return em.createNamedQuery("UserProductTheoricEntity.SelectById", UserProductTheoric.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -27,9 +27,9 @@ public class UserProductTheoricService {
      * @param em entity manager.
      * @return list entity match.
      */
-    public List<UserProductTheoricEntity> selectMany(EntityManager em)
+    public List<UserProductTheoric> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("UserProductTheoricEntity.SelectMany", UserProductTheoricEntity.class)
+        return em.createNamedQuery("UserProductTheoricEntity.SelectMany", UserProductTheoric.class)
                 .getResultList();
     }
 
@@ -39,7 +39,7 @@ public class UserProductTheoricService {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
-    public UserProductTheoricEntity insert(EntityManager em, UserProductTheoricEntity entityToInsert)
+    public UserProductTheoric insert(EntityManager em, UserProductTheoric entityToInsert)
     {
         em.persist(entityToInsert);
         em.flush();
@@ -52,7 +52,7 @@ public class UserProductTheoricService {
      * @param em entity manager.
      * @return entity updated.
      */
-    public UserProductTheoricEntity update(EntityManager em, UserProductTheoricEntity entityToUpdate)
+    public UserProductTheoric update(EntityManager em, UserProductTheoric entityToUpdate)
     {
         em.merge(entityToUpdate);
         em.flush();
@@ -64,7 +64,7 @@ public class UserProductTheoricService {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
-    public void delete(EntityManager em, UserProductTheoricEntity entityToDelete){
+    public void delete(EntityManager em, UserProductTheoric entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);

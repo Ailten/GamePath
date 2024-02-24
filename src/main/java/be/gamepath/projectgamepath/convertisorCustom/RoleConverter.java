@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.RoleEntity;
+import be.gamepath.projectgamepath.entities.Role;
 import be.gamepath.projectgamepath.service.RoleService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class RoleConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public RoleEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public Role getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class RoleConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static RoleEntity getAsObjectStatic(String value)
+    public static Role getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class RoleConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         RoleService roleService = new RoleService();
-        RoleEntity role;
+        Role role;
         try{
             role = roleService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class RoleConverter implements Converter {
         if(value==null){
             return "0";
         }
-        RoleEntity role = (RoleEntity) value;
-        return String.valueOf(role.getIdRole());
+        Role role = (Role) value;
+        return String.valueOf(role.getId());
     }
 
 }

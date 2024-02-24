@@ -1,7 +1,7 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.PegiEntity;
+import be.gamepath.projectgamepath.entities.Pegi;
 import be.gamepath.projectgamepath.service.PegiService;
 
 import javax.faces.component.UIComponent;
@@ -15,7 +15,7 @@ public class PegiConverter implements Converter {
 
     //cast from string to object.
     @Override
-    public PegiEntity getAsObject(FacesContext context, UIComponent component, String value)
+    public Pegi getAsObject(FacesContext context, UIComponent component, String value)
     {
         return getAsObjectStatic(value);
     }
@@ -28,7 +28,7 @@ public class PegiConverter implements Converter {
     }
 
     //static cast from string to object.
-    public static PegiEntity getAsObjectStatic(String value)
+    public static Pegi getAsObjectStatic(String value)
     {
         if (value==null || value.equals("0") || value.equals("")) {
             return null;
@@ -36,7 +36,7 @@ public class PegiConverter implements Converter {
 
         EntityManager em = EMF.getEM();
         PegiService pegiService = new PegiService();
-        PegiEntity pegi;
+        Pegi pegi;
         try{
             pegi = pegiService.selectById(em, Integer.parseInt(value));
         }catch(Exception e){
@@ -53,8 +53,8 @@ public class PegiConverter implements Converter {
         if(value==null){
             return "0";
         }
-        PegiEntity pegi = (PegiEntity) value;
-        return String.valueOf(pegi.getIdPegi());
+        Pegi pegi = (Pegi) value;
+        return String.valueOf(pegi.getId());
     }
 
 }
