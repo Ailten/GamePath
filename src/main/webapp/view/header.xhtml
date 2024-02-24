@@ -18,21 +18,18 @@
     </f:metadata>
 
     <div id="headerLogoBlock">
-        <h:graphicImage url="#{pageContext.request.contextPath}/images/logoLocaGame.png" id="headerLogo" alt="#{I18N['application.header.altlogo']}"/>
-        <h1>
-            <h:outputText value="#{I18N['application.header.title']}"/>
-        </h1>
+        <h:graphicImage url="#{pageContext.request.contextPath}/images/webSiteBase/logoGamePath.png" id="headerLogo" alt="#{I18N['application.header.altlogo']}"/>
     </div>
 
     <div id="headerMainContainer" class="flexGrowOne">
 
-    </div>
-
-    <div id="headerLoginBlock">
-
         <span>
             <p:commandButton value="#{I18N['application.header.connectionmessage']} #{connectionBean.user.firstName} #{connectionBean.user.lastName}" action="#{connectionBean.destroySession}" class="ui-button-warning " icon="pi pi-sign-out" rendered="#{connectionBean.user != null}" iconPos="right"/>
         </span>
+
+    </div>
+
+    <div id="headerLoginBlock">
 
         <p:commandButton value="#{I18N['application.header.loginbutton']}" action="#{connectionBean.goToPageConnection}" icon="pi pi-sign-in" class="ui-button-warning" rendered="#{connectionBean.user == null}" iconPos="right"/>
 

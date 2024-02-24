@@ -6,31 +6,41 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html">
-<ui:composition template="/WEB-INF/templates/simple.xhtml">
+<ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
     <ui:define name="title">
         #{I18N['application.homepage.title']}
     </ui:define>
     <ui:define name="content">
 
-        <!-- save historic. -->
+        <!-- execute methode in loading page. -->
         <f:metadata>
-            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/accueil')}"/>
+            <f:event type="preRenderView" listener="#{i18nBean.loadLanguagePage}"/>
         </f:metadata>
 
-        <div id="containerHomePage">
-            <h2 id="titleHomePageH2">
-                <h:outputText value="#{I18N['application.homepage.slogan']}"/>
-            </h2>
-
-            <div id="imageHomePageContainer">
-                <p:graphicImage
-                        id="imageHomePage"
-                        style="height:100%; width:100%;"
-                        url="#{pageContext.request.contextPath}/images/#{homePageBean.randomImageForHomePage}"
-                        alt="#{I18N['application.homepage.altimage']}"/>
-            </div>
+        <!-- title page -->
+        <div>
+            <h1>
+                <h:outputText value="#{I18N['application.header.menulisthome']}"/>
+            </h1>
         </div>
 
+        <!--
+                <div id="containerHomePage">
+                    <h2 id="titleHomePageH2">
+                        <h:outputText value="#{I18N['application.homepage.slogan']}"/>
+                    </h2>
+
+
+                    <div id="imageHomePageContainer">
+                        <p:graphicImage
+                                id="imageHomePage"
+                                style="height:100%; width:100%;"
+                                url="#{pageContext.request.contextPath}/images/#{homePageBean.randomImageForHomePage}"
+                                alt="#{I18N['application.homepage.altimage']}"/>
+                    </div>
+
+        </div>
+        -->
 
     </ui:define>
 </ui:composition>
