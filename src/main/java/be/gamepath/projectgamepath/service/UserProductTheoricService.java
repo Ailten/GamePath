@@ -15,12 +15,11 @@ public class UserProductTheoricService {
      */
     public UserProductTheoricEntity selectById(EntityManager em, int id)
     {
-        List<UserProductTheoricEntity> listEntityGet = em.createNamedQuery("UserProductTheoricEntity.SelectById", UserProductTheoricEntity.class)
+        return em.createNamedQuery("UserProductTheoricEntity.SelectById", UserProductTheoricEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

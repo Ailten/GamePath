@@ -15,12 +15,11 @@ public class LanguageService {
      */
     public LanguageEntity selectById(EntityManager em, int id)
     {
-        List<LanguageEntity> listEntityGet = em.createNamedQuery("LanguageEntity.SelectById", LanguageEntity.class)
+        return em.createNamedQuery("LanguageEntity.SelectById", LanguageEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

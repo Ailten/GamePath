@@ -15,14 +15,15 @@ import java.util.Objects;
 public class BasketProductTheoricEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idBasketProductTheoric")
+    @Column(name = "idBasketProductTheoric", nullable = false)
     private int idBasketProductTheoric;
-    @Basic
-    @Column(name = "idBasket")
-    private int idBasket;
-    @Basic
-    @Column(name = "idProductTheoric")
-    private int idProductTheoric;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idBasket", nullable = false)
+    private BasketEntity idBasket;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idProductTheoric", nullable = false)
+    private ProductTheoricEntity idProductTheoric;
 
     public int getIdBasketProductTheoric() {
         return idBasketProductTheoric;
@@ -32,19 +33,19 @@ public class BasketProductTheoricEntity {
         this.idBasketProductTheoric = idBasketProductTheoric;
     }
 
-    public int getIdBasket() {
+    public BasketEntity getIdBasket() {
         return idBasket;
     }
 
-    public void setIdBasket(int idBasket) {
+    public void setIdBasket(BasketEntity idBasket) {
         this.idBasket = idBasket;
     }
 
-    public int getIdProductTheoric() {
+    public ProductTheoricEntity getIdProductTheoric() {
         return idProductTheoric;
     }
 
-    public void setIdProductTheoric(int idProductTheoric) {
+    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
         this.idProductTheoric = idProductTheoric;
     }
 

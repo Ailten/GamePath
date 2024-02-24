@@ -15,14 +15,15 @@ import java.util.Objects;
 public class RolePermissionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idRolePermission")
+    @Column(name = "idRolePermission", nullable = false)
     private int idRolePermission;
-    @Basic
-    @Column(name = "idRole")
-    private int idRole;
-    @Basic
-    @Column(name = "idPermission")
-    private int idPermission;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idRole", nullable = false)
+    private RoleEntity idRole;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idPermission", nullable = false)
+    private PermissionEntity idPermission;
 
     public int getIdRolePermission() {
         return idRolePermission;
@@ -32,19 +33,19 @@ public class RolePermissionEntity {
         this.idRolePermission = idRolePermission;
     }
 
-    public int getIdRole() {
+    public RoleEntity getIdRole() {
         return idRole;
     }
 
-    public void setIdRole(int idRole) {
+    public void setIdRole(RoleEntity idRole) {
         this.idRole = idRole;
     }
 
-    public int getIdPermission() {
+    public PermissionEntity getIdPermission() {
         return idPermission;
     }
 
-    public void setIdPermission(int idPermission) {
+    public void setIdPermission(PermissionEntity idPermission) {
         this.idPermission = idPermission;
     }
 

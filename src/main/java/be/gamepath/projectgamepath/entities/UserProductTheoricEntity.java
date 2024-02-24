@@ -1,6 +1,8 @@
 package be.gamepath.projectgamepath.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -16,19 +18,22 @@ import java.util.Objects;
 public class UserProductTheoricEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idUserProductTheoric")
+    @Column(name = "idUserProductTheoric", nullable = false)
     private int idUserProductTheoric;
-    @Basic
-    @Column(name = "idUser")
-    private int idUser;
-    @Basic
-    @Column(name = "idProductTheoric")
-    private int idProductTheoric;
-    @Basic
-    @Column(name = "unlockDate")
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idUser", nullable = false)
+    private UserEntity idUser;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idProductTheoric", nullable = false)
+    private ProductTheoricEntity idProductTheoric;
+
+    @NotNull
+    @Column(name = "unlockDate", nullable = false)
     private Timestamp unlockDate;
-    @Basic
-    @Column(name = "keyUsed")
+    @NotNull
+    @Pattern(regexp = "^[0-9]{255}$") //TODO: set a valide regex.
+    @Column(name = "keyUsed", nullable = false, length = 255)
     private String keyUsed;
 
     public int getIdUserProductTheoric() {
@@ -39,19 +44,19 @@ public class UserProductTheoricEntity {
         this.idUserProductTheoric = idUserProductTheoric;
     }
 
-    public int getIdUser() {
+    public UserEntity getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(UserEntity idUser) {
         this.idUser = idUser;
     }
 
-    public int getIdProductTheoric() {
+    public ProductTheoricEntity getIdProductTheoric() {
         return idProductTheoric;
     }
 
-    public void setIdProductTheoric(int idProductTheoric) {
+    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
         this.idProductTheoric = idProductTheoric;
     }
 

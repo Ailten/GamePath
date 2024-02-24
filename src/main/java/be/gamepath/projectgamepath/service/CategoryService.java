@@ -15,12 +15,11 @@ public class CategoryService {
      */
     public CategoryEntity selectById(EntityManager em, int id)
     {
-        List<CategoryEntity> listEntityGet = em.createNamedQuery("CategoryEntity.SelectById", CategoryEntity.class)
+        return em.createNamedQuery("CategoryEntity.SelectById", CategoryEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

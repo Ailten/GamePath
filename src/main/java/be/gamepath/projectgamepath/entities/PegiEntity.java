@@ -1,6 +1,8 @@
 package be.gamepath.projectgamepath.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -15,13 +17,15 @@ import java.util.Objects;
 public class PegiEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idPegi")
+    @Column(name = "idPegi", nullable = false)
     private int idPegi;
-    @Basic
-    @Column(name = "title")
+    @NotNull
+    @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
+    @Column(name = "title", nullable = false, length = 60)
     private String title;
-    @Basic
-    @Column(name = "urlImage")
+    @NotNull
+    @Pattern(regexp = "^http://") //canvas : http://localhost/imageFolderLocalHost/******.png
+    @Column(name = "urlImage", nullable = false, length = 255)
     private String urlImage;
 
     public int getIdPegi() {

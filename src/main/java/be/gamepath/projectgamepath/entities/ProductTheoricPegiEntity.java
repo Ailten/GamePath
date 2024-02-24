@@ -15,14 +15,16 @@ import java.util.Objects;
 public class ProductTheoricPegiEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idProductTheoricPegi")
+    @Column(name = "idProductTheoricPegi", nullable = false)
     private int idProductTheoricPegi;
-    @Basic
-    @Column(name = "idProductTheoric")
-    private int idProductTheoric;
-    @Basic
-    @Column(name = "idPegi")
-    private int idPegi;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idProductTheoric", nullable = false)
+    private ProductTheoricEntity idProductTheoric;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idPegi", nullable = false)
+    private PegiEntity idPegi;
 
     public int getIdProductTheoricPegi() {
         return idProductTheoricPegi;
@@ -32,19 +34,19 @@ public class ProductTheoricPegiEntity {
         this.idProductTheoricPegi = idProductTheoricPegi;
     }
 
-    public int getIdProductTheoric() {
+    public ProductTheoricEntity getIdProductTheoric() {
         return idProductTheoric;
     }
 
-    public void setIdProductTheoric(int idProductTheoric) {
+    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
         this.idProductTheoric = idProductTheoric;
     }
 
-    public int getIdPegi() {
+    public PegiEntity getIdPegi() {
         return idPegi;
     }
 
-    public void setIdPegi(int idPegi) {
+    public void setIdPegi(PegiEntity idPegi) {
         this.idPegi = idPegi;
     }
 

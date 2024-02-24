@@ -1,6 +1,9 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.enumeration.PayementType;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -16,17 +19,20 @@ import java.util.Objects;
 public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idOrder")
+    @Column(name = "idOrder", nullable = false)
     private int idOrder;
-    @Basic
-    @Column(name = "idUser")
-    private int idUser;
-    @Basic
-    @Column(name = "validateBasketDate")
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idUser", nullable = false)
+    private UserEntity idUser;
+    @NotNull
+    @Column(name = "validateBasketDate", nullable = false)
     private Timestamp validateBasketDate;
-    @Basic
-    @Column(name = "payementType")
-    private Object payementType;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payementType", nullable = false)
+    private PayementType payementType;
 
     public int getIdOrder() {
         return idOrder;
@@ -36,11 +42,11 @@ public class OrderEntity {
         this.idOrder = idOrder;
     }
 
-    public int getIdUser() {
+    public UserEntity getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(UserEntity idUser) {
         this.idUser = idUser;
     }
 
@@ -52,11 +58,11 @@ public class OrderEntity {
         this.validateBasketDate = validateBasketDate;
     }
 
-    public Object getPayementType() {
+    public PayementType getPayementType() {
         return payementType;
     }
 
-    public void setPayementType(Object payementType) {
+    public void setPayementType(PayementType payementType) {
         this.payementType = payementType;
     }
 

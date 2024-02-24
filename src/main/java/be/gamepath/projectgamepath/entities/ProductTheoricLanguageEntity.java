@@ -17,12 +17,13 @@ public class ProductTheoricLanguageEntity {
     @Id
     @Column(name = "idProductTheoricLanguage")
     private int idProductTheoricLanguage;
-    @Basic
-    @Column(name = "idProductTheoric")
-    private int idProductTheoric;
-    @Basic
-    @Column(name = "idLanguage")
-    private int idLanguage;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idProductTheoric", nullable = false)
+    private ProductTheoricEntity idProductTheoric;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idLanguage", nullable = false)
+    private LanguageEntity idLanguage;
 
     public int getIdProductTheoricLanguage() {
         return idProductTheoricLanguage;
@@ -32,19 +33,19 @@ public class ProductTheoricLanguageEntity {
         this.idProductTheoricLanguage = idProductTheoricLanguage;
     }
 
-    public int getIdProductTheoric() {
+    public ProductTheoricEntity getIdProductTheoric() {
         return idProductTheoric;
     }
 
-    public void setIdProductTheoric(int idProductTheoric) {
+    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
         this.idProductTheoric = idProductTheoric;
     }
 
-    public int getIdLanguage() {
+    public LanguageEntity getIdLanguage() {
         return idLanguage;
     }
 
-    public void setIdLanguage(int idLanguage) {
+    public void setIdLanguage(LanguageEntity idLanguage) {
         this.idLanguage = idLanguage;
     }
 

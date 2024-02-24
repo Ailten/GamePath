@@ -1,6 +1,12 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.enumeration.Tva;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -15,28 +21,36 @@ import java.util.Objects;
 public class ProductKeyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idProductKey")
+    @Column(name = "idProductKey", nullable = false)
     private int idProductKey;
-    @Basic
-    @Column(name = "idOrder")
-    private int idOrder;
-    @Basic
-    @Column(name = "idProductTheoric")
-    private int idProductTheoric;
-    @Basic
-    @Column(name = "key")
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idOrder", nullable = false)
+    private OrderEntity idOrder;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idProductTheoric", nullable = false)
+    private ProductTheoricEntity idProductTheoric;
+    @NotNull
+    @Pattern(regexp = "^[0-9]{255}$") //TODO: set a valide regex.
+    @Column(name = "key", nullable = false, length = 255)
     private String key;
-    @Basic
-    @Column(name = "currentPriceHTVA")
-    private double currentPriceHtva;
-    @Basic
-    @Column(name = "currentTVA")
-    private Object currentTva;
-    @Basic
-    @Column(name = "currentReduction")
+
+    @NotNull
+    @Min(1)
+    @Column(name = "currentPriceHTVA", nullable = false)
+    private float currentPriceHtva;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "currentTVA", nullable = false)
+    private Tva currentTva;
+    @NotNull
+    @Min(0)
+    @Max(90)
+    @Column(name = "currentReduction", nullable = false)
     private int currentReduction;
-    @Basic
-    @Column(name = "isValid")
+
+    @Column(name = "isValid", nullable = false)
     private byte isValid;
 
     public int getIdProductKey() {
@@ -47,19 +61,19 @@ public class ProductKeyEntity {
         this.idProductKey = idProductKey;
     }
 
-    public int getIdOrder() {
+    public OrderEntity getIdOrder() {
         return idOrder;
     }
 
-    public void setIdOrder(int idOrder) {
+    public void setIdOrder(OrderEntity idOrder) {
         this.idOrder = idOrder;
     }
 
-    public int getIdProductTheoric() {
+    public ProductTheoricEntity getIdProductTheoric() {
         return idProductTheoric;
     }
 
-    public void setIdProductTheoric(int idProductTheoric) {
+    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
         this.idProductTheoric = idProductTheoric;
     }
 
@@ -71,19 +85,19 @@ public class ProductKeyEntity {
         this.key = key;
     }
 
-    public double getCurrentPriceHtva() {
+    public float getCurrentPriceHtva() {
         return currentPriceHtva;
     }
 
-    public void setCurrentPriceHtva(double currentPriceHtva) {
+    public void setCurrentPriceHtva(float currentPriceHtva) {
         this.currentPriceHtva = currentPriceHtva;
     }
 
-    public Object getCurrentTva() {
+    public Tva getCurrentTva() {
         return currentTva;
     }
 
-    public void setCurrentTva(Object currentTva) {
+    public void setCurrentTva(Tva currentTva) {
         this.currentTva = currentTva;
     }
 

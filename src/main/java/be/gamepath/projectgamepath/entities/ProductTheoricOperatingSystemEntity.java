@@ -15,14 +15,15 @@ import java.util.Objects;
 public class ProductTheoricOperatingSystemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idProductTheoricOperatingSystem")
+    @Column(name = "idProductTheoricOperatingSystem", nullable = false)
     private int idProductTheoricOperatingSystem;
-    @Basic
-    @Column(name = "idProductTheoric")
-    private int idProductTheoric;
-    @Basic
-    @Column(name = "idOperatingSystem")
-    private int idOperatingSystem;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idProductTheoric", nullable = false)
+    private ProductTheoricEntity idProductTheoric;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idOperatingSystem", nullable = false)
+    private OperatingSystemEntity idOperatingSystem;
 
     public int getIdProductTheoricOperatingSystem() {
         return idProductTheoricOperatingSystem;
@@ -32,19 +33,19 @@ public class ProductTheoricOperatingSystemEntity {
         this.idProductTheoricOperatingSystem = idProductTheoricOperatingSystem;
     }
 
-    public int getIdProductTheoric() {
+    public ProductTheoricEntity getIdProductTheoric() {
         return idProductTheoric;
     }
 
-    public void setIdProductTheoric(int idProductTheoric) {
+    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
         this.idProductTheoric = idProductTheoric;
     }
 
-    public int getIdOperatingSystem() {
+    public OperatingSystemEntity getIdOperatingSystem() {
         return idOperatingSystem;
     }
 
-    public void setIdOperatingSystem(int idOperatingSystem) {
+    public void setIdOperatingSystem(OperatingSystemEntity idOperatingSystem) {
         this.idOperatingSystem = idOperatingSystem;
     }
 

@@ -15,12 +15,11 @@ public class OrderService {
      */
     public OrderEntity selectById(EntityManager em, int id)
     {
-        List<OrderEntity> listEntityGet = em.createNamedQuery("OrderEntity.SelectById", OrderEntity.class)
+        return em.createNamedQuery("OrderEntity.SelectById", OrderEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

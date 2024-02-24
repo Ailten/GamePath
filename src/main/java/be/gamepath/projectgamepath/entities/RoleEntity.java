@@ -1,6 +1,8 @@
 package be.gamepath.projectgamepath.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -15,10 +17,12 @@ import java.util.Objects;
 public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idRole")
+    @Column(name = "idRole", nullable = false)
     private int idRole;
-    @Basic
-    @Column(name = "title")
+
+    @NotNull
+    @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
+    @Column(name = "title", nullable = false, length = 60)
     private String title;
 
     public int getIdRole() {

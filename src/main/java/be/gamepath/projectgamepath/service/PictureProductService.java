@@ -15,12 +15,11 @@ public class PictureProductService {
      */
     public PictureProductEntity selectById(EntityManager em, int id)
     {
-        List<PictureProductEntity> listEntityGet = em.createNamedQuery("PictureProductEntity.SelectById", PictureProductEntity.class)
+        return em.createNamedQuery("PictureProductEntity.SelectById", PictureProductEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

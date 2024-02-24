@@ -15,12 +15,11 @@ public class PermissionService {
      */
     public PermissionEntity selectById(EntityManager em, int id)
     {
-        List<PermissionEntity> listEntityGet = em.createNamedQuery("PermissionEntity.SelectById", PermissionEntity.class)
+        return em.createNamedQuery("PermissionEntity.SelectById", PermissionEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

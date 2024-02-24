@@ -1,5 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.RolePermissionEntity;
 import be.gamepath.projectgamepath.entities.UserEntity;
 
 import javax.persistence.EntityManager;
@@ -15,12 +16,11 @@ public class UserService {
      */
     public UserEntity selectById(EntityManager em, int id)
     {
-        List<UserEntity> listEntityGet = em.createNamedQuery("UserEntity.SelectById", UserEntity.class)
+        return em.createNamedQuery("UserEntity.SelectById", UserEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -70,6 +70,12 @@ public class UserService {
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);
         em.flush();
+    }
+
+    public List<RolePermissionEntity> selectRolePermissionOfUser(EntityManager em, int idUser){
+        return em.createNamedQuery("UserEntity.SelectRolePermissionOfUser", RolePermissionEntity.class)
+                .setParameter("idUser", idUser)
+                .getResultList();
     }
 
 }

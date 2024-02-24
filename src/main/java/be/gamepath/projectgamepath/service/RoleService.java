@@ -15,12 +15,11 @@ public class RoleService {
      */
     public RoleEntity selectById(EntityManager em, int id)
     {
-        List<RoleEntity> listEntityGet = em.createNamedQuery("RoleEntity.SelectById", RoleEntity.class)
+        return em.createNamedQuery("RoleEntity.SelectById", RoleEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

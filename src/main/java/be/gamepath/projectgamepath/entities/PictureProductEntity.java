@@ -1,6 +1,8 @@
 package be.gamepath.projectgamepath.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -15,13 +17,15 @@ import java.util.Objects;
 public class PictureProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idPictureProduct")
+    @Column(name = "idPictureProduct", nullable = false)
     private int idPictureProduct;
-    @Basic
-    @Column(name = "idProductTheoric")
-    private int idProductTheoric;
-    @Basic
-    @Column(name = "urlImage")
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idProductTheoric", nullable = false)
+    private ProductTheoricEntity idProductTheoric;
+    @NotNull
+    @Pattern(regexp = "^http://") //canvas : http://localhost/imageFolderLocalHost/******.png
+    @Column(name = "urlImage", nullable = false, length = 255)
     private String urlImage;
 
     public int getIdPictureProduct() {
@@ -32,11 +36,11 @@ public class PictureProductEntity {
         this.idPictureProduct = idPictureProduct;
     }
 
-    public int getIdProductTheoric() {
+    public ProductTheoricEntity getIdProductTheoric() {
         return idProductTheoric;
     }
 
-    public void setIdProductTheoric(int idProductTheoric) {
+    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
         this.idProductTheoric = idProductTheoric;
     }
 

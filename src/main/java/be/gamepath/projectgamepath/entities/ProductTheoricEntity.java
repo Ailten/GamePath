@@ -1,6 +1,13 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.enumeration.MultyPlayer;
+import be.gamepath.projectgamepath.enumeration.Tva;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.sql.Date;
 import java.util.Objects;
 
@@ -16,34 +23,43 @@ import java.util.Objects;
 public class ProductTheoricEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idProductTheoric")
+    @Column(name = "idProductTheoric", nullable = false)
     private int idProductTheoric;
-    @Basic
-    @Column(name = "idSocietyProducer")
-    private int idSocietyProducer;
-    @Basic
-    @Column(name = "title")
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idSocietyProducer", nullable = false)
+    private SocietyProducerEntity idSocietyProducer;
+
+    @NotNull
+    @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
+    @Column(name = "title", nullable = false, length = 60)
     private String title;
-    @Basic
-    @Column(name = "priceHTVA")
-    private double priceHtva;
-    @Basic
-    @Column(name = "TVA")
-    private Object tva;
-    @Basic
-    @Column(name = "reduction")
+    @NotNull
+    @Min(1)
+    @Column(name = "priceHTVA", nullable = false)
+    private float priceHtva;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TVA", nullable = false)
+    private Tva tva;
+    @NotNull
+    @Min(0)
+    @Max(90)
+    @Column(name = "reduction", nullable = false)
     private int reduction;
-    @Basic
-    @Column(name = "multiPlayer")
-    private Object multiPlayer;
-    @Basic
-    @Column(name = "releaseDate")
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "multiPlayer", nullable = false)
+    private MultyPlayer multiPlayer;
+    @NotNull
+    @Column(name = "releaseDate", nullable = false)
     private Date releaseDate;
-    @Basic
-    @Column(name = "description")
+    @NotNull
+    //@Pattern(regexp = "^[a-zA-Z0-9 çéâêîôûàèìòùëïü!?.,-]{3,60}$")
+    @Column(name = "description", nullable = false, length = 255)
     private String description;
-    @Basic
-    @Column(name = "isActive")
+
+    @Column(name = "isActive", nullable = false)
     private byte isActive;
 
     public int getIdProductTheoric() {
@@ -54,11 +70,11 @@ public class ProductTheoricEntity {
         this.idProductTheoric = idProductTheoric;
     }
 
-    public int getIdSocietyProducer() {
+    public SocietyProducerEntity getIdSocietyProducer() {
         return idSocietyProducer;
     }
 
-    public void setIdSocietyProducer(int idSocietyProducer) {
+    public void setIdSocietyProducer(SocietyProducerEntity idSocietyProducer) {
         this.idSocietyProducer = idSocietyProducer;
     }
 
@@ -70,19 +86,19 @@ public class ProductTheoricEntity {
         this.title = title;
     }
 
-    public double getPriceHtva() {
+    public float getPriceHtva() {
         return priceHtva;
     }
 
-    public void setPriceHtva(double priceHtva) {
+    public void setPriceHtva(float priceHtva) {
         this.priceHtva = priceHtva;
     }
 
-    public Object getTva() {
+    public Tva getTva() {
         return tva;
     }
 
-    public void setTva(Object tva) {
+    public void setTva(Tva tva) {
         this.tva = tva;
     }
 
@@ -94,11 +110,11 @@ public class ProductTheoricEntity {
         this.reduction = reduction;
     }
 
-    public Object getMultiPlayer() {
+    public MultyPlayer getMultiPlayer() {
         return multiPlayer;
     }
 
-    public void setMultiPlayer(Object multiPlayer) {
+    public void setMultiPlayer(MultyPlayer multiPlayer) {
         this.multiPlayer = multiPlayer;
     }
 

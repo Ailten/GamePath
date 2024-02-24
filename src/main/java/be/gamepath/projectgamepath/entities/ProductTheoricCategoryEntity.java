@@ -15,14 +15,16 @@ import java.util.Objects;
 public class ProductTheoricCategoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idProductTheoricCategory")
+    @Column(name = "idProductTheoricCategory", nullable = false)
     private int idProductTheoricCategory;
-    @Basic
-    @Column(name = "idProductTheoric")
-    private int idProductTheoric;
-    @Basic
-    @Column(name = "idCategory")
-    private int idCategory;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idProductTheoric", nullable = false)
+    private ProductTheoricEntity idProductTheoric;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idCategory", nullable = false)
+    private CategoryEntity idCategory;
 
     public int getIdProductTheoricCategory() {
         return idProductTheoricCategory;
@@ -32,19 +34,19 @@ public class ProductTheoricCategoryEntity {
         this.idProductTheoricCategory = idProductTheoricCategory;
     }
 
-    public int getIdProductTheoric() {
+    public ProductTheoricEntity getIdProductTheoric() {
         return idProductTheoric;
     }
 
-    public void setIdProductTheoric(int idProductTheoric) {
+    public void setIdProductTheoric(ProductTheoricEntity idProductTheoric) {
         this.idProductTheoric = idProductTheoric;
     }
 
-    public int getIdCategory() {
+    public CategoryEntity getIdCategory() {
         return idCategory;
     }
 
-    public void setIdCategory(int idCategory) {
+    public void setIdCategory(CategoryEntity idCategory) {
         this.idCategory = idCategory;
     }
 

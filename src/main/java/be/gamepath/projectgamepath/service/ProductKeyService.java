@@ -15,12 +15,11 @@ public class ProductKeyService {
      */
     public ProductKeyEntity selectById(EntityManager em, int id)
     {
-        List<ProductKeyEntity> listEntityGet = em.createNamedQuery("ProductKeyEntity.SelectById", ProductKeyEntity.class)
+        return em.createNamedQuery("ProductKeyEntity.SelectById", ProductKeyEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

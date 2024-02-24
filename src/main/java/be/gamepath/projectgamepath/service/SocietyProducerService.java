@@ -15,12 +15,11 @@ public class SocietyProducerService {
      */
     public SocietyProducerEntity selectById(EntityManager em, int id)
     {
-        List<SocietyProducerEntity> listEntityGet = em.createNamedQuery("SocietyProducerEntity.SelectById", SocietyProducerEntity.class)
+        return em.createNamedQuery("SocietyProducerEntity.SelectById", SocietyProducerEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

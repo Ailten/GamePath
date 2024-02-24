@@ -15,12 +15,11 @@ public class BasketService {
      */
     public BasketEntity selectById(EntityManager em, int id)
     {
-        List<BasketEntity> listEntityGet = em.createNamedQuery("BasketEntity.SelectById", BasketEntity.class)
+        return em.createNamedQuery("BasketEntity.SelectById", BasketEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**

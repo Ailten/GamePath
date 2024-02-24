@@ -1,7 +1,12 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.managedBeans.ConnectionBean;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -10,40 +15,51 @@ import java.util.Objects;
                         "where (u.idUser = :id)"),
         @NamedQuery(name= "UserEntity.SelectMany",
                 query = "select u from UserEntity u "),
+        @NamedQuery(name= "UserEntity.SelectRolePermissionOfUser",
+                query = "select rp from RoleEntity r " +
+                        "join RolePermissionEntity rp on (r.idRole = rp.idRole.idRole) "+
+                        "join UserEntity u on (r.idRole = u.idRole.idRole) "+
+                        "where (u.idUser = :idUser)"),
 })
 @Entity
 @Table(name = "user", schema = "gamepath", catalog = "")
 public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idUser")
+    @Column(name = "idUser", nullable = false)
     private int idUser;
-    @Basic
-    @Column(name = "idRole")
-    private int idRole;
-    @Basic
-    @Column(name = "email")
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idRole", nullable = false)
+    private RoleEntity idRole;
+    @NotNull
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") //source : https://regexr.com/3e48o
+    @Column(name = "email", nullable = false, length = 255)
     private String email;
-    @Basic
-    @Column(name = "password")
+    @NotNull
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
-    @Basic
-    @Column(name = "lastName")
+    @NotNull
+    @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
+    @Column(name = "lastName", nullable = false, length = 60)
     private String lastName;
-    @Basic
-    @Column(name = "firstName")
+    @NotNull
+    @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
+    @Column(name = "firstName", nullable = false, length = 60)
     private String firstName;
-    @Basic
-    @Column(name = "phone")
+    @NotNull
+    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$") //source : https://ihateregex.io/expr/phone/
+    //@Pattern(regexp = "^[+][0-9]{1,4}[ ]{1}[0-9]{2,4}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}$")
+    @Column(name = "phone", nullable = false, length = 45)
     private String phone;
-    @Basic
-    @Column(name = "birthDate")
+    @NotNull
+    @Column(name = "birthDate", nullable = false)
     private Date birthDate;
-    @Basic
-    @Column(name = "registrationDate")
+    @NotNull
+    @Column(name = "registrationDate", nullable = false)
     private Date registrationDate;
-    @Basic
-    @Column(name = "isActive")
+
+    @Column(name = "isActive", nullable = false)
     private byte isActive;
 
     public int getIdUser() {
@@ -54,11 +70,11 @@ public class UserEntity {
         this.idUser = idUser;
     }
 
-    public int getIdRole() {
+    public RoleEntity getIdRole() {
         return idRole;
     }
 
-    public void setIdRole(int idRole) {
+    public void setIdRole(RoleEntity idRole) {
         this.idRole = idRole;
     }
 
@@ -137,5 +153,33 @@ public class UserEntity {
     @Override
     public int hashCode() {
         return Objects.hash(idUser, idRole, email, password, lastName, firstName, phone, birthDate, registrationDate, isActive);
+    }
+
+
+
+
+
+    @Transient
+    public List<RolePermissionEntity> listRolePermission;
+
+    @Transient
+    public List<RolePermissionEntity> getListRolePermission() {
+        if (this.listRolePermission == null)
+            ConnectionBean.initListRolePermission(this);
+        return this.listRolePermission;
+    }
+
+    /**
+     * Method to verify user access
+     * @param permissionTitle title of a permission ask.
+     * @return true if the user has permission send.
+     */
+    @Transient
+    public boolean verifyPermission(String permissionTitle)
+    {
+        return this.getListRolePermission().stream()
+                .filter(rp -> rp.getIdPermission().getTitle().equals(permissionTitle))
+                .findFirst()
+                .orElse(null) != null;
     }
 }

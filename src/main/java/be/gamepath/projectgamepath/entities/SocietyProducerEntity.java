@@ -1,6 +1,8 @@
 package be.gamepath.projectgamepath.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -15,19 +17,25 @@ import java.util.Objects;
 public class SocietyProducerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idSocietyProducer")
+    @Column(name = "idSocietyProducer", nullable = false)
     private int idSocietyProducer;
-    @Basic
-    @Column(name = "title")
+
+    @NotNull
+    @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
+    @Column(name = "title", nullable = false, length = 60)
     private String title;
-    @Basic
-    @Column(name = "email")
+    @NotNull
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") //source : https://regexr.com/3e48o
+    @Column(name = "email", nullable = false, length = 255)
     private String email;
-    @Basic
-    @Column(name = "phone")
+    @NotNull
+    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$") //source : https://ihateregex.io/expr/phone/
+    //@Pattern(regexp = "^[+][0-9]{1,4}[ ]{1}[0-9]{2,4}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}$")
+    @Column(name = "phone", nullable = false, length = 45)
     private String phone;
-    @Basic
-    @Column(name = "numeroTVA")
+    @NotNull
+    //@Pattern(regexp = "^[A-Z0-9.]{8,11}$")
+    @Column(name = "numeroTVA", nullable = false)
     private int numeroTva;
 
     public int getIdSocietyProducer() {

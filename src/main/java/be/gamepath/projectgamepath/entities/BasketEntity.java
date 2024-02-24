@@ -15,11 +15,12 @@ import java.util.Objects;
 public class BasketEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idBasket")
+    @Column(name = "idBasket", nullable = false)
     private int idBasket;
-    @Basic
-    @Column(name = "idUser")
-    private int idUser;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "idUser", nullable = false)
+    private UserEntity idUser;
 
     public int getIdBasket() {
         return idBasket;
@@ -29,11 +30,11 @@ public class BasketEntity {
         this.idBasket = idBasket;
     }
 
-    public int getIdUser() {
+    public UserEntity getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(UserEntity idUser) {
         this.idUser = idUser;
     }
 

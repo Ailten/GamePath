@@ -15,12 +15,11 @@ public class ProductTheoricService {
      */
     public ProductTheoricEntity selectById(EntityManager em, int id)
     {
-        List<ProductTheoricEntity> listEntityGet = em.createNamedQuery("ProductTheoricEntity.SelectById", ProductTheoricEntity.class)
+        return em.createNamedQuery("ProductTheoricEntity.SelectById", ProductTheoricEntity.class)
                 .setParameter("id", id)
-                .getResultList();
-
-        //return the only one result, or null if more or less than one result.
-        return (listEntityGet.size() == 1? listEntityGet.get(0): null);
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
     /**
