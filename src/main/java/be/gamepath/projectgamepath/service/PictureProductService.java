@@ -15,7 +15,7 @@ public class PictureProductService {
      */
     public PictureProduct selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("PictureProductEntity.SelectById", PictureProduct.class)
+        return em.createNamedQuery("PictureProduct.SelectById", PictureProduct.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class PictureProductService {
      */
     public List<PictureProduct> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("PictureProductEntity.SelectMany", PictureProduct.class)
+        return em.createNamedQuery("PictureProduct.SelectMany", PictureProduct.class)
                 .getResultList();
     }
 

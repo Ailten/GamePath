@@ -15,7 +15,7 @@ public class LanguageService {
      */
     public Language selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("LanguageEntity.SelectById", Language.class)
+        return em.createNamedQuery("Language.SelectById", Language.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class LanguageService {
      */
     public List<Language> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("LanguageEntity.SelectMany", Language.class)
+        return em.createNamedQuery("Language.SelectMany", Language.class)
                 .getResultList();
     }
 

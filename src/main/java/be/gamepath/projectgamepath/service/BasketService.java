@@ -15,7 +15,7 @@ public class BasketService {
      */
     public Basket selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("BasketEntity.SelectById", Basket.class)
+        return em.createNamedQuery("Basket.SelectById", Basket.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class BasketService {
      */
     public List<Basket> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("BasketEntity.SelectMany", Basket.class)
+        return em.createNamedQuery("Basket.SelectMany", Basket.class)
                 .getResultList();
     }
 

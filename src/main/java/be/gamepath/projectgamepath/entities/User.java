@@ -20,6 +20,9 @@ import java.util.Objects;
                         "join RolePermission rp on (r.id = rp.role.id) "+
                         "join User u on (r.id = u.role.id) "+
                         "where (u.id = :idUser)"),
+        @NamedQuery(name= "User.SelectUserByLogin",
+                query = "select u from User u " +
+                        "where (u.email = :loginUser)"),
 })
 @Entity
 @Table(name = "user", schema = "gamepath", catalog = "")
@@ -48,8 +51,8 @@ public class User {
     @Column(name = "firstName", nullable = false, length = 60)
     private String firstName;
     @NotNull
-    @Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$") //source : https://ihateregex.io/expr/phone/
-    //@Pattern(regexp = "^[+][0-9]{1,4}[ ]{1}[0-9]{2,4}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}$")
+    //@Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$") //source : https://ihateregex.io/expr/phone/
+    @Pattern(regexp = "^[+][0-9]{1,4}[ ]{1}[0-9]{2,4}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}$")
     @Column(name = "phone", nullable = false, length = 45)
     private String phone;
     @NotNull

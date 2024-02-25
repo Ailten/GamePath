@@ -18,23 +18,33 @@
     </f:metadata>
 
     <div id="headerLogoBlock">
-        <h:graphicImage url="#{pageContext.request.contextPath}/images/webSiteBase/logoGamePath.png" id="headerLogo" alt="#{I18N['application.header.altlogo']}"/>
+        <h:graphicImage url="#{pageContext.request.contextPath}/images/webSiteBase/logoGamePath.png"
+                        id="headerLogo"
+                        alt="#{I18N['application.header.altlogo']}"/>
     </div>
 
     <div id="headerMainContainer" class="flexGrowOne">
 
         <span>
-            <p:commandButton value="#{I18N['application.header.connectionmessage']} #{connectionBean.user.firstName} #{connectionBean.user.lastName}" action="#{connectionBean.destroySession}" class="ui-button-warning " icon="pi pi-sign-out" rendered="#{connectionBean.user != null}" iconPos="right"/>
+            <p:commandButton value="
+            #{I18N['application.header.connectionmessage']}
+            #{connectionBean.user.firstName}
+            #{connectionBean.user.lastName}"
+                             action="#{connectionBean.destroySession}"
+                             class="ui-button-info "
+                             icon="pi pi-sign-out"
+                             rendered="#{connectionBean.user != null}"
+                             iconPos="right"/>
         </span>
 
     </div>
 
     <div id="headerLoginBlock">
 
-        <p:commandButton value="#{I18N['application.header.loginbutton']}" action="#{connectionBean.goToPageConnection}" icon="pi pi-sign-in" class="ui-button-warning" rendered="#{connectionBean.user == null}" iconPos="right"/>
+        <p:commandButton value="#{I18N['application.header.loginbutton']}" action="#{connectionBean.redirectPage('/view/connection')}" icon="pi pi-sign-in" class="ui-button-info" rendered="#{connectionBean.user == null}" iconPos="right"/>
 
         <h:form id="headerLanguageButtonContainer">
-            <p:menuButton value="#{I18N['application.header.language']}" class="headerLanguageButton ui-button-warning" iconPos="right">
+            <p:menuButton value="#{I18N['application.header.language']}" class="headerLanguageButton ui-button-info" iconPos="right">
 
                 <p:menuitem value="#{I18N['application.header.languagefr']}" action="#{i18nBean.changeLanguage('fr','headerLanguageButtonContainer')}"/>
                 <p:menuitem value="#{I18N['application.header.languageen']}" action="#{i18nBean.changeLanguage('en','headerLanguageButtonContainer')}"/>
@@ -43,7 +53,7 @@
         </h:form>
 
         <div class="card" id="headerMenuButtonContainer">
-            <p:commandButton id="dynaButton" value="#{I18N['application.header.menutitle']}" type="button" icon="pi pi-bars" class="ui-button-warning headerMenuButton" iconPos="right"/>
+            <p:commandButton id="dynaButton" value="#{I18N['application.header.menutitle']}" type="button" icon="pi pi-bars" class="ui-button-info headerMenuButton" iconPos="right"/>
             <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">
 
                 <p:menuitem value="#{I18N['application.header.menulisthome']}" action="/accueil.xhtml"/>

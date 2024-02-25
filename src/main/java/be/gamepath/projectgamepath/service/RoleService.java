@@ -15,7 +15,7 @@ public class RoleService {
      */
     public Role selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("RoleEntity.SelectById", Role.class)
+        return em.createNamedQuery("Role.SelectById", Role.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class RoleService {
      */
     public List<Role> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("RoleEntity.SelectMany", Role.class)
+        return em.createNamedQuery("Role.SelectMany", Role.class)
                 .getResultList();
     }
 

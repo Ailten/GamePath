@@ -4,8 +4,10 @@ import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.User;
 import be.gamepath.projectgamepath.service.UserService;
 import be.gamepath.projectgamepath.utility.Utility;
+import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -15,18 +17,70 @@ import java.io.Serializable;
 @SessionScoped
 public class ConnectionBean implements Serializable {
 
-    private User userConnected;
+    //user connected.
+    private User user;
 
     public User getUser() {
-        return userConnected;
+        return user;
     }
     public void setUser(User user) {
-        this.userConnected = user;
+        this.user = user;
     }
 
 
-    //connection() //TODO.
-    //destroyConnection() //TODO.
+    /**
+     * Connect an user.
+     */
+    public String connection(String login) {
+
+        EntityManager em = EMF.getEM();
+        UserService userService = new UserService();
+        EntityTransaction transaction = em.getTransaction();
+        boolean isError = false;
+
+        this.user = new User();
+
+        try{
+            transaction.begin();
+            this.user = userService.selectUserByLogin(em, login);
+            transaction.commit();
+        }
+        catch(Exception e)
+        {
+            isError = true;
+        }
+        finally
+        {
+            if(transaction.isActive())
+                transaction.rollback();
+            em.close();
+        }
+
+        if(isError)
+            return "";
+
+        return "/accueil";
+    }
+
+    /**
+     * Deconnect an user.
+     */
+    public String deconnection() {
+        // Logout session connectionBean
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        // managed bean go to js
+        PrimeFaces.current().executeScript("submitLanguageForm(\"headerLanguageButtonContainer\")");
+        return "/accueil";
+    }
+
+    /**
+     * ask if this user is connected.
+     */
+    public boolean isUserHasThisLogin(String login) {
+        if(this.user == null)
+            return false;
+        return this.user.getEmail().equals(login);
+    }
 
 
     /**
@@ -60,13 +114,20 @@ public class ConnectionBean implements Serializable {
 
     //ask is user log has permissions send.
     public boolean verifyPermissionUser(String permissionName){
-        if(this.userConnected == null || this.userConnected.getId()==0)
+        if(this.user == null || this.user.getId()==0)
             return false;
-        return this.userConnected.verifyPermission(permissionName);
+        return this.user.verifyPermission(permissionName);
     }
 
     public boolean verifyNotPermissionUser(String permissionName){
         return !(verifyPermissionUser(permissionName));
+    }
+
+    /**
+     * Redirect to another page.
+     */
+    public String redirectPage(String path) {
+        return path;
     }
 
 }

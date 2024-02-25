@@ -15,7 +15,7 @@ public class OperatingSystemService {
      */
     public OperatingSystem selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("OperatingSystemEntity.SelectById", OperatingSystem.class)
+        return em.createNamedQuery("OperatingSystem.SelectById", OperatingSystem.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class OperatingSystemService {
      */
     public List<OperatingSystem> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("OperatingSystemEntity.SelectMany", OperatingSystem.class)
+        return em.createNamedQuery("OperatingSystem.SelectMany", OperatingSystem.class)
                 .getResultList();
     }
 

@@ -15,7 +15,7 @@ public class PegiService {
      */
     public Pegi selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("PegiEntity.SelectById", Pegi.class)
+        return em.createNamedQuery("Pegi.SelectById", Pegi.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class PegiService {
      */
     public List<Pegi> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("PegiEntity.SelectMany", Pegi.class)
+        return em.createNamedQuery("Pegi.SelectMany", Pegi.class)
                 .getResultList();
     }
 

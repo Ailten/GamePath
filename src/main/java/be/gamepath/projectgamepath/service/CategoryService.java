@@ -15,7 +15,7 @@ public class CategoryService {
      */
     public Category selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("CategoryEntity.SelectById", Category.class)
+        return em.createNamedQuery("Category.SelectById", Category.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class CategoryService {
      */
     public List<Category> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("CategoryEntity.SelectMany", Category.class)
+        return em.createNamedQuery("Category.SelectMany", Category.class)
                 .getResultList();
     }
 

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
+    <ui:define name="title">
+        #{I18N['application.homepage.title']}
+    </ui:define>
+    <ui:define name="content">
+
+        <!-- title page -->
+        <div class="h-content">
+            <h1>
+                <h:outputText value="#{I18N['application.header.loginbutton']}"/>
+            </h1>
+        </div>
+
+        <!-- Users to connect -->
+        <div class="content-body-center">
+
+            <p>
+                <p:commandButton value="User Client"
+                                 action="#{connectionBean.deconnection()}"
+                                 icon="pi pi-sign-in"
+                                 class="ui-button-info"
+                                 disabled="#{connectionBean.user}"
+                                 iconPos="right"/>
+            </p>
+            <p>
+                <p:commandButton value="User Client"
+                                 action="#{connectionBean.connection('Client@gmail.com')}"
+                                 icon="pi pi-sign-in"
+                                 class="ui-button-info"
+                                 disabled="#{connectionBean.isUserHasThisLogin('Client@gmail.com')}"
+                                 iconPos="right"/>
+            </p>
+            <p>
+                <p:commandButton value="User Employé"
+                                 action="#{connectionBean.connection('Employe@gmail.com')}"
+                                 icon="pi pi-sign-in"
+                                 class="ui-button-info"
+                                 disabled="#{connectionBean.isUserHasThisLogin('Employe@gmail.com')}"
+                                 iconPos="right"/>
+            </p>
+
+        </div>
+
+
+    </ui:define>
+</ui:composition>
+</html>

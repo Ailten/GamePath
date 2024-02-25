@@ -15,7 +15,7 @@ public class PermissionService {
      */
     public Permission selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("PermissionEntity.SelectById", Permission.class)
+        return em.createNamedQuery("Permission.SelectById", Permission.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class PermissionService {
      */
     public List<Permission> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("PermissionEntity.SelectMany", Permission.class)
+        return em.createNamedQuery("Permission.SelectMany", Permission.class)
                 .getResultList();
     }
 

@@ -15,7 +15,7 @@ public class OrderService {
      */
     public Order selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("OrderEntity.SelectById", Order.class)
+        return em.createNamedQuery("Order.SelectById", Order.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class OrderService {
      */
     public List<Order> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("OrderEntity.SelectMany", Order.class)
+        return em.createNamedQuery("Order.SelectMany", Order.class)
                 .getResultList();
     }
 

@@ -16,7 +16,7 @@ public class UserService {
      */
     public User selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("UserEntity.SelectById", User.class)
+        return em.createNamedQuery("User.SelectById", User.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -30,7 +30,7 @@ public class UserService {
      */
     public List<User> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("UserEntity.SelectMany", User.class)
+        return em.createNamedQuery("User.SelectMany", User.class)
                 .getResultList();
     }
 
@@ -73,9 +73,17 @@ public class UserService {
     }
 
     public List<RolePermission> selectRolePermissionOfUser(EntityManager em, int idUser){
-        return em.createNamedQuery("UserEntity.SelectRolePermissionOfUser", RolePermission.class)
+        return em.createNamedQuery("User.SelectRolePermissionOfUser", RolePermission.class)
                 .setParameter("idUser", idUser)
                 .getResultList();
+    }
+
+    public User selectUserByLogin(EntityManager em, String loginUser){
+        return em.createNamedQuery("User.SelectUserByLogin", User.class)
+                .setParameter("loginUser", loginUser)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
 }

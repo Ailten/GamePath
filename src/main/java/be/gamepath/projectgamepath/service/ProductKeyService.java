@@ -15,7 +15,7 @@ public class ProductKeyService {
      */
     public ProductKey selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("ProductKeyEntity.SelectById", ProductKey.class)
+        return em.createNamedQuery("ProductKey.SelectById", ProductKey.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class ProductKeyService {
      */
     public List<ProductKey> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("ProductKeyEntity.SelectMany", ProductKey.class)
+        return em.createNamedQuery("ProductKey.SelectMany", ProductKey.class)
                 .getResultList();
     }
 

@@ -15,7 +15,7 @@ public class UserProductTheoricService {
      */
     public UserProductTheoric selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("UserProductTheoricEntity.SelectById", UserProductTheoric.class)
+        return em.createNamedQuery("UserProductTheoric.SelectById", UserProductTheoric.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class UserProductTheoricService {
      */
     public List<UserProductTheoric> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("UserProductTheoricEntity.SelectMany", UserProductTheoric.class)
+        return em.createNamedQuery("UserProductTheoric.SelectMany", UserProductTheoric.class)
                 .getResultList();
     }
 

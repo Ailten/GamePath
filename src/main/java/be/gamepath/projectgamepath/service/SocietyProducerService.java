@@ -15,7 +15,7 @@ public class SocietyProducerService {
      */
     public SocietyProducer selectById(EntityManager em, int id)
     {
-        return em.createNamedQuery("SocietyProducerEntity.SelectById", SocietyProducer.class)
+        return em.createNamedQuery("SocietyProducer.SelectById", SocietyProducer.class)
                 .setParameter("id", id)
                 .getResultStream()
                 .findFirst()
@@ -29,7 +29,7 @@ public class SocietyProducerService {
      */
     public List<SocietyProducer> selectMany(EntityManager em)
     {
-        return em.createNamedQuery("SocietyProducerEntity.SelectMany", SocietyProducer.class)
+        return em.createNamedQuery("SocietyProducer.SelectMany", SocietyProducer.class)
                 .getResultList();
     }
 
