@@ -15,7 +15,7 @@ public class EMF {
     protected EntityManager em;
 
     private static EntityManagerFactory emfInstance =
-            Persistence.createEntityManagerFactory("locagame");
+            Persistence.createEntityManagerFactory("gamepath");
 
 //    //public EMF(){
 //        this.em = EMF.getEM();

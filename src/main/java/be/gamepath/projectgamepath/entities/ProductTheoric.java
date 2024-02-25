@@ -60,7 +60,7 @@ public class ProductTheoric {
     private String description;
 
     @Column(name = "isActive", nullable = false)
-    private byte isActive;
+    private boolean isActive;
 
     public int getId() {
         return id;
@@ -134,11 +134,11 @@ public class ProductTheoric {
         this.description = description;
     }
 
-    public byte getIsActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(byte isActive) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 

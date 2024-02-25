@@ -22,7 +22,7 @@ import java.util.Objects;
                         "where (u.id = :idUser)"),
         @NamedQuery(name= "User.SelectUserByLogin",
                 query = "select u from User u " +
-                        "where (u.email = :loginUser)"),
+                        "where (u.email = :loginUser)")
 })
 @Entity
 @Table(name = "user", schema = "gamepath", catalog = "")
@@ -63,7 +63,7 @@ public class User {
     private Date registrationDate;
 
     @Column(name = "isActive", nullable = false)
-    private byte isActive;
+    private boolean isActive;
 
     public int getId() {
         return id;
@@ -137,11 +137,11 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
-    public byte getIsActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(byte isActive) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 

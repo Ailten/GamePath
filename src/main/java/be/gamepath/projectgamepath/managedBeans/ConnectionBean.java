@@ -130,4 +130,19 @@ public class ConnectionBean implements Serializable {
         return path;
     }
 
+
+    //return a string with concat last name and first name of user.
+    public String getFullNameUser(){
+        if(this.user == null)
+            return "";
+        return (this.user.getLastName()+" "+this.user.getFirstName());
+    }
+
+    //return if the user has a permission.
+    public boolean isUserHasPermission(String permissionAsk){
+        if(this.user == null)
+            return false;
+        return this.user.verifyPermission(permissionAsk);
+    }
+
 }

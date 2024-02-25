@@ -12,39 +12,24 @@
     </ui:define>
     <ui:define name="content">
 
+        <div id="content-bg-accueil">
+
         <!-- execute methode in loading page. -->
         <f:metadata>
             <f:event type="preRenderView" listener="#{i18nBean.loadLanguagePage}"/>
         </f:metadata>
 
         <!-- title page -->
-        <div class="h-content">
+        <div class="h-content h-accueil">
             <h1>
                 <h:outputText value="#{I18N['application.header.menulisthome']}"/>
             </h1>
         </div>
 
-        <div class="content-body-center">
-
+        <div class="content-body-center height-accueil">
         </div>
 
-        <!--
-                <div id="containerHomePage">
-                    <h2 id="titleHomePageH2">
-                        <h:outputText value="#{I18N['application.homepage.slogan']}"/>
-                    </h2>
-
-
-                    <div id="imageHomePageContainer">
-                        <p:graphicImage
-                                id="imageHomePage"
-                                style="height:100%; width:100%;"
-                                url="#{pageContext.request.contextPath}/images/#{homePageBean.randomImageForHomePage}"
-                                alt="#{I18N['application.homepage.altimage']}"/>
-                    </div>
-
         </div>
-        -->
 
     </ui:define>
 </ui:composition>

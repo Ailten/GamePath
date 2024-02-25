@@ -24,14 +24,6 @@
 
             <p>
                 <p:commandButton value="User Client"
-                                 action="#{connectionBean.deconnection()}"
-                                 icon="pi pi-sign-in"
-                                 class="ui-button-info"
-                                 disabled="#{connectionBean.user}"
-                                 iconPos="right"/>
-            </p>
-            <p>
-                <p:commandButton value="User Client"
                                  action="#{connectionBean.connection('Client@gmail.com')}"
                                  icon="pi pi-sign-in"
                                  class="ui-button-info"
@@ -44,6 +36,14 @@
                                  icon="pi pi-sign-in"
                                  class="ui-button-info"
                                  disabled="#{connectionBean.isUserHasThisLogin('Employe@gmail.com')}"
+                                 iconPos="right"/>
+            </p>
+            <p>
+                <p:commandButton value="User Admin"
+                                 action="#{connectionBean.connection('Admin@gmail.com')}"
+                                 icon="pi pi-sign-in"
+                                 class="ui-button-info"
+                                 disabled="true"
                                  iconPos="right"/>
             </p>
 

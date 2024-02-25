@@ -10,7 +10,7 @@
 
 <!-- ______ ______ -->
 
-<div class="containerFlex">
+<div class="containerFlex header-line">
 
     <!-- execute methode in loading page. -->
     <f:metadata>
@@ -25,24 +25,32 @@
 
     <div id="headerMainContainer" class="flexGrowOne">
 
-        <span>
-            <p:commandButton value="
-            #{I18N['application.header.connectionmessage']}
-            #{connectionBean.user.firstName}
-            #{connectionBean.user.lastName}"
-                             action="#{connectionBean.destroySession}"
-                             class="ui-button-info "
-                             icon="pi pi-sign-out"
-                             rendered="#{connectionBean.user != null}"
-                             iconPos="right"/>
-        </span>
+        <h3 id="header-hello-user">
+            <h:outputText value="#{I18N['application.header.helloUser']}"/>
+            <h:outputText value=" " render="#{connectionBean.user != null}"/>
+            <h:outputText value="#{connectionBean.fullNameUser}"/>
+            !
+        </h3>
 
     </div>
 
     <div id="headerLoginBlock">
 
-        <p:commandButton value="#{I18N['application.header.loginbutton']}" action="#{connectionBean.redirectPage('/view/connection')}" icon="pi pi-sign-in" class="ui-button-info" rendered="#{connectionBean.user == null}" iconPos="right"/>
+        <!-- button login/logout -->
+        <p:commandButton value="#{I18N['application.header.loginbutton']}"
+                         action="#{connectionBean.redirectPage('/view/connection')}"
+                         icon="pi pi-sign-in"
+                         class="ui-button-info"
+                         rendered="#{connectionBean.user == null}"
+                         iconPos="right"/>
+        <p:commandButton value="#{I18N['application.header.logoutbutton']}"
+                         action="#{connectionBean.deconnection}"
+                         icon="pi pi-sign-in"
+                         class="ui-button-info"
+                         rendered="#{connectionBean.user != null}"
+                         iconPos="right"/>
 
+        <!-- form language -->
         <h:form id="headerLanguageButtonContainer">
             <p:menuButton value="#{I18N['application.header.language']}" class="headerLanguageButton ui-button-info" iconPos="right">
 
@@ -52,20 +60,33 @@
             </p:menuButton>
         </h:form>
 
+        <!-- menu
         <div class="card" id="headerMenuButtonContainer">
             <p:commandButton id="dynaButton" value="#{I18N['application.header.menutitle']}" type="button" icon="pi pi-bars" class="ui-button-info headerMenuButton" iconPos="right"/>
             <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">
 
                 <p:menuitem value="#{I18N['application.header.menulisthome']}" action="/accueil.xhtml"/>
                 <p:menuitem value="#{I18N['application.header.menucopy']}" action="/view/listCopy.xhtml" rendered="#{connectionBean.verifyPermissionUser('copy:listCopy')}"/>
-                <p:menuitem value="#{I18N['application.header.menulistcatalog']}" action="/view/catalog.xhtml"/>
-                <p:menuitem value="#{I18N['application.header.menuproduct']}" action="/view/listProduct.xhtml" rendered="#{connectionBean.verifyPermissionUser('product:listProduct')}"/>
-                <p:menuitem value="#{I18N['application.header.menucategory']}" action="/view/listCategory.xhtml" rendered="#{connectionBean.verifyPermissionUser('category:listCategory')}"/>
-                <p:menuitem value="#{I18N['application.header.menueditor']}" action="/view/listEditor.xhtml" rendered="#{connectionBean.verifyPermissionUser('editor:listEditor')}"/>
-                <p:menuitem value="#{I18N['application.header.menuplatform']}" action="/view/listPlatform.xhtml" rendered="#{connectionBean.verifyPermissionUser('platform:listPlatform')}"/>
 
             </p:menu>
         </div>
+        -->
+
+    </div>
+
+</div>
+
+<div class="containerFlex header-line">
+
+    <div>
+
+        <!-- menu -->
+        <p:commandButton value="#{I18N['application.header.menulisthome']}"
+                         action="#{connectionBean.redirectPage('/accueil')}"
+                         class="ui-button-info"
+                         rendered="true"
+                         icon="pi pi-home"
+                         iconPos="left"/>
 
     </div>
 
