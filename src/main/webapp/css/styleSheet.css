@@ -22,7 +22,7 @@
 }
 #content {
     background-color: #effffe;
-    margin: 5px 0 5px 0;
+    padding: 5px 0 5px 0;
 }
 
 #header .ui-button-info, /* button in header */
@@ -54,6 +54,50 @@
     margin-top: 10px;
 }
 
+#header .ui-menu.ui-menubar {
+    background-color: rgb(0, 0, 0, 0);
+    border-color: rgb(0, 0, 0, 0);
+}
+#header .ui-menu.ui-menubar a.ui-menuitem-link,
+#header .ui-menu.ui-menubar a.ui-menuitem-link > span {
+    font-size: 1.3rem;
+}
+#header .ui-menu.ui-menubar a.ui-menuitem-link:hover,
+#header .ui-menu.ui-menubar a.ui-menuitem-link:active {
+    background-color: #027abc;
+    color: #000;
+}
+#header .ui-menu.ui-menubar li.ui-menuitem.ui-menu-parent:has(> ul:empty) {
+    display: none;
+}
+
+#header #card-pop-up-message { /* --- */
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 20%;
+}
+#header .pop-up-message {
+    margin: 0;
+    width: 100%;
+    font-size: 0.9em;
+}
+#header .pop-up-message .ui-message-error-icon {
+    display: none;
+}
+#header .pop-up-message .ui-message-error-summary,
+#header .pop-up-message .ui-message-error-detail
+{
+    display: block;
+    margin: 5px;
+}
+
+.ui-growl[id="form-pop-up-message:pop-up-message_container"] {
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+}
+
 /* --- content --- */
 
 #content h1{
@@ -70,6 +114,10 @@
 #content-bg-accueil {
     background-image: url("http://localhost:8080/ProjectGamePath_war_exploded/images/webSiteBase/BackgroundAccueilTeck.jpg");
     background-size: cover;
+}
+
+#content:has(> #content-bg-accueil) {
+    padding: 0;
 }
 
 .h-accueil {

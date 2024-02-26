@@ -23,10 +23,12 @@
         </div>
 
         <div id="content">
-            <ui:insert name="content">
-                #{I18N['application.defaultpage.body.content']}
-            </ui:insert>
+            <ui:insert name="content">.</ui:insert>
         </div>
+
+        <script type="text/javascript">
+            replacePopUpError();
+        </script>
 
         <div id="footer">
             <ui:include src="../../view/footer.xhtml">.</ui:include>

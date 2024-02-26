@@ -8,6 +8,7 @@ import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -16,6 +17,9 @@ import java.io.Serializable;
 @Named
 @SessionScoped
 public class ConnectionBean implements Serializable {
+
+    @Inject
+    PopUpMessageBean popUpMessageBean;
 
     //user connected.
     private User user;
@@ -31,28 +35,40 @@ public class ConnectionBean implements Serializable {
     /**
      * Connect an user.
      */
-    public String connection(String login) {
+    public String connection(String login, String password) {
 
         EntityManager em = EMF.getEM();
         UserService userService = new UserService();
-        EntityTransaction transaction = em.getTransaction();
+        //EntityTransaction transaction = em.getTransaction();
         boolean isError = false;
 
         this.user = new User();
 
         try{
-            transaction.begin();
+            //transaction.begin();
             this.user = userService.selectUserByLogin(em, login);
-            transaction.commit();
+
+            if(this.user == null || //no user with this login was found in DB.
+                !Utility.passwordEqualsHash(password, this.user.getPassword()) //the password was not matching to password in DB.
+            ){
+                popUpMessageBean.setPopUpMessage(
+                        Utility.stringFromI18N("application.connexion.titleErrorUserNotFound"),
+                        Utility.stringFromI18N("application.connexion.messageErrorUserNotFound"),
+                        false
+                );
+                throw new Exception("User not found");
+            }
+            //transaction.commit();
         }
         catch(Exception e)
         {
             isError = true;
+            this.user = null;
         }
         finally
         {
-            if(transaction.isActive())
-                transaction.rollback();
+            //if(transaction.isActive())
+            //    transaction.rollback();
             em.close();
         }
 
@@ -66,10 +82,8 @@ public class ConnectionBean implements Serializable {
      * Deconnect an user.
      */
     public String deconnection() {
-        // Logout session connectionBean
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        // managed bean go to js
-        PrimeFaces.current().executeScript("submitLanguageForm(\"headerLanguageButtonContainer\")");
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); //Logout session connectionBean.
+        PrimeFaces.current().executeScript("submitLanguageForm(\"headerLanguageButtonContainer\")"); //managed bean go to js.
         return "/accueil";
     }
 
@@ -112,17 +126,6 @@ public class ConnectionBean implements Serializable {
     }
 
 
-    //ask is user log has permissions send.
-    public boolean verifyPermissionUser(String permissionName){
-        if(this.user == null || this.user.getId()==0)
-            return false;
-        return this.user.verifyPermission(permissionName);
-    }
-
-    public boolean verifyNotPermissionUser(String permissionName){
-        return !(verifyPermissionUser(permissionName));
-    }
-
     /**
      * Redirect to another page.
      */
@@ -144,5 +147,6 @@ public class ConnectionBean implements Serializable {
             return false;
         return this.user.verifyPermission(permissionAsk);
     }
+
 
 }

@@ -60,37 +60,40 @@
             </p:menuButton>
         </h:form>
 
-        <!-- menu
-        <div class="card" id="headerMenuButtonContainer">
-            <p:commandButton id="dynaButton" value="#{I18N['application.header.menutitle']}" type="button" icon="pi pi-bars" class="ui-button-info headerMenuButton" iconPos="right"/>
-            <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">
-
-                <p:menuitem value="#{I18N['application.header.menulisthome']}" action="/accueil.xhtml"/>
-                <p:menuitem value="#{I18N['application.header.menucopy']}" action="/view/listCopy.xhtml" rendered="#{connectionBean.verifyPermissionUser('copy:listCopy')}"/>
-
-            </p:menu>
-        </div>
-        -->
-
     </div>
 
 </div>
 
 <div class="containerFlex header-line">
+    <p:menubar>
 
-    <div>
+        <!-- home -->
+        <p:submenu label="#{I18N['application.header.menulisthome']}"
+                   icon="pi pi-fw pi-home">
+            <p:menuitem value="#{I18N['application.header.menulisthome']}"
+                        icon="pi pi-fw pi-home"
+                        action="#{connectionBean.redirectPage('/accueil')}"/>
+        </p:submenu>
 
-        <!-- menu -->
-        <p:commandButton value="#{I18N['application.header.menulisthome']}"
-                         action="#{connectionBean.redirectPage('/accueil')}"
-                         class="ui-button-info"
-                         rendered="true"
-                         icon="pi pi-home"
-                         iconPos="left"/>
-
-    </div>
-
+        <!-- user -->
+        <p:submenu label="#{I18N['application.header.menulistuser']}"
+                   icon="pi pi-fw pi-user">
+            <p:menuitem value="#{I18N['application.header.menulistusers']}"
+                        icon="pi pi-fw pi-users"
+                        action="#"
+                        rendered="#{connectionBean.isUserHasPermission('readList-user')}"/>
+            <p:menuitem value="#{I18N['application.header.menulistuserme']}"
+                        icon="pi pi-fw pi-user"
+                        action="#"
+                        rendered="#{connectionBean.isUserHasPermission('read-user-me')}"/>
+        </p:submenu>
+    </p:menubar>
 </div>
+
+<!-- pop up error/success -->
+<h:form id="form-pop-up-message">
+    <p:growl id="pop-up-message" showDetail="true"/>
+</h:form>
 
 <!-- ______ ______ -->
 
