@@ -35,7 +35,7 @@ public enum Tva {
     //cast string to enum.
     public static Tva stringToEnum(String txtValue){
         return Arrays.stream(Tva.values())
-                .filter(s->s.getTxtValue().equals(txtValue))
+                .filter(t->t.getTxtValue().equals(txtValue))
                 .findFirst()
                 .orElse(null);
     }

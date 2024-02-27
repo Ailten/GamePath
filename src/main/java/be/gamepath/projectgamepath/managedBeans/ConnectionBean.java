@@ -2,7 +2,10 @@ package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.User;
+import be.gamepath.projectgamepath.enumeration.Crud;
 import be.gamepath.projectgamepath.service.UserService;
+import be.gamepath.projectgamepath.utility.CrudManaging;
+import be.gamepath.projectgamepath.utility.EntityGenerique;
 import be.gamepath.projectgamepath.utility.Utility;
 import org.primefaces.PrimeFaces;
 
@@ -11,8 +14,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 
 @Named
 @SessionScoped
@@ -20,6 +23,9 @@ public class ConnectionBean implements Serializable {
 
     @Inject
     PopUpMessageBean popUpMessageBean;
+
+    private static String pathHomePage = "/accueil";
+    public static String getPathHomePage() { return pathHomePage; }
 
     //user connected.
     private User user;
@@ -75,7 +81,7 @@ public class ConnectionBean implements Serializable {
         if(isError)
             return "";
 
-        return "/accueil";
+        return pathHomePage;
     }
 
     /**
@@ -83,8 +89,8 @@ public class ConnectionBean implements Serializable {
      */
     public String deconnection() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); //Logout session connectionBean.
-        PrimeFaces.current().executeScript("submitLanguageForm(\"headerLanguageButtonContainer\")"); //managed bean go to js.
-        return "/accueil";
+        PrimeFaces.current().executeScript("submitLanguageForm(\"header-language-button-container\")"); //managed bean go to js.
+        return pathHomePage;
     }
 
     /**
@@ -104,13 +110,15 @@ public class ConnectionBean implements Serializable {
     {
         EntityManager em = EMF.getEM();
         UserService userService = new UserService();
-        EntityTransaction transaction = em.getTransaction();
+        //EntityTransaction transaction = em.getTransaction();
+
         try
         {
-            transaction.begin();
+            //transaction.begin();
             //Call of the service that will use the NamedQuery of the "RolePermission" entity.
             user.listRolePermission = userService.selectRolePermissionOfUser(em, user.getId());
-            transaction.commit();
+
+            //transaction.commit();
         }
         catch(Exception e)
         {
@@ -118,8 +126,8 @@ public class ConnectionBean implements Serializable {
         }
         finally
         {
-            if(transaction.isActive())
-                transaction.rollback();
+            //if(transaction.isActive())
+            //    transaction.rollback();
             em.close();
         }
 
@@ -132,6 +140,21 @@ public class ConnectionBean implements Serializable {
     public String redirectPage(String path) {
         return path;
     }
+
+    /**
+     * Redirect to another page and send an entity selected.
+     * @param path entity manager.
+     * @return list entity match.
+     */
+    public String redirectCrudPage(String path, CrudManaging<EntityGenerique> crudManaging, EntityGenerique entitySelectedForCrud, String modeAskStr) {
+        crudManaging.setElementCrudSelected(entitySelectedForCrud);
+        crudManaging.setModeSelected(Crud.getFromStr(modeAskStr));
+
+        return redirectPage(path);
+    }
+
+    private Type crud = Crud.class;
+    public Type getCrud() { return this.crud; };
 
 
     //return a string with concat last name and first name of user.

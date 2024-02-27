@@ -14,20 +14,23 @@
 
         <div id="content-bg-accueil">
 
-        <!-- execute methode in loading page. -->
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{i18nBean.loadLanguagePage}"/>
-        </f:metadata>
+            <f:metadata>
+                <!-- execute methode in loading page. -->
+                <f:event type="preRenderView" listener="#{i18nBean.loadLanguagePage}"/>
+                <!-- save historic -->
+                <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/crudProduct')}"/>
+            </f:metadata>
 
-        <!-- title page -->
-        <div class="h-content h-accueil">
-            <h1>
-                <h:outputText value="#{I18N['application.header.menulisthome']}"/>
-            </h1>
-        </div>
+            <!-- title page -->
+            <div class="h-content h-accueil">
+                <h1>
+                    <h:outputText value="#{I18N['application.header.menuListHome']}"/>
+                </h1>
+            </div>
 
-        <div class="content-body-center height-accueil">
-        </div>
+            <div class="content-body-center height-accueil">
+                <!-- TODO: an animation css for accueil page (if having time for). -->
+            </div>
 
         </div>
 

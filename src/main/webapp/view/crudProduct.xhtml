@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
+    <ui:define name="title">
+        #{I18N['application.header.title']}
+    </ui:define>
+    <ui:define name="content">
+
+        <!-- save historic -->
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/crudProduct')}"/>
+        </f:metadata>
+
+        <!-- title page -->
+        <div class="h-content">
+            <h1>
+                <h:outputText value="#{I18N['application.header.menuAddProduct']}"
+                              rendered="#{productTheoricBean.isModeSelected('create')}"/>
+            </h1>
+        </div>
+
+        <div class="content-form-body-center">
+
+            <!-- form crud product -->
+            <h:form id="form-crud-product" class="form-crud">
+
+                <!-- input String title -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-product-title" value="#{I18N['application.crudProductTheoric.labelTitle']}"/>
+                    <p:inputText id="input-product-title"
+                                 required="true"
+                                 disabled="#{productTheoricBean.isModeSelected('readListe')}"
+                                 rendered="true"
+                                 value="#{productTheoricBean.elementCrudSelected.title}"
+                                 placeholder="#{I18N['application.crudProductTheoric.placeHolderTitle']}"
+                                 validatorMessage="#{I18N['application.crudProductTheoric.errorTitle']}">
+                        <p:ajax event="change" update="error-input-product-title"/>
+                    </p:inputText>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-title" for="input-product-title"/>
+                </p:outputPanel>
+
+                <!-- button submit form -->
+                <p:outputPanel class="panel-input">
+                    <p:commandButton value="#{I18N['application.crudPage.buttonCreateSubmit']}"
+                                     rendered="#{productTheoricBean.isModeSelected('create')}"
+                                     ajax="false"
+                                     validateClient="true"
+                                     class="ui-button-success"
+                                     action="#{productTheoricBean.submitCrudForm(historicalBean)}"/>
+                    <p:commandButton value="#{I18N['application.crudPage.buttonUpdateSubmit']}"
+                                     rendered="#{productTheoricBean.isModeSelected('update')}"
+                                     ajax="false"
+                                     validateClient="true"
+                                     class="ui-button-success"
+                                     action="#{productTheoricBean.submitCrudForm(historicalBean)}"/>
+                </p:outputPanel>
+
+            </h:form>
+
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

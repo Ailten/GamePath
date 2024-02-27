@@ -29,7 +29,7 @@ public enum PayementType {
     //cast string to enum.
     public static PayementType stringToEnum(String txtValue){
         return Arrays.stream(PayementType.values())
-                .filter(s->s.getTxtValue().equals(txtValue))
+                .filter(pt->pt.getTxtValue().equals(txtValue))
                 .findFirst()
                 .orElse(null);
     }

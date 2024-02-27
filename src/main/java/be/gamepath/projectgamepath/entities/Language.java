@@ -1,5 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.utility.EntityGenerique;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -14,7 +16,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "language", schema = "gamepath", catalog = "")
-public class Language {
+public class Language extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idLanguage", nullable = false)
@@ -52,6 +54,7 @@ public class Language {
         this.urlImage = urlImage;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,6 +62,7 @@ public class Language {
         Language that = (Language) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {

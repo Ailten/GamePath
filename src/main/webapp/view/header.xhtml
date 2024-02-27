@@ -10,20 +10,20 @@
 
 <!-- ______ ______ -->
 
-<div class="containerFlex header-line">
+<div class="container-flex header-line">
 
     <!-- execute methode in loading page. -->
     <f:metadata>
         <f:event type="preRenderView" listener="#{i18nBean.loadLanguagePage}"/>
     </f:metadata>
 
-    <div id="headerLogoBlock">
+    <div id="header-logo-block">
         <h:graphicImage url="#{pageContext.request.contextPath}/images/webSiteBase/logoGamePath.png"
-                        id="headerLogo"
-                        alt="#{I18N['application.header.altlogo']}"/>
+                        id="header-logo"
+                        alt="#{I18N['application.header.altLogo']}"/>
     </div>
 
-    <div id="headerMainContainer" class="flexGrowOne">
+    <div id="header-main-container" class="flex-grow-one">
 
         <h3 id="header-hello-user">
             <h:outputText value="#{I18N['application.header.helloUser']}"/>
@@ -34,16 +34,16 @@
 
     </div>
 
-    <div id="headerLoginBlock">
+    <div id="header-login-block">
 
         <!-- button login/logout -->
-        <p:commandButton value="#{I18N['application.header.loginbutton']}"
+        <p:commandButton value="#{I18N['application.header.loginButton']}"
                          action="#{connectionBean.redirectPage('/view/connection')}"
                          icon="pi pi-sign-in"
                          class="ui-button-info"
                          rendered="#{connectionBean.user == null}"
                          iconPos="right"/>
-        <p:commandButton value="#{I18N['application.header.logoutbutton']}"
+        <p:commandButton value="#{I18N['application.header.logoutButton']}"
                          action="#{connectionBean.deconnection}"
                          icon="pi pi-sign-in"
                          class="ui-button-info"
@@ -51,11 +51,11 @@
                          iconPos="right"/>
 
         <!-- form language -->
-        <h:form id="headerLanguageButtonContainer">
-            <p:menuButton value="#{I18N['application.header.language']}" class="headerLanguageButton ui-button-info" iconPos="right">
+        <h:form id="header-language-button-container">
+            <p:menuButton value="#{I18N['application.header.language']}" class="header-language-button ui-button-info" iconPos="right">
 
-                <p:menuitem value="#{I18N['application.header.languagefr']}" action="#{i18nBean.changeLanguage('fr','headerLanguageButtonContainer')}"/>
-                <p:menuitem value="#{I18N['application.header.languageen']}" action="#{i18nBean.changeLanguage('en','headerLanguageButtonContainer')}"/>
+                <p:menuitem value="#{I18N['application.header.languageFr']}" action="#{i18nBean.changeLanguage('fr','headerLanguageButtonContainer')}"/>
+                <p:menuitem value="#{I18N['application.header.languageEn']}" action="#{i18nBean.changeLanguage('en','headerLanguageButtonContainer')}"/>
 
             </p:menuButton>
         </h:form>
@@ -64,29 +64,47 @@
 
 </div>
 
-<div class="containerFlex header-line">
+<div class="container-flex header-line">
     <p:menubar>
 
         <!-- home -->
-        <p:submenu label="#{I18N['application.header.menulisthome']}"
+        <p:submenu label="#{I18N['application.header.menuListHome']}"
                    icon="pi pi-fw pi-home">
-            <p:menuitem value="#{I18N['application.header.menulisthome']}"
+            <p:menuitem value="#{I18N['application.header.menuListHome']}"
                         icon="pi pi-fw pi-home"
-                        action="#{connectionBean.redirectPage('/accueil')}"/>
+                        action="#{connectionBean.redirectPage(connectionBean.pathHomePage)}"/>
         </p:submenu>
 
         <!-- user -->
-        <p:submenu label="#{I18N['application.header.menulistuser']}"
+        <p:submenu label="#{I18N['application.header.menuListUser']}"
                    icon="pi pi-fw pi-user">
-            <p:menuitem value="#{I18N['application.header.menulistusers']}"
+            <p:menuitem value="#{I18N['application.header.menuListUsers']}"
                         icon="pi pi-fw pi-users"
                         action="#"
                         rendered="#{connectionBean.isUserHasPermission('readList-user')}"/>
-            <p:menuitem value="#{I18N['application.header.menulistuserme']}"
+            <p:menuitem value="#{I18N['application.header.menuAddUser']}"
+                        icon="pi pi-fw pi-plus"
+                        action="#"
+                        rendered="#{connectionBean.isUserHasPermission('create-user')}"/>
+            <p:menuitem value="#{I18N['application.header.menuListUserMe']}"
                         icon="pi pi-fw pi-user"
                         action="#"
                         rendered="#{connectionBean.isUserHasPermission('read-user-me')}"/>
         </p:submenu>
+
+        <!-- product -->
+        <p:submenu label="#{I18N['application.header.menuListUser']}"
+                   icon="pi pi-fw pi-th-large"> <!-- pi-bars -->
+            <p:menuitem value="#{I18N['application.header.menuListCatalogue']}"
+                        icon="pi pi-fw pi-th-large"
+                        action="#{connectionBean.redirectPage('/view/catalog')}"/>
+            <p:menuitem value="#{I18N['application.header.menuAddProduct']}"
+                        icon="pi pi-fw pi-plus"
+                        action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, null, 'create')}"
+                        rendered="#{connectionBean.isUserHasPermission('create-product')}"/>
+        </p:submenu>
+
+
     </p:menubar>
 </div>
 

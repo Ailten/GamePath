@@ -3,6 +3,7 @@ package be.gamepath.projectgamepath.convertisorCustom;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.OperatingSystem;
 import be.gamepath.projectgamepath.service.OperatingSystemService;
+import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,8 +12,13 @@ import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
 @FacesConverter("OperatingSystemConverter")
-public class OperatingSystemConverter implements Converter {
+public class OperatingSystemConverter extends ConvertisorGeneric<OperatingSystem, OperatingSystemService> {
 
+    public OperatingSystemConverter(){
+        this.service = new OperatingSystemService();
+    }
+
+    /*
     //cast from string to object.
     @Override
     public OperatingSystem getAsObject(FacesContext context, UIComponent component, String value)
@@ -56,5 +62,5 @@ public class OperatingSystemConverter implements Converter {
         OperatingSystem operatingSystem = (OperatingSystem) value;
         return String.valueOf(operatingSystem.getId());
     }
-
+    */
 }

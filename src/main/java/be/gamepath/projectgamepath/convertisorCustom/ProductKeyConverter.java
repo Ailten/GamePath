@@ -3,6 +3,7 @@ package be.gamepath.projectgamepath.convertisorCustom;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.ProductKey;
 import be.gamepath.projectgamepath.service.ProductKeyService;
+import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,8 +12,13 @@ import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
 @FacesConverter("ProductKeyConverter")
-public class ProductKeyConverter implements Converter {
+public class ProductKeyConverter extends ConvertisorGeneric<ProductKey, ProductKeyService> {
 
+    public ProductKeyConverter(){
+        this.service = new ProductKeyService();
+    }
+
+    /*
     //cast from string to object.
     @Override
     public ProductKey getAsObject(FacesContext context, UIComponent component, String value)
@@ -56,5 +62,5 @@ public class ProductKeyConverter implements Converter {
         ProductKey productKey = (ProductKey) value;
         return String.valueOf(productKey.getId());
     }
-
+    */
 }

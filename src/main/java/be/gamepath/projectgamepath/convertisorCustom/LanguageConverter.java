@@ -3,6 +3,7 @@ package be.gamepath.projectgamepath.convertisorCustom;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Language;
 import be.gamepath.projectgamepath.service.LanguageService;
+import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,8 +12,13 @@ import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
 @FacesConverter("LanguageConverter")
-public class LanguageConverter implements Converter {
+public class LanguageConverter extends ConvertisorGeneric<Language, LanguageService> {
 
+    public LanguageConverter(){
+        this.service = new LanguageService();
+    }
+
+    /*
     //cast from string to object.
     @Override
     public Language getAsObject(FacesContext context, UIComponent component, String value)
@@ -56,5 +62,5 @@ public class LanguageConverter implements Converter {
         Language language = (Language) value;
         return String.valueOf(language.getId());
     }
-
+    */
 }

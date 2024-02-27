@@ -3,6 +3,7 @@ package be.gamepath.projectgamepath.convertisorCustom;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.ProductTheoric;
 import be.gamepath.projectgamepath.service.ProductTheoricService;
+import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,8 +12,13 @@ import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
 @FacesConverter("ProductTheoricConverter")
-public class ProductTheoricConverter implements Converter {
+public class ProductTheoricConverter extends ConvertisorGeneric<ProductTheoric, ProductTheoricService> {
 
+    public ProductTheoricConverter(){
+        this.service = new ProductTheoricService();
+    }
+
+    /*
     //cast from string to object.
     @Override
     public ProductTheoric getAsObject(FacesContext context, UIComponent component, String value)
@@ -56,5 +62,5 @@ public class ProductTheoricConverter implements Converter {
         ProductTheoric productTheoric = (ProductTheoric) value;
         return String.valueOf(productTheoric.getId());
     }
-
+    */
 }

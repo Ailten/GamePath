@@ -10,10 +10,10 @@
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 
-.containerFlex{
+.container-flex{
     display: flex;
 }
-.flexGrowOne{
+.flex-grow-one{
     flex-grow: 1;
 }
 
@@ -27,20 +27,34 @@
 
 #header .ui-button-info, /* button in header */
 #header form span .ui-button, /* button language in header */
-#content .ui-button-info /* button in content */
+#content #content-form-body-center .ui-button, /* button in crud */
+#content .content-form-body-center input.ui-inputfield, /* input in crud */
+#content .content-form-body-center span.ui-message-error-detail /* error in crud */
 {
     font-size: 1.5rem;
 }
 
+.panel-input {
+    display: flex;
+    margin: 5px 0 5px 0;
+}
+.panel-input > * {
+    flex-grow: 1;
+}
+.panel-input label.ui-widget {
+    font-size: 1.5rem;
+    padding-top: 0.5rem;
+}
+
 /* --- header --- */
 
-#header #headerLoginBlock{
+#header #header-login-block{
     text-align: right;
 }
-#header #headerLoginBlock > * {
+#header #header-login-block > * {
     margin-bottom: 10px;
 }
-#header #headerMainContainer {
+#header #header-main-container {
     margin: 0 10px 0 10px;
 }
 #header #header-hello-user {
@@ -71,27 +85,6 @@
     display: none;
 }
 
-#header #card-pop-up-message { /* --- */
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    width: 20%;
-}
-#header .pop-up-message {
-    margin: 0;
-    width: 100%;
-    font-size: 0.9em;
-}
-#header .pop-up-message .ui-message-error-icon {
-    display: none;
-}
-#header .pop-up-message .ui-message-error-summary,
-#header .pop-up-message .ui-message-error-detail
-{
-    display: block;
-    margin: 5px;
-}
-
 .ui-growl[id="form-pop-up-message:pop-up-message_container"] {
     top: 10px;
     right: 10px;
@@ -104,9 +97,12 @@
     text-align: center;
 }
 
-#content .content-body-center {
+#content .content-form-body-center {
     width: 60%;
     margin: 0 auto 0 auto;
+}
+#content .content-table-body-center {
+    text-align: center;
 }
 
 /* --- accueil --- */
@@ -144,13 +140,27 @@
     margin-left: 10px;
 }
 
-#footer .blockFooter {
+#footer .block-footer {
     text-align: center;
     padding: 10px 0 10px 0;
 }
-#footer .blockFooter:nth-child(n + 2) {
+#footer .block-footer:nth-child(n + 2) {
     border-left: #333 solid 2px;
 }
-#footer .blockFooter .icon-reseau:hover {
+#footer .block-footer .icon-reseau:hover {
     color: #effffe;
+}
+
+/* --- responsive phone --- */
+@media (max-width:600px) {
+    #header #header-hello-user {
+        font-size: 1.5rem;
+    }
+    #header #header-logo {
+        width: 15rem;
+    }
+
+    #content .content-form-body-center {
+        width: 90%;
+    }
 }

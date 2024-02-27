@@ -1,5 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.utility.EntityGenerique;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -12,7 +14,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "rolepermission", schema = "gamepath", catalog = "")
-public class RolePermission {
+public class RolePermission extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idRolePermission", nullable = false)
@@ -49,6 +51,7 @@ public class RolePermission {
         this.permission = permission;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,6 +59,7 @@ public class RolePermission {
         RolePermission that = (RolePermission) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {

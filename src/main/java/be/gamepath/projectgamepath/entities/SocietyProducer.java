@@ -1,5 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.utility.EntityGenerique;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -14,7 +16,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "societyproducer", schema = "gamepath", catalog = "")
-public class SocietyProducer {
+public class SocietyProducer extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idSocietyProducer", nullable = false)
@@ -78,6 +80,7 @@ public class SocietyProducer {
         this.numeroTva = numeroTva;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,6 +88,7 @@ public class SocietyProducer {
         SocietyProducer that = (SocietyProducer) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {

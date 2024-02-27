@@ -1,5 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.utility.EntityGenerique;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -14,7 +16,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "pictureproduct", schema = "gamepath", catalog = "")
-public class PictureProduct {
+public class PictureProduct extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idPictureProduct", nullable = false)
@@ -52,6 +54,7 @@ public class PictureProduct {
         this.urlImage = urlImage;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,6 +62,7 @@ public class PictureProduct {
         PictureProduct that = (PictureProduct) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {

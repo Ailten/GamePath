@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.enumeration.Tva;
+import be.gamepath.projectgamepath.utility.EntityGenerique;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -18,7 +19,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "productkey", schema = "gamepath", catalog = "")
-public class ProductKey {
+public class ProductKey extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idProductKey", nullable = false)
@@ -117,6 +118,7 @@ public class ProductKey {
         this.isValid = isValid;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,6 +126,7 @@ public class ProductKey {
         ProductKey that = (ProductKey) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {

@@ -29,7 +29,7 @@ public enum MultyPlayer {
     //cast string to enum.
     public static MultyPlayer stringToEnum(String txtValue){
         return Arrays.stream(MultyPlayer.values())
-                .filter(s->s.getTxtValue().equals(txtValue))
+                .filter(mp->mp.getTxtValue().equals(txtValue))
                 .findFirst()
                 .orElse(null);
     }

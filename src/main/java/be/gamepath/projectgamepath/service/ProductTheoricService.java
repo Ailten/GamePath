@@ -1,11 +1,12 @@
 package be.gamepath.projectgamepath.service;
 
 import be.gamepath.projectgamepath.entities.ProductTheoric;
+import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class ProductTheoricService {
+public class ProductTheoricService extends ServiceGeneric<ProductTheoric> {
 
     /**
      * get one entity (find by primary key).
@@ -34,41 +35,18 @@ public class ProductTheoricService {
     }
 
     /**
-     * insert an entity in db.
+     * get one entity (find by champ unique).
      * @param em entity manager.
-     * @param entityToInsert entity to insert.
-     * @return entity inserted.
+     * @param title champ unique.
+     * @return entity find.
      */
-    public ProductTheoric insert(EntityManager em, ProductTheoric entityToInsert)
-    {
-        em.persist(entityToInsert);
-        em.flush();
-        return entityToInsert;
+    public ProductTheoric selectByTitle(EntityManager em, String title){
+        return em.createNamedQuery("ProductTheoric.SelectByTitle", ProductTheoric.class)
+                .setParameter("title", title)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
-    /**
-     * update an entity in db.
-     * @param entityToUpdate entity to update.
-     * @param em entity manager.
-     * @return entity updated.
-     */
-    public ProductTheoric update(EntityManager em, ProductTheoric entityToUpdate)
-    {
-        em.merge(entityToUpdate);
-        em.flush();
-        return entityToUpdate;
-    }
-
-    /**
-     * delete entity from db.
-     * @param em entity manager.
-     * @param entityToDelete entity to delete.
-     */
-    public void delete(EntityManager em, ProductTheoric entityToDelete){
-        if(!em.contains(entityToDelete))
-            entityToDelete = em.merge(entityToDelete);
-        em.remove(entityToDelete);
-        em.flush();
-    }
 
 }

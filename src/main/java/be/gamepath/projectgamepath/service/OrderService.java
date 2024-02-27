@@ -1,11 +1,12 @@
 package be.gamepath.projectgamepath.service;
 
 import be.gamepath.projectgamepath.entities.Order;
+import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class OrderService {
+public class OrderService extends ServiceGeneric<Order> {
 
     /**
      * get one entity (find by primary key).
@@ -33,42 +34,5 @@ public class OrderService {
                 .getResultList();
     }
 
-    /**
-     * insert an entity in db.
-     * @param em entity manager.
-     * @param entityToInsert entity to insert.
-     * @return entity inserted.
-     */
-    public Order insert(EntityManager em, Order entityToInsert)
-    {
-        em.persist(entityToInsert);
-        em.flush();
-        return entityToInsert;
-    }
-
-    /**
-     * update an entity in db.
-     * @param entityToUpdate entity to update.
-     * @param em entity manager.
-     * @return entity updated.
-     */
-    public Order update(EntityManager em, Order entityToUpdate)
-    {
-        em.merge(entityToUpdate);
-        em.flush();
-        return entityToUpdate;
-    }
-
-    /**
-     * delete entity from db.
-     * @param em entity manager.
-     * @param entityToDelete entity to delete.
-     */
-    public void delete(EntityManager em, Order entityToDelete){
-        if(!em.contains(entityToDelete))
-            entityToDelete = em.merge(entityToDelete);
-        em.remove(entityToDelete);
-        em.flush();
-    }
 
 }

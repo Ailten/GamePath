@@ -1,11 +1,12 @@
 package be.gamepath.projectgamepath.service;
 
 import be.gamepath.projectgamepath.entities.UserProductTheoric;
+import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class UserProductTheoricService {
+public class UserProductTheoricService extends ServiceGeneric<UserProductTheoric> {
 
     /**
      * get one entity (find by primary key).
@@ -33,42 +34,5 @@ public class UserProductTheoricService {
                 .getResultList();
     }
 
-    /**
-     * insert an entity in db.
-     * @param em entity manager.
-     * @param entityToInsert entity to insert.
-     * @return entity inserted.
-     */
-    public UserProductTheoric insert(EntityManager em, UserProductTheoric entityToInsert)
-    {
-        em.persist(entityToInsert);
-        em.flush();
-        return entityToInsert;
-    }
-
-    /**
-     * update an entity in db.
-     * @param entityToUpdate entity to update.
-     * @param em entity manager.
-     * @return entity updated.
-     */
-    public UserProductTheoric update(EntityManager em, UserProductTheoric entityToUpdate)
-    {
-        em.merge(entityToUpdate);
-        em.flush();
-        return entityToUpdate;
-    }
-
-    /**
-     * delete entity from db.
-     * @param em entity manager.
-     * @param entityToDelete entity to delete.
-     */
-    public void delete(EntityManager em, UserProductTheoric entityToDelete){
-        if(!em.contains(entityToDelete))
-            entityToDelete = em.merge(entityToDelete);
-        em.remove(entityToDelete);
-        em.flush();
-    }
 
 }

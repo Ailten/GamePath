@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.managedBeans.ConnectionBean;
+import be.gamepath.projectgamepath.utility.EntityGenerique;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,9 +17,9 @@ import java.util.Objects;
         @NamedQuery(name= "User.SelectMany",
                 query = "select u from User u "),
         @NamedQuery(name= "User.SelectRolePermissionOfUser",
-                query = "select rp from Role r " +
-                        "join RolePermission rp on (r.id = rp.role.id) "+
-                        "join User u on (r.id = u.role.id) "+
+                query = "select rp from User as u " +
+                        "join Role as r on (u.role.id = r.id) " +
+                        "join RolePermission as rp on (r.id = rp.role.id)" +
                         "where (u.id = :idUser)"),
         @NamedQuery(name= "User.SelectUserByLogin",
                 query = "select u from User u " +
@@ -26,7 +27,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "user", schema = "gamepath", catalog = "")
-public class User {
+public class User extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idUser", nullable = false)
@@ -145,6 +146,7 @@ public class User {
         this.isActive = isActive;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -152,6 +154,7 @@ public class User {
         User that = (User) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {

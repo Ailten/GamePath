@@ -3,6 +3,7 @@ package be.gamepath.projectgamepath.convertisorCustom;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.SocietyProducer;
 import be.gamepath.projectgamepath.service.SocietyProducerService;
+import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,8 +12,13 @@ import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
 @FacesConverter("SocietyProducerConverter")
-public class SocietyProducerConverter implements Converter {
+public class SocietyProducerConverter extends ConvertisorGeneric<SocietyProducer, SocietyProducerService> {
 
+    public SocietyProducerConverter(){
+        this.service = new SocietyProducerService();
+    }
+
+    /*
     //cast from string to object.
     @Override
     public SocietyProducer getAsObject(FacesContext context, UIComponent component, String value)
@@ -56,5 +62,5 @@ public class SocietyProducerConverter implements Converter {
         SocietyProducer societyProducer = (SocietyProducer) value;
         return String.valueOf(societyProducer.getId());
     }
-
+    */
 }

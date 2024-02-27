@@ -3,6 +3,7 @@ package be.gamepath.projectgamepath.convertisorCustom;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Order;
 import be.gamepath.projectgamepath.service.OrderService;
+import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,8 +12,13 @@ import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
 @FacesConverter("OrderConverter")
-public class OrderConverter implements Converter {
+public class OrderConverter extends ConvertisorGeneric<Order, OrderService> {
 
+    public OrderConverter(){
+        this.service = new OrderService();
+    }
+
+    /*
     //cast from string to object.
     @Override
     public Order getAsObject(FacesContext context, UIComponent component, String value)
@@ -56,5 +62,5 @@ public class OrderConverter implements Converter {
         Order order = (Order) value;
         return String.valueOf(order.getId());
     }
-
+    */
 }

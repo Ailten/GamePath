@@ -1,4 +1,11 @@
 
+//loading page.
+window.addEventListener('load', function(){
+    document.addEventListener('scroll', function(){
+        replacePopUpError();
+    });
+});
+
 //function for submit form language in header (reload page after select new language).
 function submitLanguageForm(idForm){
     let domForm = document.getElementById(idForm);
@@ -9,12 +16,6 @@ function submitLanguageForm(idForm){
     domForm.submit();
 }
 
-//loading page.
-window.addEventListener('load', function(){
-    document.addEventListener('scroll', function(){
-        replacePopUpError();
-    });
-})
 
 //function for scrolling position pop-up message.
 function replacePopUpError(){

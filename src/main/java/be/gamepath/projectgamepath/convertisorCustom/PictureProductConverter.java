@@ -3,6 +3,7 @@ package be.gamepath.projectgamepath.convertisorCustom;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.PictureProduct;
 import be.gamepath.projectgamepath.service.PictureProductService;
+import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,8 +12,13 @@ import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
 @FacesConverter("PictureProductConverter")
-public class PictureProductConverter implements Converter {
+public class PictureProductConverter extends ConvertisorGeneric<PictureProduct, PictureProductService> {
 
+    public PictureProductConverter(){
+        this.service = new PictureProductService();
+    }
+
+    /*
     //cast from string to object.
     @Override
     public PictureProduct getAsObject(FacesContext context, UIComponent component, String value)
@@ -56,5 +62,5 @@ public class PictureProductConverter implements Converter {
         PictureProduct pictureProduct = (PictureProduct) value;
         return String.valueOf(pictureProduct.getId());
     }
-
+    */
 }

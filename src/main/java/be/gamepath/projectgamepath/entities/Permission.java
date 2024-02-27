@@ -1,5 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.utility.EntityGenerique;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -14,7 +16,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "permission", schema = "gamepath", catalog = "")
-public class Permission {
+public class Permission extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idPermission", nullable = false)
@@ -40,6 +42,7 @@ public class Permission {
         this.title = title;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,6 +50,7 @@ public class Permission {
         Permission that = (Permission) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {

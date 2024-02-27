@@ -3,6 +3,7 @@ package be.gamepath.projectgamepath.convertisorCustom;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Role;
 import be.gamepath.projectgamepath.service.RoleService;
+import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,8 +12,13 @@ import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 
 @FacesConverter("BasketConverter")
-public class RoleConverter implements Converter {
+public class RoleConverter extends ConvertisorGeneric<Role, RoleService> {
 
+    public RoleConverter(){
+        this.service = new RoleService();
+    }
+
+    /*
     //cast from string to object.
     @Override
     public Role getAsObject(FacesContext context, UIComponent component, String value)
@@ -56,5 +62,5 @@ public class RoleConverter implements Converter {
         Role role = (Role) value;
         return String.valueOf(role.getId());
     }
-
+    */
 }

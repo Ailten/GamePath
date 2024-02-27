@@ -1,5 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.utility.EntityGenerique;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -12,7 +14,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "basketproducttheoric", schema = "gamepath", catalog = "")
-public class BasketProductTheoric {
+public class BasketProductTheoric extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idBasketProductTheoric", nullable = false)
@@ -49,6 +51,7 @@ public class BasketProductTheoric {
         this.productTheoric = productTheoric;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,6 +59,7 @@ public class BasketProductTheoric {
         BasketProductTheoric that = (BasketProductTheoric) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {

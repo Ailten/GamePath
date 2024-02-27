@@ -1,11 +1,12 @@
 package be.gamepath.projectgamepath.service;
 
 import be.gamepath.projectgamepath.entities.ProductKey;
+import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class ProductKeyService {
+public class ProductKeyService extends ServiceGeneric<ProductKey> {
 
     /**
      * get one entity (find by primary key).
@@ -33,42 +34,5 @@ public class ProductKeyService {
                 .getResultList();
     }
 
-    /**
-     * insert an entity in db.
-     * @param em entity manager.
-     * @param entityToInsert entity to insert.
-     * @return entity inserted.
-     */
-    public ProductKey insert(EntityManager em, ProductKey entityToInsert)
-    {
-        em.persist(entityToInsert);
-        em.flush();
-        return entityToInsert;
-    }
-
-    /**
-     * update an entity in db.
-     * @param entityToUpdate entity to update.
-     * @param em entity manager.
-     * @return entity updated.
-     */
-    public ProductKey update(EntityManager em, ProductKey entityToUpdate)
-    {
-        em.merge(entityToUpdate);
-        em.flush();
-        return entityToUpdate;
-    }
-
-    /**
-     * delete entity from db.
-     * @param em entity manager.
-     * @param entityToDelete entity to delete.
-     */
-    public void delete(EntityManager em, ProductKey entityToDelete){
-        if(!em.contains(entityToDelete))
-            entityToDelete = em.merge(entityToDelete);
-        em.remove(entityToDelete);
-        em.flush();
-    }
 
 }

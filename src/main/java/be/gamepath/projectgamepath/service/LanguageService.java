@@ -1,11 +1,12 @@
 package be.gamepath.projectgamepath.service;
 
 import be.gamepath.projectgamepath.entities.Language;
+import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class LanguageService {
+public class LanguageService extends ServiceGeneric<Language> {
 
     /**
      * get one entity (find by primary key).
@@ -33,42 +34,5 @@ public class LanguageService {
                 .getResultList();
     }
 
-    /**
-     * insert an entity in db.
-     * @param em entity manager.
-     * @param entityToInsert entity to insert.
-     * @return entity inserted.
-     */
-    public Language insert(EntityManager em, Language entityToInsert)
-    {
-        em.persist(entityToInsert);
-        em.flush();
-        return entityToInsert;
-    }
-
-    /**
-     * update an entity in db.
-     * @param entityToUpdate entity to update.
-     * @param em entity manager.
-     * @return entity updated.
-     */
-    public Language update(EntityManager em, Language entityToUpdate)
-    {
-        em.merge(entityToUpdate);
-        em.flush();
-        return entityToUpdate;
-    }
-
-    /**
-     * delete entity from db.
-     * @param em entity manager.
-     * @param entityToDelete entity to delete.
-     */
-    public void delete(EntityManager em, Language entityToDelete){
-        if(!em.contains(entityToDelete))
-            entityToDelete = em.merge(entityToDelete);
-        em.remove(entityToDelete);
-        em.flush();
-    }
 
 }

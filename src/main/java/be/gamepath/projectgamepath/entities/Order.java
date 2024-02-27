@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.enumeration.PayementType;
+import be.gamepath.projectgamepath.utility.EntityGenerique;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ import java.util.Objects;
 })
 @Entity
 @Table(name = "order", schema = "gamepath", catalog = "")
-public class Order {
+public class Order extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idOrder", nullable = false)
@@ -66,6 +67,7 @@ public class Order {
         this.payementType = payementType;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +75,7 @@ public class Order {
         Order that = (Order) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {

@@ -2,6 +2,7 @@ package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.enumeration.MultyPlayer;
 import be.gamepath.projectgamepath.enumeration.Tva;
+import be.gamepath.projectgamepath.utility.EntityGenerique;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -17,10 +18,13 @@ import java.util.Objects;
                         "where (pt.id = :id)"),
         @NamedQuery(name= "ProductTheoric.SelectMany",
                 query = "select pt from ProductTheoric pt "),
+        @NamedQuery(name= "ProductTheoric.SelectByTitle",
+                query = "select pt from ProductTheoric pt " +
+                        "where (pt.title = :title)"),
 })
 @Entity
 @Table(name = "producttheoric", schema = "gamepath", catalog = "")
-public class ProductTheoric {
+public class ProductTheoric extends EntityGenerique {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idProductTheoric", nullable = false)
@@ -142,6 +146,7 @@ public class ProductTheoric {
         this.isActive = isActive;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -149,6 +154,7 @@ public class ProductTheoric {
         ProductTheoric that = (ProductTheoric) o;
         return id == that.id;
     }
+    */
 
     @Override
     public int hashCode() {
