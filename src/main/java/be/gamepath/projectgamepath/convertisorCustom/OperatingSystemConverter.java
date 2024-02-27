@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.OperatingSystem;
 import be.gamepath.projectgamepath.service.OperatingSystemService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("OperatingSystemConverter")
-public class OperatingSystemConverter extends ConvertisorGeneric<OperatingSystem, OperatingSystemService> {
+public class OperatingSystemConverter extends ConvertorGeneric<OperatingSystem, OperatingSystemService> {
 
     public OperatingSystemConverter(){
         this.service = new OperatingSystemService();

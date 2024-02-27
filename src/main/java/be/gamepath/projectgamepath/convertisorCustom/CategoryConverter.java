@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.service.CategoryService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("CategoryConverter")
-public class CategoryConverter extends ConvertisorGeneric<Category, CategoryService> {
+public class CategoryConverter extends ConvertorGeneric<Category, CategoryService> {
 
     public CategoryConverter(){
         this.service = new CategoryService();

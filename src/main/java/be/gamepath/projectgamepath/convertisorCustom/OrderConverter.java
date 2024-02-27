@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Order;
 import be.gamepath.projectgamepath.service.OrderService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("OrderConverter")
-public class OrderConverter extends ConvertisorGeneric<Order, OrderService> {
+public class OrderConverter extends ConvertorGeneric<Order, OrderService> {
 
     public OrderConverter(){
         this.service = new OrderService();

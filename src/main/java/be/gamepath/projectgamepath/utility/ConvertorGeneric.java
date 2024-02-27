@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.persistence.EntityManager;
 
-public class ConvertisorGeneric<TEntity extends EntityGenerique, TService extends ServiceGeneric<TEntity>> implements Converter<TEntity> {
+public class ConvertorGeneric<TEntity extends EntityGenerique, TService extends ServiceGeneric<TEntity>> implements Converter<TEntity> {
 
     protected TService service;
 

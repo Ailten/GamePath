@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.ProductTheoric;
 import be.gamepath.projectgamepath.service.ProductTheoricService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("ProductTheoricConverter")
-public class ProductTheoricConverter extends ConvertisorGeneric<ProductTheoric, ProductTheoricService> {
+public class ProductTheoricConverter extends ConvertorGeneric<ProductTheoric, ProductTheoricService> {
 
     public ProductTheoricConverter(){
         this.service = new ProductTheoricService();

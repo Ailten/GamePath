@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Permission;
 import be.gamepath.projectgamepath.service.PermissionService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("PermissionConverter")
-public class PermissionConverter extends ConvertisorGeneric<Permission, PermissionService> {
+public class PermissionConverter extends ConvertorGeneric<Permission, PermissionService> {
 
     public PermissionConverter(){
         this.service = new PermissionService();

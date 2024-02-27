@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.entities.Basket;
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.service.BasketService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("BasketConverter")
-public class BasketConverter extends ConvertisorGeneric<Basket, BasketService> {
+public class BasketConverter extends ConvertorGeneric<Basket, BasketService> {
 
     public BasketConverter(){
         this.service = new BasketService();

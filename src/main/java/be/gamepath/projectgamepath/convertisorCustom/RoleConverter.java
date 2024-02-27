@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Role;
 import be.gamepath.projectgamepath.service.RoleService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("BasketConverter")
-public class RoleConverter extends ConvertisorGeneric<Role, RoleService> {
+public class RoleConverter extends ConvertorGeneric<Role, RoleService> {
 
     public RoleConverter(){
         this.service = new RoleService();

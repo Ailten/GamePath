@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.User;
 import be.gamepath.projectgamepath.service.UserService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("UserConverter")
-public class UserConverter extends ConvertisorGeneric<User, UserService> {
+public class UserConverter extends ConvertorGeneric<User, UserService> {
 
     public UserConverter(){
         this.service = new UserService();

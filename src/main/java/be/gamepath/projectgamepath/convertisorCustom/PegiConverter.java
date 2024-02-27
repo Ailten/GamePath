@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Pegi;
 import be.gamepath.projectgamepath.service.PegiService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("PegiConverter")
-public class PegiConverter extends ConvertisorGeneric<Pegi, PegiService> {
+public class PegiConverter extends ConvertorGeneric<Pegi, PegiService> {
 
     public PegiConverter(){
         this.service = new PegiService();

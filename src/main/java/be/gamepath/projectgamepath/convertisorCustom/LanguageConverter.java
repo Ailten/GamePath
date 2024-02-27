@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Language;
 import be.gamepath.projectgamepath.service.LanguageService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("LanguageConverter")
-public class LanguageConverter extends ConvertisorGeneric<Language, LanguageService> {
+public class LanguageConverter extends ConvertorGeneric<Language, LanguageService> {
 
     public LanguageConverter(){
         this.service = new LanguageService();

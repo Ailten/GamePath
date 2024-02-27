@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.SocietyProducer;
 import be.gamepath.projectgamepath.service.SocietyProducerService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("SocietyProducerConverter")
-public class SocietyProducerConverter extends ConvertisorGeneric<SocietyProducer, SocietyProducerService> {
+public class SocietyProducerConverter extends ConvertorGeneric<SocietyProducer, SocietyProducerService> {
 
     public SocietyProducerConverter(){
         this.service = new SocietyProducerService();

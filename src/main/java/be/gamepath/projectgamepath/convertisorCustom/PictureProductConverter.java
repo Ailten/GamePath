@@ -1,18 +1,13 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
-import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.PictureProduct;
 import be.gamepath.projectgamepath.service.PictureProductService;
-import be.gamepath.projectgamepath.utility.ConvertisorGeneric;
+import be.gamepath.projectgamepath.utility.ConvertorGeneric;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 @FacesConverter("PictureProductConverter")
-public class PictureProductConverter extends ConvertisorGeneric<PictureProduct, PictureProductService> {
+public class PictureProductConverter extends ConvertorGeneric<PictureProduct, PictureProductService> {
 
     public PictureProductConverter(){
         this.service = new PictureProductService();
