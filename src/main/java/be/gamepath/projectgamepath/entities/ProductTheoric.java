@@ -24,12 +24,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "producttheoric", schema = "gamepath", catalog = "")
 public class ProductTheoric extends EntityGenerique {
-
-    public ProductTheoric(){
-        this.tva = Tva.D_VINGHTETUN;
-        this.multiPlayer = MultyPlayer.A_SINGLE;
-    }
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idProductTheoric", nullable = false)

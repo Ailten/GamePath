@@ -83,7 +83,6 @@
                                      validatorMessage="#{I18N['application.crudProductTheoric.errorTva']}">
                         <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
                                       itemValue="#{null}"
-                                      rendered="#{productTheoricBean.elementCrudSelected.tva == null}"
                                       itemDisabled="true"
                                       noSelectionOption="true"/>
                         <!-- import all enum -->
@@ -105,6 +104,7 @@
                 <p:outputPanel class="panel-input panel-input-without-error">
                     <p:outputLabel for="input-product-price" value="#{I18N['application.crudProductTheoric.labelPrice']}"/>
                     <p:inputNumber id="input-product-price"
+                                   class="#{(productTheoricBean.elementCrudSelected.hasReduction()? 'text-line-through': '')}"
                                    disabled="true"
                                    value="#{productTheoricBean.elementCrudSelected.price}"
                                    decimalPlaces="2"
@@ -120,7 +120,6 @@
                 <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
                     <p:outputLabel for="input-product-reduction" value="#{I18N['application.crudProductTheoric.labelReduction']}"/>
                     <p:inputNumber id="input-product-reduction"
-                                   class="#{(productTheoricBean.elementCrudSelected.hasReduction()? 'text-line-through': '')}"
                                    required="true"
                                    disabled="false"
                                    value="#{productTheoricBean.elementCrudSelected.reduction}"
@@ -131,7 +130,7 @@
                                    symbolPosition="s"
                                    placeholder="#{I18N['application.crudProductTheoric.placeHolderReduction']}"
                                    validatorMessage="#{I18N['application.crudProductTheoric.errorReduction']}">
-                        <p:ajax event="change" update="error-input-product-reduction, input-product-reduction, panel-input-price-reduction"/>
+                        <p:ajax event="change" update="error-input-product-reduction, input-product-reduction, panel-input-price-reduction, input-product-price"/>
                     </p:inputNumber>
                 </p:outputPanel>
                 <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
@@ -183,7 +182,8 @@
                                      validatorMessage="#{I18N['application.crudProductTheoric.errorMultyPlayer']}">
                         <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
                                       itemValue="#{null}"
-                                      rendered="#{productTheoricBean.elementCrudSelected.multiPlayer == null}"/>
+                                      itemDisabled="true"
+                                      noSelectionOption="true"/>
                         <!-- import all enum -->
                         <p:importEnum type="be.gamepath.projectgamepath.enumeration.MultyPlayer"
                                       var="enumImportMultyPlayer"
@@ -218,7 +218,8 @@
                         </f:metadata>
                         <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
                                       itemValue="#{null}"
-                                      rendered="#{productTheoricBean.elementCrudSelected.societyProducer == null}"/>
+                                      itemDisabled="true"
+                                      noSelectionOption="true"/>
                         <f:selectItems value="#{productTheoricBean.allSocietyProducer}"
                                        var="society"
                                        itemLabel="#{society.title}"

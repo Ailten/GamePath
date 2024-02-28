@@ -50,8 +50,11 @@
     margin-bottom: 20px;
 }
 
-.text-line-through {
-    text-decoration:line-through;
+#body #content .text-line-through {
+    text-decoration: line-through;
+}
+#body #content .text-line-through * {
+    text-decoration: line-through;
 }
 
 .hidde {
@@ -62,6 +65,11 @@
     animation-duration: 1s;
 }
 
+ul.ui-selectonemenu-items > li.ui-noselection-option[disabled][data-label="---"],
+table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"]
+{
+    display: none;
+}
 
 /* --- header --- */
 
