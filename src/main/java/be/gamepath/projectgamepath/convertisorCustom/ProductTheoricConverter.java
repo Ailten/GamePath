@@ -2,12 +2,12 @@ package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.entities.ProductTheoric;
 import be.gamepath.projectgamepath.service.ProductTheoricService;
-import be.gamepath.projectgamepath.utility.ConvertorGeneric;
+import be.gamepath.projectgamepath.utility.ConverterGeneric;
 
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter("ProductTheoricConverter")
-public class ProductTheoricConverter extends ConvertorGeneric<ProductTheoric, ProductTheoricService> {
+public class ProductTheoricConverter extends ConverterGeneric<ProductTheoric, ProductTheoricService> {
 
     public ProductTheoricConverter(){
         this.service = new ProductTheoricService();

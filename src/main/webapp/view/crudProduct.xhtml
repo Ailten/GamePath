@@ -30,25 +30,257 @@
             <!-- form crud product -->
             <h:form id="form-crud-product" class="form-crud">
 
+
+                <!-- ______ start form crud ______ -->
+
+
                 <!-- input String title -->
                 <p:outputPanel class="panel-input">
                     <p:outputLabel for="input-product-title" value="#{I18N['application.crudProductTheoric.labelTitle']}"/>
                     <p:inputText id="input-product-title"
                                  required="true"
-                                 disabled="#{productTheoricBean.isModeSelected('readListe')}"
-                                 rendered="true"
+                                 disabled="#{productTheoricBean.isModeSelected('read')}"
                                  value="#{productTheoricBean.elementCrudSelected.title}"
                                  placeholder="#{I18N['application.crudProductTheoric.placeHolderTitle']}"
                                  validatorMessage="#{I18N['application.crudProductTheoric.errorTitle']}">
-                        <p:ajax event="change" update="error-input-product-title"/>
+                        <p:ajax event="change" update="error-input-product-title, input-product-title"/>
                     </p:inputText>
                 </p:outputPanel>
                 <p:outputPanel class="panel-input">
                     <p:message id="error-input-product-title" for="input-product-title"/>
                 </p:outputPanel>
 
-                <!-- button submit form -->
+                <!-- input float priceHtva -->
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
+                    <p:outputLabel for="input-product-pricehtva" value="#{I18N['application.crudProductTheoric.labelPriceHtva']}"/>
+                    <p:inputNumber id="input-product-pricehtva"
+                                   required="true"
+                                   disabled="false"
+                                   value="#{productTheoricBean.elementCrudSelected.priceHtva}"
+                                   minValue="0"
+                                   decimalPlaces="2"
+                                   decimalSeparator="#{I18N['application.crudPage.decimalSeparator']}"
+                                   thousandSeparator="'"
+                                   symbol="€"
+                                   symbolPosition="s"
+                                   placeholder="#{I18N['application.crudProductTheoric.placeHolderPriceHtva']}"
+                                   validatorMessage="#{I18N['application.crudProductTheoric.errorPriceHtva']}">
+                       <p:ajax event="change" update="error-input-product-pricehtva, input-product-price, input-product-pricehtva, panel-input-price-reduction"/>
+                    </p:inputNumber>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
+                    <p:message id="error-input-product-pricehtva" for="input-product-pricehtva"/>
+                </p:outputPanel>
+
+                <!-- input enum tva -->
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
+                    <p:outputLabel for="input-product-tva" value="#{I18N['application.crudProductTheoric.labelTva']}"/>
+                    <p:selectOneMenu id="input-product-tva"
+                                     required="true"
+                                     disabled="false"
+                                     value="#{productTheoricBean.elementCrudSelected.tva}"
+                                     converter="TvaConverter"
+                                     validatorMessage="#{I18N['application.crudProductTheoric.errorTva']}">
+                        <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
+                                      itemValue="#{null}"
+                                      rendered="#{productTheoricBean.elementCrudSelected.tva == null}"
+                                      itemDisabled="true"
+                                      noSelectionOption="true"/>
+                        <!-- import all enum -->
+                        <p:importEnum type="be.gamepath.projectgamepath.enumeration.Tva"
+                                      var="enumImportTva"
+                                      allSuffix="getAll"/>
+                        <f:selectItems value="#{enumImportTva.getAll}"
+                                       var="tva"
+                                       itemLabel="#{tva.getTxtValue()}"
+                                       itemValue="#{tva}"/>
+                        <p:ajax event="change" update="error-input-product-tva, input-product-price, input-product-tva, panel-input-price-reduction"/>
+                    </p:selectOneMenu>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
+                    <p:message id="error-input-product-tva" for="input-product-tva"/>
+                </p:outputPanel>
+
+                <!-- input float price (with tva) -->
+                <p:outputPanel class="panel-input panel-input-without-error">
+                    <p:outputLabel for="input-product-price" value="#{I18N['application.crudProductTheoric.labelPrice']}"/>
+                    <p:inputNumber id="input-product-price"
+                                   disabled="true"
+                                   value="#{productTheoricBean.elementCrudSelected.price}"
+                                   decimalPlaces="2"
+                                   decimalSeparator="#{I18N['application.crudPage.decimalSeparator']}"
+                                   thousandSeparator="'"
+                                   symbol="€"
+                                   symbolPosition="s"
+                                   placeholder="#{I18N['application.crudPage.emptyValuePlaceHolder']}">
+                    </p:inputNumber>
+                </p:outputPanel>
+
+                <!-- input int reduction -->
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
+                    <p:outputLabel for="input-product-reduction" value="#{I18N['application.crudProductTheoric.labelReduction']}"/>
+                    <p:inputNumber id="input-product-reduction"
+                                   class="#{(productTheoricBean.elementCrudSelected.hasReduction()? 'text-line-through': '')}"
+                                   required="true"
+                                   disabled="false"
+                                   value="#{productTheoricBean.elementCrudSelected.reduction}"
+                                   minValue="0"
+                                   maxValue="90"
+                                   decimalPlaces="0"
+                                   symbol="%"
+                                   symbolPosition="s"
+                                   placeholder="#{I18N['application.crudProductTheoric.placeHolderReduction']}"
+                                   validatorMessage="#{I18N['application.crudProductTheoric.errorReduction']}">
+                        <p:ajax event="change" update="error-input-product-reduction, input-product-reduction, panel-input-price-reduction"/>
+                    </p:inputNumber>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
+                    <p:message id="error-input-product-reduction" for="input-product-reduction"/>
+                </p:outputPanel>
+
+                <!-- input float price (with tva and reduction) -->
+                <p:outputPanel class="panel-input panel-input-without-error #{(productTheoricBean.elementCrudSelected.hasReduction()? '': 'hidde')}" id="panel-input-price-reduction">
+                    <!-- rendered="#{productTheoricBean.isModeSelected('read') and productTheoricBean.elementCrudSelected.hasReduction()}" -->
+                    <p:outputLabel for="input-product-pricewithreduction" value="#{I18N['application.crudProductTheoric.labelPriceWithReduction']}"/>
+                    <p:inputNumber id="input-product-pricewithreduction"
+                                   disabled="true"
+                                   value="#{productTheoricBean.elementCrudSelected.priceWithReduction}"
+                                   decimalPlaces="2"
+                                   decimalSeparator="#{I18N['application.crudPage.decimalSeparator']}"
+                                   thousandSeparator="'"
+                                   symbol="€"
+                                   symbolPosition="s"
+                                   placeholder="#{I18N['application.crudPage.emptyValuePlaceHolder']}">
+                    </p:inputNumber>
+                </p:outputPanel>
+
+                <p:separator/>
+
+                <!-- input Date release -->
                 <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-product-release" value="#{I18N['application.crudProductTheoric.labelRelease']}"/>
+                    <p:datePicker id="input-product-release"
+                                  required="true"
+                                  disabled="#{productTheoricBean.isModeSelected('read')}"
+                                  value="#{productTheoricBean.elementCrudSelected.releaseDate}"
+                                  pattern="#{I18N['application.crudPage.patternDate']}"
+                                  validatorMessage="#{I18N['application.crudProductTheoric.errorRelease']}">
+                        <p:ajax event="change" update="error-input-product-release, input-product-release"/>
+                    </p:datePicker>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-release" for="input-product-release"/>
+                </p:outputPanel>
+
+                <!-- input enum multyplayer -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-product-multyplayer"
+                                   value="#{I18N['application.crudProductTheoric.labelMultyPlayer']}"/>
+                    <p:selectOneMenu id="input-product-multyplayer"
+                                     required="true"
+                                     disabled="#{productTheoricBean.isModeSelected('read')}"
+                                     value="#{productTheoricBean.elementCrudSelected.multiPlayer}"
+                                     converter="MultyPlayerConverter"
+                                     validatorMessage="#{I18N['application.crudProductTheoric.errorMultyPlayer']}">
+                        <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
+                                      itemValue="#{null}"
+                                      rendered="#{productTheoricBean.elementCrudSelected.multiPlayer == null}"/>
+                        <!-- import all enum -->
+                        <p:importEnum type="be.gamepath.projectgamepath.enumeration.MultyPlayer"
+                                      var="enumImportMultyPlayer"
+                                      allSuffix="getAll"/>
+                        <f:selectItems value="#{enumImportMultyPlayer.getAll}"
+                                       var="multiPlayer"
+                                       itemLabel="#{multiPlayer.getTxtValue()}"
+                                       itemValue="#{multiPlayer}"/>
+                        <p:ajax event="change" update="error-input-product-multyplayer, input-product-multyplayer"/>
+                    </p:selectOneMenu>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-multyplayer" for="input-product-multyplayer"/>
+                </p:outputPanel>
+
+                <!-- input Entity society (combo box) -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-product-society" value="#{I18N['application.crudProductTheoric.labelSociety']}"/>
+                    <p:selectOneMenu id="input-product-society"
+                                     required="true"
+                                     disabled="#{productTheoricBean.isModeSelected('read')}"
+                                     value="#{productTheoricBean.elementCrudSelected.societyProducer}"
+                                     converter="SocietyProducerConverter"
+                                     effect="fade"
+                                     var="s"
+                                     filter="true"
+                                     filterMatchMode="startsWith"
+                                     validatorMessage="#{I18N['application.crudProductTheoric.errorSociety']}">
+                        <!-- reload list entity from db. -->
+                        <f:metadata>
+                            <f:event type="preRenderView" listener="#{productTheoricBean.initAllSocietyProducer()}"/>
+                        </f:metadata>
+                        <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
+                                      itemValue="#{null}"
+                                      rendered="#{productTheoricBean.elementCrudSelected.societyProducer == null}"/>
+                        <f:selectItems value="#{productTheoricBean.allSocietyProducer}"
+                                       var="society"
+                                       itemLabel="#{society.title}"
+                                       itemValue="#{society}"/>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{I18N['application.crudPage.headerComboBox']}"/>
+                            </f:facet>
+                            <h:outputText value="#{s.title}"/>
+                        </p:column>
+                        <p:ajax event="change" update="error-input-product-society, input-product-society"/>
+                    </p:selectOneMenu>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-society" for="input-product-society"/>
+                </p:outputPanel>
+
+                <!-- input String description (text area) -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-product-description" value="#{I18N['application.crudProductTheoric.labelDescription']}"/>
+                    <p:inputTextarea id="input-product-description"
+                                     required="true"
+                                     disabled="#{productTheoricBean.isModeSelected('read')}"
+                                     value="#{productTheoricBean.elementCrudSelected.description}"
+                                     rows="6"
+                                     cols="33"
+                                     maxlength="255"
+                                     placeholder="#{I18N['application.crudProductTheoric.placeHolderDescription']}"
+                                     validatorMessage="#{I18N['application.crudProductTheoric.errorDescription']}">
+                        <p:ajax event="change" update="error-input-product-description, input-product-description"/>
+                    </p:inputTextarea>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-description" for="input-product-description"/>
+                </p:outputPanel>
+
+                <!-- input boolean active -->
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('read')}">
+                    <p:outputLabel for="input-product-active" value="#{I18N['application.crudPage.labelActive']}"/>
+                    <p:selectBooleanCheckbox id="input-product-active"
+                                             disabled="#{productTheoricBean.isModeSelected('read')}"
+                                             value="#{productTheoricBean.elementCrudSelected.isActive}"/>
+                </p:outputPanel><!--
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-active" for="input-product-active"/>
+                </p:outputPanel>-->
+
+
+                <!-- ______ end form crud ______ -->
+
+
+                <!-- button submit form -->
+                <p:outputPanel class="panel-input panel-submit-crud">
+                    <p:commandButton value="#{I18N['application.crudPage.buttonBackLastPage']}"
+                                     rendered="true"
+                                     ajax="false"
+                                     validateClient="false"
+                                     immediate="true"
+                                     class="ui-button-secondary"
+                                     action="#{historicalBean.backLastPageHistoric()}"/>
+
                     <p:commandButton value="#{I18N['application.crudPage.buttonCreateSubmit']}"
                                      rendered="#{productTheoricBean.isModeSelected('create')}"
                                      ajax="false"

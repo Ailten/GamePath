@@ -1,15 +1,14 @@
 package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.enumeration.MultyPlayer;
-import be.gamepath.projectgamepath.enumeration.Tva;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter("MultyPlayerConvertor")
-public class MultyPlayerConvertor implements Converter {
+@FacesConverter("MultyPlayerConverter")
+public class MultyPlayerConverter implements Converter {
 
     //static cast from string to object.
     @Override

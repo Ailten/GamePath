@@ -18,7 +18,7 @@
                 <!-- execute methode in loading page. -->
                 <f:event type="preRenderView" listener="#{i18nBean.loadLanguagePage}"/>
                 <!-- save historic -->
-                <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/crudProduct')}"/>
+                <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric(connectionBean.pathHomePage)}"/>
             </f:metadata>
 
             <!-- title page -->

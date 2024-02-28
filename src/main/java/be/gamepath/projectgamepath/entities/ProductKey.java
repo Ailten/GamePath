@@ -4,10 +4,7 @@ import be.gamepath.projectgamepath.enumeration.Tva;
 import be.gamepath.projectgamepath.utility.EntityGenerique;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -33,12 +30,13 @@ public class ProductKey extends EntityGenerique {
     @JoinColumn(name = "idProductTheoric", nullable = false)
     private ProductTheoric productTheoric;
     @NotNull
-    @Pattern(regexp = "^[0-9]{255}$") //TODO: set a valide regex.
+    @Size(min = 3, max = 255)
+    @Pattern(regexp = "^[0-9]{3,255}$") //TODO: set a valide regex.
     @Column(name = "key", nullable = false, length = 255)
     private String key;
 
     @NotNull
-    @Min(1)
+    @Min(0)
     @Column(name = "currentPriceHTVA", nullable = false)
     private float currentPriceHtva;
     @NotNull

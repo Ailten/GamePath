@@ -14,6 +14,13 @@ public class CrudManaging<TEntity> {
 
     public Crud getModeSelected() { return this.modeSelected; }
     public void setModeSelected(Crud mode) { this.modeSelected = mode; }
+    public boolean isModeSelected(String... modesAskStr){
+        for(String modeAskStr: modesAskStr){
+            if(this.isModeSelected(modeAskStr))
+                return true;
+        }
+        return false;
+    }
     public boolean isModeSelected(String modeAskStr){
         return this.isModeSelected(Crud.getFromStr(modeAskStr));
     }

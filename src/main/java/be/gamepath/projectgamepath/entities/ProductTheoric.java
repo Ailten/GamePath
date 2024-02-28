@@ -3,13 +3,12 @@ package be.gamepath.projectgamepath.entities;
 import be.gamepath.projectgamepath.enumeration.MultyPlayer;
 import be.gamepath.projectgamepath.enumeration.Tva;
 import be.gamepath.projectgamepath.utility.EntityGenerique;
+import be.gamepath.projectgamepath.utility.Utility;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import java.sql.Date;
+import javax.validation.constraints.*;
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -25,6 +24,12 @@ import java.util.Objects;
 @Entity
 @Table(name = "producttheoric", schema = "gamepath", catalog = "")
 public class ProductTheoric extends EntityGenerique {
+
+    public ProductTheoric(){
+        this.tva = Tva.D_VINGHTETUN;
+        this.multiPlayer = MultyPlayer.A_SINGLE;
+    }
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idProductTheoric", nullable = false)
@@ -35,11 +40,12 @@ public class ProductTheoric extends EntityGenerique {
     private SocietyProducer societyProducer;
 
     @NotNull
+    @Size(min = 3, max = 60) //message="I18N[application.crudPage.errorStringSize60]"
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
     @Column(name = "title", nullable = false, length = 60)
     private String title;
     @NotNull
-    @Min(1)
+    @Min(0)
     @Column(name = "priceHTVA", nullable = false)
     private float priceHtva;
     @NotNull
@@ -57,9 +63,10 @@ public class ProductTheoric extends EntityGenerique {
     private MultyPlayer multiPlayer;
     @NotNull
     @Column(name = "releaseDate", nullable = false)
-    private Date releaseDate;
+    private LocalDateTime releaseDate;
     @NotNull
-    //@Pattern(regexp = "^[a-zA-Z0-9 çéâêîôûàèìòùëïü!?.,-]{3,60}$")
+    @Size(min = 3, max = 255)
+    //@Pattern(regexp = "^[a-zA-Z0-9 çéâêîôûàèìòùëïü!?.,-]{3,255}$")
     @Column(name = "description", nullable = false, length = 255)
     private String description;
 
@@ -123,11 +130,13 @@ public class ProductTheoric extends EntityGenerique {
     }
 
     public Date getReleaseDate() {
-        return releaseDate;
+        if(this.releaseDate == null)
+            return null;
+        return Utility.castLocalDateTimeToDate(this.releaseDate);
     }
 
     public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
+        this.releaseDate = Utility.castDateToLocalDateTime(releaseDate);
     }
 
     public String getDescription() {
@@ -159,5 +168,20 @@ public class ProductTheoric extends EntityGenerique {
     @Override
     public int hashCode() {
         return Objects.hash(id, societyProducer, title, priceHtva, tva, reduction, multiPlayer, releaseDate, description, isActive);
+    }
+
+
+    public float getPrice(){
+        if(this.tva == null)
+            return this.priceHtva;
+        return this.priceHtva + this.tva.evalTva(this.priceHtva);
+    }
+
+    public boolean hasReduction(){
+        return this.reduction != 0;
+    }
+
+    public float getPriceWithReduction(){
+        return this.getPrice() * (1 - ((float)this.reduction)/100);
     }
 }

@@ -39,4 +39,10 @@ public enum Tva {
                 .findFirst()
                 .orElse(null);
     }
+
+    //eval tva based on a priceHtva send.
+    public float evalTva(float priceHtva){
+        return priceHtva * (((float)this.getNumValue()) / 100);
+    }
+
 }

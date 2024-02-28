@@ -3,6 +3,10 @@ package be.gamepath.projectgamepath.utility;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import javax.faces.context.FacesContext;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -47,6 +51,24 @@ public class Utility {
         FacesContext context = FacesContext.getCurrentInstance();
         ResourceBundle text = ResourceBundle.getBundle("language.messages", context.getViewRoot().getLocale());
         return text.getString(keyOfString);
+    }
+
+
+    /**
+     * function to convert a localdatetime to a date.
+     * @param localDateTime
+     * @return
+     */
+    public static Date castLocalDateTimeToDate(LocalDateTime localDateTime){
+        return Date.from(localDateTime.toInstant(ZoneOffset.UTC));
+    }
+
+    /**
+     * function to vonvert a date to a localdatetime
+     */
+    public static LocalDateTime castDateToLocalDateTime(Date dateConvert)
+    {
+        return LocalDateTime.ofInstant(dateConvert.toInstant(), ZoneId.systemDefault());
     }
 
 }

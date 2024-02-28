@@ -6,6 +6,7 @@ import be.gamepath.projectgamepath.utility.EntityGenerique;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
@@ -37,21 +38,26 @@ public class User extends EntityGenerique {
     @JoinColumn(name = "idRole", nullable = false)
     private Role role;
     @NotNull
+    @Size(min = 3, max = 255)
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") //source : https://regexr.com/3e48o
     @Column(name = "email", nullable = false, length = 255)
     private String email;
     @NotNull
+    @Size(max = 255)
     @Column(name = "password", nullable = false, length = 255)
     private String password;
     @NotNull
+    @Size(min = 3, max = 60)
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
     @Column(name = "lastName", nullable = false, length = 60)
     private String lastName;
     @NotNull
+    @Size(min = 3, max = 60)
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
     @Column(name = "firstName", nullable = false, length = 60)
     private String firstName;
     @NotNull
+    @Size(max = 45)
     //@Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$") //source : https://ihateregex.io/expr/phone/
     @Pattern(regexp = "^[+][0-9]{1,4}[ ]{1}[0-9]{2,4}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}[ ]{1}[0-9]{2}$")
     @Column(name = "phone", nullable = false, length = 45)

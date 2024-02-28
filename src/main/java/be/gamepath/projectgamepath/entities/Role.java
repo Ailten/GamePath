@@ -5,6 +5,7 @@ import be.gamepath.projectgamepath.utility.EntityGenerique;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -23,6 +24,7 @@ public class Role extends EntityGenerique {
     private int id;
 
     @NotNull
+    @Size(min = 3, max = 60)
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
     @Column(name = "title", nullable = false, length = 60)
     private String title;

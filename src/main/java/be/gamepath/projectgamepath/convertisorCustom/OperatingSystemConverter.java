@@ -2,12 +2,12 @@ package be.gamepath.projectgamepath.convertisorCustom;
 
 import be.gamepath.projectgamepath.entities.OperatingSystem;
 import be.gamepath.projectgamepath.service.OperatingSystemService;
-import be.gamepath.projectgamepath.utility.ConvertorGeneric;
+import be.gamepath.projectgamepath.utility.ConverterGeneric;
 
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter("OperatingSystemConverter")
-public class OperatingSystemConverter extends ConvertorGeneric<OperatingSystem, OperatingSystemService> {
+public class OperatingSystemConverter extends ConverterGeneric<OperatingSystem, OperatingSystemService> {
 
     public OperatingSystemConverter(){
         this.service = new OperatingSystemService();

@@ -5,6 +5,7 @@ import be.gamepath.projectgamepath.utility.EntityGenerique;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -26,6 +27,7 @@ public class PictureProduct extends EntityGenerique {
     @JoinColumn(name = "idProductTheoric", nullable = false)
     private ProductTheoric productTheoric;
     @NotNull
+    @Size(min = 3, max = 255)
     @Pattern(regexp = "^http://") //canvas : http://localhost/imageFolderLocalHost/******.png
     @Column(name = "urlImage", nullable = false, length = 255)
     private String urlImage;

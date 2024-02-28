@@ -25,7 +25,7 @@ public class ConnectionBean implements Serializable {
     PopUpMessageBean popUpMessageBean;
 
     private static String pathHomePage = "/accueil";
-    public static String getPathHomePage() { return pathHomePage; }
+    public String getPathHomePage() { return pathHomePage; }
 
     //user connected.
     private User user;

@@ -27,9 +27,9 @@
 
 #header .ui-button-info, /* button in header */
 #header form span .ui-button, /* button language in header */
-#content #content-form-body-center .ui-button, /* button in crud */
-#content .content-form-body-center input.ui-inputfield, /* input in crud */
-#content .content-form-body-center span.ui-message-error-detail /* error in crud */
+#content .content-form-body-center .ui-button, /* button in crud */
+#content .content-form-body-center .ui-inputfield, /* input in crud */
+#content .content-form-body-center .ui-message-error-detail /* error in crud */
 {
     font-size: 1.5rem;
 }
@@ -39,12 +39,25 @@
     margin: 5px 0 5px 0;
 }
 .panel-input > * {
-    flex-grow: 1;
+    /*flex-grow: 1;*/
+    flex: 1;
 }
 .panel-input label.ui-widget {
     font-size: 1.5rem;
     padding-top: 0.5rem;
 }
+.panel-input-without-error {
+    margin-bottom: 20px;
+}
+
+.text-line-through {
+    text-decoration:line-through;
+}
+
+.hidde {
+    display: none;
+}
+
 
 /* --- header --- */
 
@@ -86,7 +99,8 @@
 }
 
 .ui-growl[id="form-pop-up-message:pop-up-message_container"] {
-    top: 10px;
+    /*top: 10px;*/
+    top: 209px;
     right: 10px;
     font-size: 1.2rem;
 }
@@ -99,10 +113,29 @@
 
 #content .content-form-body-center {
     width: 60%;
-    margin: 0 auto 0 auto;
+    margin: 20px auto 20px auto;
 }
 #content .content-table-body-center {
     text-align: center;
+}
+
+#content .panel-submit-crud {
+    margin-top: 25px;
+}
+#content .panel-submit-crud > button{
+    margin: 0 10px 0 10px;
+}
+
+#content .content-form-body-center .panel-input .p-datepicker > input,
+#content .content-form-body-center .panel-input .ui-inputnumber > input
+{
+    width: 100%;
+}
+
+#content .content-form-body-center .panel-input .ui-selectbooleancheckbox > .ui-chkbox-box {
+    margin-left: auto;
+    width: 33px;
+    height: 33px;
 }
 
 /* --- accueil --- */

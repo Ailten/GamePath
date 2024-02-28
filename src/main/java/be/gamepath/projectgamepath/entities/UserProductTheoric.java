@@ -5,6 +5,7 @@ import be.gamepath.projectgamepath.utility.EntityGenerique;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -34,7 +35,8 @@ public class UserProductTheoric extends EntityGenerique {
     @Column(name = "unlockDate", nullable = false)
     private Timestamp unlockDate;
     @NotNull
-    @Pattern(regexp = "^[0-9]{255}$") //TODO: set a valide regex.
+    @Size(min = 3, max = 255)
+    @Pattern(regexp = "^[0-9]{3,255}$") //TODO: set a valide regex.
     @Column(name = "keyUsed", nullable = false, length = 255)
     private String keyUsed;
 
