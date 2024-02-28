@@ -139,8 +139,7 @@
                 </p:outputPanel>
 
                 <!-- input float price (with tva and reduction) -->
-                <p:outputPanel class="panel-input panel-input-without-error #{(productTheoricBean.elementCrudSelected.hasReduction()? '': 'hidde')}" id="panel-input-price-reduction">
-                    <!-- rendered="#{productTheoricBean.isModeSelected('read') and productTheoricBean.elementCrudSelected.hasReduction()}" -->
+                <p:outputPanel class="panel-input panel-input-without-error #{(productTheoricBean.elementCrudSelected.hasReduction()? 'show-input-line': 'hidde')}" id="panel-input-price-reduction">
                     <p:outputLabel for="input-product-pricewithreduction" value="#{I18N['application.crudProductTheoric.labelPriceWithReduction']}"/>
                     <p:inputNumber id="input-product-pricewithreduction"
                                    disabled="true"
@@ -262,10 +261,7 @@
                     <p:selectBooleanCheckbox id="input-product-active"
                                              disabled="#{productTheoricBean.isModeSelected('read')}"
                                              value="#{productTheoricBean.elementCrudSelected.isActive}"/>
-                </p:outputPanel><!--
-                <p:outputPanel class="panel-input">
-                    <p:message id="error-input-product-active" for="input-product-active"/>
-                </p:outputPanel>-->
+                </p:outputPanel>
 
 
                 <!-- ______ end form crud ______ -->

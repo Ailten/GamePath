@@ -57,6 +57,10 @@
 .hidde {
     display: none;
 }
+.show-input-line {
+    animation-name: show-input-line;
+    animation-duration: 1s;
+}
 
 
 /* --- header --- */
@@ -195,5 +199,19 @@
 
     #content .content-form-body-center {
         width: 90%;
+    }
+}
+
+/* --- animation --- */
+@keyframes show-input-line {
+    0% {
+        /*transform: scale(1, 0);*/
+        margin-top: -53px;
+        opacity: 0;
+    }
+    100% {
+        /*transform: scale(1, 1);*/
+        margin-top: 5px;
+        opacity: 1;
     }
 }
