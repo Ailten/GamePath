@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.utility.EntityGenerique;
+import be.gamepath.projectgamepath.utility.FileManaging;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,10 @@ import java.util.Objects;
                         "where (os.id = :id)"),
         @NamedQuery(name= "OperatingSystem.SelectMany",
                 query = "select os from OperatingSystem os "),
+        @NamedQuery(name= "OperatingSystem.SelectManyByIdProduct",
+                query = "select os from ProductTheoricOperatingSystem ptos " +
+                        "join Category os on (ptos.operatingSystem.id = os.id) " +
+                        "where (ptos.productTheoric.id = :idProductTheoric)"),
 })
 @Entity
 @Table(name = "operatingsystem", schema = "gamepath", catalog = "")
@@ -70,5 +75,13 @@ public class OperatingSystem extends EntityGenerique {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, urlImage);
+    }
+
+
+    //function for get full url of image in server.
+    public String getUrlImageToDraw(){
+        if(this.getUrlImage() == null)
+            return FileManaging.getDefaultUrlForApply();
+        return FileManaging.getUrlForApply(this.getUrlImage(), "operatingSystem");
     }
 }

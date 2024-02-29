@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.utility.EntityGenerique;
+import be.gamepath.projectgamepath.utility.FileManaging;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,9 @@ import java.util.Objects;
                         "where (pp.id = :id)"),
         @NamedQuery(name= "PictureProduct.SelectMany",
                 query = "select pp from PictureProduct pp "),
+        @NamedQuery(name= "PictureProduct.SelectManyByIdProduct",
+                query = "select pp from PictureProduct pp " +
+                        "where (pp.productTheoric.id = :idProductTheoric)"),
 })
 @Entity
 @Table(name = "pictureproduct", schema = "gamepath", catalog = "")
@@ -69,5 +73,13 @@ public class PictureProduct extends EntityGenerique {
     @Override
     public int hashCode() {
         return Objects.hash(id, productTheoric, urlImage);
+    }
+
+
+    //function for get full url of image in server.
+    public String getUrlImageToDraw(){
+        if(this.getUrlImage() == null)
+            return FileManaging.getDefaultUrlForApply();
+        return FileManaging.getUrlForApply(this.getUrlImage(), "pictureProduct");
     }
 }

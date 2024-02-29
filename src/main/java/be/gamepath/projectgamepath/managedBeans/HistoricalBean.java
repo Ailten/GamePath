@@ -1,5 +1,7 @@
 package be.gamepath.projectgamepath.managedBeans;
 
+import org.primefaces.PrimeFaces;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -19,6 +21,7 @@ public class HistoricalBean implements Serializable {
     }
 
     public void saveNewPageHistoric(String url){
+        PrimeFaces.current().executeScript("eventLoadPage(\'"+url+"\')");
         if(url.equals(historic[index%historic.length]))
             return;
         historic[(++index)%historic.length]=url;
@@ -27,6 +30,8 @@ public class HistoricalBean implements Serializable {
     public String backLastPageHistoric(){
         return historic[(--index)%historic.length];
     }
+
+    public String currentPage() { return historic[(index)%historic.length]; }
 
 
 }

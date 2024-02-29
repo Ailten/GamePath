@@ -35,4 +35,10 @@ public class PermissionService extends ServiceGeneric<Permission> {
     }
 
 
+    public List<Permission> selectManyByIdRole(EntityManager em, int idRole){
+        return em.createNamedQuery("Permission.SelectManyByIdRole", Permission.class)
+                .setParameter("idRole", idRole)
+                .getResultList();
+    }
+
 }

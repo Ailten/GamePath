@@ -14,6 +14,10 @@ import java.util.Objects;
                         "where (p.id = :id)"),
         @NamedQuery(name= "Permission.SelectMany",
                 query = "select p from Permission p "),
+        @NamedQuery(name= "Permission.SelectManyByIdRole",
+                query = "select p from RolePermission rp " +
+                        "join Permission p on (rp.permission.id = p.id) " +
+                        "where (rp.role.id = :idRole)"),
 })
 @Entity
 @Table(name = "permission", schema = "gamepath", catalog = "")

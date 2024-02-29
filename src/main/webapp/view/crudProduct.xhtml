@@ -5,7 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
     <ui:define name="title">
         #{I18N['application.header.title']}
@@ -152,7 +152,152 @@
                     </p:inputNumber>
                 </p:outputPanel>
 
+                <!-- separator -->
                 <p:separator/>
+
+                <!-- input Object category -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-product-category" value="#{I18N['application.crudProductTheoric.labelCategory']}"/>
+                    <p:selectCheckboxMenu id="input-product-category"
+                                          disabled="#{productTheoricBean.isModeSelected('read')}"
+                                          value="#{productTheoricBean.elementCrudSelected.listCategory}"
+                                          converter="CategoryConverter"
+                                          filter="true"
+                                          filterMatchMode="startsWith"
+                                          multiple="true"
+                                          class="check-box-menu-on-focus"
+                                          validatorMessage="#{I18N['application.crudProductTheoric.errorCategory']}">
+                        <!-- reload list entity from db. -->
+                        <f:metadata>
+                            <f:event type="preRenderView" listener="#{categoryBean.initAllCategory()}"/>
+                        </f:metadata>
+                        <f:selectItems value="#{categoryBean.allCategory}"
+                                       var="cateogry"
+                                       itemLabel="#{cateogry.title}"
+                                       itemValue="#{cateogry}"/>
+                        <p:ajax event="change" update="error-input-product-category, input-product-category"/>
+                    </p:selectCheckboxMenu>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-category" for="input-product-category"/>
+                </p:outputPanel>
+
+                <!-- input Object pegi -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-product-pegi" value="#{I18N['application.crudProductTheoric.labelPegi']}"/>
+                    <p:selectCheckboxMenu id="input-product-pegi"
+                                          disabled="#{productTheoricBean.isModeSelected('read')}"
+                                          value="#{productTheoricBean.elementCrudSelected.listPegi}"
+                                          converter="PegiConverter"
+                                          filter="true"
+                                          filterMatchMode="startsWith"
+                                          multiple="true"
+                                          class="check-box-menu-on-focus"
+                                          validatorMessage="#{I18N['application.crudProductTheoric.errorPegi']}">
+                        <!-- reload list entity from db. -->
+                        <f:metadata>
+                            <f:event type="preRenderView" listener="#{pegiBean.initAllPegi()}"/>
+                        </f:metadata>
+                        <f:selectItems value="#{pegiBean.allPegi}"
+                                       var="pegi"
+                                       itemLabel="#{pegi.title}"
+                                       itemValue="#{pegi}"/>
+                    </p:selectCheckboxMenu>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-pegi" for="input-product-pegi"/>
+                </p:outputPanel>
+
+                <!-- input Object operatingsystem -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-product-operatingsystem" value="#{I18N['application.crudProductTheoric.labelOperatingSystem']}"/>
+                    <p:selectCheckboxMenu id="input-product-operatingsystem"
+                                          disabled="#{productTheoricBean.isModeSelected('read')}"
+                                          value="#{productTheoricBean.elementCrudSelected.listOperatingSystem}"
+                                          converter="OperatingSystemConverter"
+                                          filter="true"
+                                          filterMatchMode="startsWith"
+                                          multiple="true"
+                                          class="check-box-menu-on-focus"
+                                          validatorMessage="#{I18N['application.crudProductTheoric.errorOperatingSystem']}">
+                        <!-- reload list entity from db. -->
+                        <f:metadata>
+                            <f:event type="preRenderView" listener="#{operatingSystemBean.initAllOperatingSystem()}"/>
+                        </f:metadata>
+                        <f:selectItems value="#{operatingSystemBean.allOperatingSystem}"
+                                       var="operatingSystem"
+                                       itemLabel="#{operatingSystem.title}"
+                                       itemValue="#{operatingSystem}"/>
+                        <p:ajax event="change" update="error-input-product-operatingsystem, input-product-operatingsystem"/>
+                    </p:selectCheckboxMenu>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-operatingsystem" for="input-product-operatingsystem"/>
+                </p:outputPanel>
+
+                <!-- input Object language -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-product-language" value="#{I18N['application.crudProductTheoric.labelLanguage']}"/>
+                    <p:selectCheckboxMenu id="input-product-language"
+                                          disabled="#{productTheoricBean.isModeSelected('read')}"
+                                          value="#{productTheoricBean.elementCrudSelected.listLanguage}"
+                                          converter="LanguageConverter"
+                                          filter="true"
+                                          filterMatchMode="startsWith"
+                                          multiple="true"
+                                          class="check-box-menu-on-focus"
+                                          validatorMessage="#{I18N['application.crudProductTheoric.errorLanguage']}">
+                        <!-- reload list entity from db. -->
+                        <f:metadata>
+                            <f:event type="preRenderView" listener="#{languageBean.initAllLanguage()}"/>
+                        </f:metadata>
+                        <f:selectItems value="#{languageBean.allLanguage}"
+                                       var="language"
+                                       itemLabel="#{language.title}"
+                                       itemValue="#{language}"/>
+                        <p:ajax event="change" update="error-input-product-language, input-product-language"/>
+                    </p:selectCheckboxMenu>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-product-language" for="input-product-language"/>
+                </p:outputPanel>
+
+                <!-- separator -->
+                <p:separator/>
+
+                <!-- input File image-->
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('update')}">
+                    <p:outputLabel for="input-product-inputfileimage" value="#{I18N['application.crudProductTheoric.labelInputFileImage']}"/>
+                    <p:fileUpload value="#{productTheoricBean.imageFile}"
+                                  mode="advanced"
+                                  listener="#{productTheoricBean.fileUploadListener}"
+                                  auto="true"
+                                  allowTypes="/(\.|\/)(jpe?g|png)$/"
+                                  sizeLimit="102400"
+                                  update="error-input-product-inputfileimage, input-product-inputfileimage, panel-draw-picture"
+                                  invalidSizeMessage="#{I18N['application.crudProductTheoric.errorInputFileImageSize']}"
+                                  invalidFileMessage="#{I18N['application.crudProductTheoric.errorInputFileImageType']}"/>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('update')}">
+                    <p:message id="error-input-product-inputfileimage" for="input-product-inputfileimage"/>
+                </p:outputPanel>
+
+                <!-- draw picture -->
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('read', 'update')}" id="panel-draw-picture">
+                    <ui:repeat value="${productTheoricBean.elementCrudSelected.listPictureProduct}" var="pictureProduct">
+                        <p:outputPanel> <!-- container for one image -->
+                            <h:graphicImage url="#{pictureProduct.urlImageToDraw}"
+                                            alt="#{I18N['application.crudProductTheoric.altImagePicture']}"/> <!-- image draw -->
+                            <p:commandLink action="#{productTheoricBean.deletePictureProduct(pictureProduct)}"
+                                           update="panel-draw-picture"> <!-- button delete image -->
+                                <i class="pi pi-times-circle"/>
+                            </p:commandLink>
+                        </p:outputPanel>
+                    </ui:repeat>
+                </p:outputPanel>
+
+                <!-- separator -->
+                <p:separator rendered="#{productTheoricBean.isModeSelected('read', 'update')}"/>
 
                 <!-- input Date release -->
                 <p:outputPanel class="panel-input">
@@ -211,16 +356,17 @@
                                      var="s"
                                      filter="true"
                                      filterMatchMode="startsWith"
+                                     onfocus="focusOnComboBox(this)"
                                      validatorMessage="#{I18N['application.crudProductTheoric.errorSociety']}">
                         <!-- reload list entity from db. -->
                         <f:metadata>
-                            <f:event type="preRenderView" listener="#{productTheoricBean.initAllSocietyProducer()}"/>
+                            <f:event type="preRenderView" listener="#{societyProducerBean.initAllSocietyProducer()}"/>
                         </f:metadata>
                         <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
                                       itemValue="#{null}"
                                       itemDisabled="true"
                                       noSelectionOption="true"/>
-                        <f:selectItems value="#{productTheoricBean.allSocietyProducer}"
+                        <f:selectItems value="#{societyProducerBean.allSocietyProducer}"
                                        var="society"
                                        itemLabel="#{society.title}"
                                        itemValue="#{society}"/>

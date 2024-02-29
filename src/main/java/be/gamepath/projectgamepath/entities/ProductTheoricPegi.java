@@ -11,6 +11,12 @@ import java.util.Objects;
                         "where (ptp.id = :id)"),
         @NamedQuery(name= "ProductTheoricPegi.SelectMany",
                 query = "select ptp from ProductTheoricPegi ptp "),
+        @NamedQuery(name= "ProductTheoricPegi.SelectByBothId",
+                query = "select ptp from ProductTheoricPegi ptp " +
+                        "where ( " +
+                        "  ptp.productTheoric.id = :idProductTheoric and " +
+                        "  ptp.pegi.id = :idpegi " +
+                        ")"),
 })
 @Entity
 @Table(name = "producttheoricpegi", schema = "gamepath", catalog = "")

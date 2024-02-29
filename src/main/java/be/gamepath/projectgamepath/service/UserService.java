@@ -37,12 +37,6 @@ public class UserService extends ServiceGeneric<User> {
 
 
 
-    public List<RolePermission> selectRolePermissionOfUser(EntityManager em, int idUser){
-        return em.createNamedQuery("User.SelectRolePermissionOfUser", RolePermission.class)
-                .setParameter("idUser", idUser)
-                .getResultList();
-    }
-
     public User selectUserByLogin(EntityManager em, String loginUser){
         return em.createNamedQuery("User.SelectUserByLogin", User.class)
                 .setParameter("loginUser", loginUser)

@@ -1,5 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.entities.Language;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
@@ -34,5 +35,11 @@ public class LanguageService extends ServiceGeneric<Language> {
                 .getResultList();
     }
 
+
+    public List<Language> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
+        return em.createNamedQuery("Language.SelectManyByIdProduct", Language.class)
+                .setParameter("idProductTheoric", idProductTheoric)
+                .getResultList();
+    }
 
 }

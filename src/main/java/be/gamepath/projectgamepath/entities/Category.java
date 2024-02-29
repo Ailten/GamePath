@@ -14,6 +14,10 @@ import java.util.Objects;
                         "where (c.id = :id)"),
         @NamedQuery(name= "Category.SelectMany",
                 query = "select c from Category c "),
+        @NamedQuery(name= "Category.SelectManyByIdProduct",
+                query = "select c from ProductTheoricCategory ptc " +
+                        "join Category c on (ptc.category.id = c.id) " +
+                        "where (ptc.productTheoric.id = :idProductTheoric)"),
 })
 @Entity
 @Table(name = "category", schema = "gamepath", catalog = "")

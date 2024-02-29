@@ -1,11 +1,13 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.managedBeans.RoleBean;
 import be.gamepath.projectgamepath.utility.EntityGenerique;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -58,5 +60,32 @@ public class Role extends EntityGenerique {
     @Override
     public int hashCode() {
         return Objects.hash(id, title);
+    }
+
+
+
+    @Transient
+    private List<Permission> listPermission;
+    public List<Permission> getListPermission() {
+        if (this.listPermission == null)
+            RoleBean.initListPermission(this);
+        return this.listPermission;
+    }
+    public void setListPermission(List<Permission> listPermission) {
+        this.listPermission = listPermission;
+    }
+
+
+    /**
+     * Method to verify role has permission
+     * @param permissionTitle title of a permission ask.
+     * @return true if the role has permission send.
+     */
+    public boolean verifyPermission(String permissionTitle)
+    {
+        return this.getListPermission().stream()
+                .filter(p -> p.getTitle().equals(permissionTitle))
+                .findFirst()
+                .orElse(null) != null;
     }
 }

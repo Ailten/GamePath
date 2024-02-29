@@ -2,6 +2,7 @@ package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.enumeration.MultyPlayer;
 import be.gamepath.projectgamepath.enumeration.Tva;
+import be.gamepath.projectgamepath.managedBeans.ProductTheoricBean;
 import be.gamepath.projectgamepath.utility.EntityGenerique;
 import be.gamepath.projectgamepath.utility.Utility;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -178,4 +180,62 @@ public class ProductTheoric extends EntityGenerique {
     public float getPriceWithReduction(){
         return this.getPrice() * (1 - ((float)this.reduction)/100);
     }
+
+
+
+    @Transient
+    private List<Category> listCategory;
+    public List<Category> getListCategory() {
+        if (this.listCategory == null)
+            ProductTheoricBean.initListCategory(this);
+        return this.listCategory;
+    }
+    public void setListCategory(List<Category> listCategory) {
+        this.listCategory = listCategory;
+    }
+
+    @Transient
+    private List<Pegi> listPegi;
+    public List<Pegi> getListPegi() {
+        if (this.listPegi == null)
+            ProductTheoricBean.initListPegi(this);
+        return this.listPegi;
+    }
+    public void setListPegi(List<Pegi> listPegi) {
+        this.listPegi = listPegi;
+    }
+
+    @Transient
+    private List<OperatingSystem> listOperatingSystem;
+    public List<OperatingSystem> getListOperatingSystem() {
+        if (this.listOperatingSystem == null)
+            ProductTheoricBean.initListOperatingSystem(this);
+        return this.listOperatingSystem;
+    }
+    public void setListOperatingSystem(List<OperatingSystem> listOperatingSystem) {
+        this.listOperatingSystem = listOperatingSystem;
+    }
+
+    @Transient
+    private List<Language> listLanguage;
+    public List<Language> getListLanguage() {
+        if (this.listLanguage == null)
+            ProductTheoricBean.initListLanguage(this);
+        return this.listLanguage;
+    }
+    public void setListLanguage(List<Language> listLanguage) {
+        this.listLanguage = listLanguage;
+    }
+
+    @Transient
+    private List<PictureProduct> listPictureProduct;
+    public List<PictureProduct> getListPictureProduct() {
+        if (this.listPictureProduct == null)
+            ProductTheoricBean.initListPictureProduct(this);
+        return this.listPictureProduct;
+    }
+    public void setListPictureProduct(List<PictureProduct> listPictureProduct) {
+        this.listPictureProduct = listPictureProduct;
+    }
+
 }

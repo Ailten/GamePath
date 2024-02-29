@@ -71,6 +71,12 @@ table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"]
     display: none;
 }
 
+div[id$="_panel"] *, /* panel combo box size text */
+table[id$="_table"] * /* panel combo box table */
+{
+    font-size: 1.3rem;
+}
+
 /* --- header --- */
 
 #header #header-login-block{
@@ -111,8 +117,7 @@ table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"]
 }
 
 .ui-growl[id="form-pop-up-message:pop-up-message_container"] {
-    /*top: 10px;*/
-    top: 209px;
+    top: 10px;
     right: 10px;
     font-size: 1.2rem;
 }
@@ -155,6 +160,13 @@ table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"]
 #content-bg-accueil {
     background-image: url("http://localhost:8080/ProjectGamePath_war_exploded/images/webSiteBase/BackgroundAccueilTeck.jpg");
     background-size: cover;
+    background-position: right;
+}
+
+#content{
+    background-image: url("http://localhost:8080/ProjectGamePath_war_exploded/images/webSiteBase/BackgroundAccueilTeck_20.png");
+    background-size: cover;
+    background-position: right;
 }
 
 #content:has(> #content-bg-accueil) {
@@ -180,6 +192,7 @@ table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"]
 
 #footer .pi.icon-reseau {
     font-size: 3rem;
+    color: #333;
 }
 #footer .pi.icon-reseau:nth-child(n + 2) {
     margin-left: 10px;

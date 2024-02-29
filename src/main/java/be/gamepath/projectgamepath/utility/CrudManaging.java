@@ -24,6 +24,13 @@ public class CrudManaging<TEntity> {
     public boolean isModeSelected(String modeAskStr){
         return this.isModeSelected(Crud.getFromStr(modeAskStr));
     }
+    public boolean isModeSelected(Crud... modesAsk){
+        for(Crud modeAskStr: modesAsk){
+            if(this.isModeSelected(modeAskStr))
+                return true;
+        }
+        return false;
+    }
     public boolean isModeSelected(Crud modeAsk){
         return this.modeSelected == modeAsk;
     }
@@ -64,7 +71,7 @@ public class CrudManaging<TEntity> {
             else if (this.isModeSelected(Crud.UPDATE))
                 success = this.update();
         }catch(Exception e){
-            Utility.debug("error catch : " + e);
+            Utility.debug("error into submitCrudForm : " + e.getMessage());
             success = false;
         }
 

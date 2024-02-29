@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.utility.EntityGenerique;
+import be.gamepath.projectgamepath.utility.FileManaging;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,10 @@ import java.util.Objects;
                         "where (p.id = :id)"),
         @NamedQuery(name= "Pegi.SelectMany",
                 query = "select p from Pegi p "),
+        @NamedQuery(name= "Pegi.SelectManyByIdProduct",
+                query = "select p from ProductTheoricPegi ptp " +
+                        "join Pegi p on (ptp.pegi.id = p.id) " +
+                        "where (ptp.productTheoric.id = :idProductTheoric)"),
 })
 @Entity
 @Table(name = "pegi", schema = "gamepath", catalog = "")
@@ -71,4 +76,13 @@ public class Pegi extends EntityGenerique {
     public int hashCode() {
         return Objects.hash(id, title, urlImage);
     }
+
+
+    //function for get full url of image in server.
+    public String getUrlImageToDraw(){
+        if(this.getUrlImage() == null)
+            return FileManaging.getDefaultUrlForApply();
+        return FileManaging.getUrlForApply(this.getUrlImage(), "pegi");
+    }
+
 }

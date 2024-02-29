@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.utility.EntityGenerique;
+import be.gamepath.projectgamepath.utility.FileManaging;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,10 @@ import java.util.Objects;
                         "where (l.id = :id)"),
         @NamedQuery(name= "Language.SelectMany",
                 query = "select l from Language l "),
+        @NamedQuery(name= "Language.SelectManyByIdProduct",
+                query = "select l from ProductTheoricLanguage ptl " +
+                        "join Language l on (ptl.language.id = l.id) " +
+                        "where (ptl.productTheoric.id = :idProductTheoric)"),
 })
 @Entity
 @Table(name = "language", schema = "gamepath", catalog = "")
@@ -70,5 +75,13 @@ public class Language extends EntityGenerique {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, urlImage);
+    }
+
+
+    //function for get full url of image in server.
+    public String getUrlImageToDraw(){
+        if(this.getUrlImage() == null)
+            return FileManaging.getDefaultUrlForApply();
+        return FileManaging.getUrlForApply(this.getUrlImage(), "language");
     }
 }

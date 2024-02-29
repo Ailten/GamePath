@@ -1,6 +1,9 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.entities.ProductTheoric;
+import be.gamepath.projectgamepath.entities.ProductTheoricCategory;
+import be.gamepath.projectgamepath.entities.RolePermission;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
@@ -47,6 +50,5 @@ public class ProductTheoricService extends ServiceGeneric<ProductTheoric> {
                 .findFirst()
                 .orElse(null);
     }
-
 
 }

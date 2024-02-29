@@ -35,4 +35,11 @@ public class CategoryService extends ServiceGeneric<Category> {
     }
 
 
+    public List<Category> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
+        return em.createNamedQuery("Category.SelectManyByIdProduct", Category.class)
+                .setParameter("idProductTheoric", idProductTheoric)
+                .getResultList();
+    }
+
+
 }

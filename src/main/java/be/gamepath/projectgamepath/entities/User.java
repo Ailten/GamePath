@@ -1,6 +1,5 @@
 package be.gamepath.projectgamepath.entities;
 
-import be.gamepath.projectgamepath.managedBeans.ConnectionBean;
 import be.gamepath.projectgamepath.utility.EntityGenerique;
 
 import javax.persistence.*;
@@ -17,11 +16,6 @@ import java.util.Objects;
                         "where (u.id = :id)"),
         @NamedQuery(name= "User.SelectMany",
                 query = "select u from User u "),
-        @NamedQuery(name= "User.SelectRolePermissionOfUser",
-                query = "select rp from User as u " +
-                        "join Role as r on (u.role.id = r.id) " +
-                        "join RolePermission as rp on (r.id = rp.role.id)" +
-                        "where (u.id = :idUser)"),
         @NamedQuery(name= "User.SelectUserByLogin",
                 query = "select u from User u " +
                         "where (u.email = :loginUser)")
@@ -172,13 +166,9 @@ public class User extends EntityGenerique {
 
 
     @Transient
-    public List<RolePermission> listRolePermission;
-
-    @Transient
-    public List<RolePermission> getListRolePermission() {
-        if (this.listRolePermission == null)
-            ConnectionBean.initListRolePermission(this);
-        return this.listRolePermission;
+    private List<RolePermission> listRolePermission;
+    public void setListRolePermission(List<RolePermission> listRolePermission) {
+        this.listRolePermission = listRolePermission;
     }
 
     /**
@@ -186,13 +176,11 @@ public class User extends EntityGenerique {
      * @param permissionTitle title of a permission ask.
      * @return true if the user has permission send.
      */
-    @Transient
     public boolean verifyPermission(String permissionTitle)
     {
-        return this.getListRolePermission().stream()
-                .filter(rp -> rp.getPermission().getTitle().equals(permissionTitle))
-                .findFirst()
-                .orElse(null) != null;
+        if(this.role == null)
+            return false;
+        return this.role.verifyPermission(permissionTitle);
     }
 
 }

@@ -5,6 +5,7 @@ import org.primefaces.PrimeFaces;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Locale;
@@ -86,14 +87,17 @@ public class I18nBean implements Serializable {
     }
 
 
-    public void changeLanguage(String language, String idForm){
+    @Inject
+    ConnectionBean connectionBean;
+    public void changeLanguage(String language){
         //apply and load new language.
         this.setLanguage(language);
         this.loadLocal();
         this.loadLanguagePage();
 
         //call js function to submit form after execution.
-        PrimeFaces.current().executeScript("submitLanguageForm(\""+idForm+"\")");
+        connectionBean.submitForm("");
+        PrimeFaces.current().executeScript("submitFormById(\"header-language-button-container\")");
     }
 
 }

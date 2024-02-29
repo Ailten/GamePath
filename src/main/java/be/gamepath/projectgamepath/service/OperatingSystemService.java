@@ -1,5 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.entities.OperatingSystem;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
@@ -31,6 +32,13 @@ public class OperatingSystemService extends ServiceGeneric<OperatingSystem> {
     public List<OperatingSystem> selectMany(EntityManager em)
     {
         return em.createNamedQuery("OperatingSystem.SelectMany", OperatingSystem.class)
+                .getResultList();
+    }
+
+
+    public List<OperatingSystem> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
+        return em.createNamedQuery("OperatingSystem.SelectManyByIdProduct", OperatingSystem.class)
+                .setParameter("idProductTheoric", idProductTheoric)
                 .getResultList();
     }
 

@@ -54,8 +54,8 @@
         <h:form id="header-language-button-container">
             <p:menuButton value="#{I18N['application.header.language']}" class="header-language-button ui-button-info" iconPos="right">
 
-                <p:menuitem value="#{I18N['application.header.languageFr']}" action="#{i18nBean.changeLanguage('fr','headerLanguageButtonContainer')}"/>
-                <p:menuitem value="#{I18N['application.header.languageEn']}" action="#{i18nBean.changeLanguage('en','headerLanguageButtonContainer')}"/>
+                <p:menuitem value="#{I18N['application.header.languageFr']}" action="#{i18nBean.changeLanguage('fr')}"/>
+                <p:menuitem value="#{I18N['application.header.languageEn']}" action="#{i18nBean.changeLanguage('en')}"/>
 
             </p:menuButton>
         </h:form>
@@ -80,15 +80,15 @@
                    icon="pi pi-fw pi-user">
             <p:menuitem value="#{I18N['application.header.menuListUsers']}"
                         icon="pi pi-fw pi-users"
-                        action="#"
+                        action="#{connectionBean.redirectPage(null)}"
                         rendered="#{connectionBean.isUserHasPermission('readList-user')}"/>
             <p:menuitem value="#{I18N['application.header.menuAddUser']}"
                         icon="pi pi-fw pi-plus"
-                        action="#"
+                        action="#{connectionBean.redirectPage(null)}"
                         rendered="#{connectionBean.isUserHasPermission('create-user')}"/>
             <p:menuitem value="#{I18N['application.header.menuListUserMe']}"
                         icon="pi pi-fw pi-user"
-                        action="#"
+                        action="#{connectionBean.redirectPage(null)}"
                         rendered="#{connectionBean.isUserHasPermission('read-user-me')}"/>
         </p:submenu>
 

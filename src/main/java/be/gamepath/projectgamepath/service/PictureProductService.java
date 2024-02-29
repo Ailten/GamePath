@@ -1,5 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.entities.PictureProduct;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
@@ -31,6 +32,13 @@ public class PictureProductService extends ServiceGeneric<PictureProduct> {
     public List<PictureProduct> selectMany(EntityManager em)
     {
         return em.createNamedQuery("PictureProduct.SelectMany", PictureProduct.class)
+                .getResultList();
+    }
+
+
+    public List<PictureProduct> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
+        return em.createNamedQuery("PictureProduct.SelectManyByIdProduct", PictureProduct.class)
+                .setParameter("idProductTheoric", idProductTheoric)
                 .getResultList();
     }
 

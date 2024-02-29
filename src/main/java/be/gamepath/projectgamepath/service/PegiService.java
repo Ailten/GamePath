@@ -1,5 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.entities.Pegi;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
@@ -34,5 +35,12 @@ public class PegiService extends ServiceGeneric<Pegi> {
                 .getResultList();
     }
 
+
+
+    public List<Pegi> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
+        return em.createNamedQuery("Pegi.SelectManyByIdProduct", Pegi.class)
+                .setParameter("idProductTheoric", idProductTheoric)
+                .getResultList();
+    }
 
 }

@@ -1,6 +1,8 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.Permission;
 import be.gamepath.projectgamepath.entities.Role;
+import be.gamepath.projectgamepath.entities.RolePermission;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;

@@ -81,7 +81,7 @@ public class ConnectionBean implements Serializable {
         if(isError)
             return "";
 
-        return pathHomePage;
+        return this.redirectPage(pathHomePage);
     }
 
     /**
@@ -89,7 +89,7 @@ public class ConnectionBean implements Serializable {
      */
     public String deconnection() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); //Logout session connectionBean.
-        PrimeFaces.current().executeScript("submitLanguageForm(\"header-language-button-container\")"); //managed bean go to js.
+        this.reloadPage();
         return pathHomePage;
     }
 
@@ -103,41 +103,23 @@ public class ConnectionBean implements Serializable {
     }
 
 
-    /**
-     * Initialize list role into an user
-     */
-    public static void initListRolePermission(User user)
-    {
-        EntityManager em = EMF.getEM();
-        UserService userService = new UserService();
-        //EntityTransaction transaction = em.getTransaction();
-
-        try
-        {
-            //transaction.begin();
-            //Call of the service that will use the NamedQuery of the "RolePermission" entity.
-            user.listRolePermission = userService.selectRolePermissionOfUser(em, user.getId());
-
-            //transaction.commit();
-        }
-        catch(Exception e)
-        {
-            Utility.debug("error into initListPermissionOfUser : " + e);
-        }
-        finally
-        {
-            //if(transaction.isActive())
-            //    transaction.rollback();
-            em.close();
-        }
-
-    }
-
+    @Inject
+    HistoricalBean historicalBean;
 
     /**
-     * Redirect to another page.
+     * Redirect to another page (if redirect to same page, reload it).
      */
     public String redirectPage(String path) {
+        if(path == null){
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.header.titleRedirectPageNotFound"),
+                    Utility.stringFromI18N("application.header.errorRedirectPageNotFound"),
+                    false
+            );
+            this.reloadPage();
+        }else if(historicalBean.currentPage().equals(path)){
+            this.reloadPage(); //reload if same page.
+        }
         return path;
     }
 
@@ -169,6 +151,16 @@ public class ConnectionBean implements Serializable {
         if(this.user == null)
             return false;
         return this.user.verifyPermission(permissionAsk);
+    }
+
+
+    //submit form by id.
+    public void submitForm(String idForm){
+        PrimeFaces.current().executeScript("submitFormById(\""+idForm+"\")");
+    }
+
+    public void reloadPage(){
+        PrimeFaces.current().executeScript("submitFormById(\"header-language-button-container\")");
     }
 
 
