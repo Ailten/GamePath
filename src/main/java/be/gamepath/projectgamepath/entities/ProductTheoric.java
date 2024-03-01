@@ -22,10 +22,38 @@ import java.util.Objects;
         @NamedQuery(name= "ProductTheoric.SelectByTitle",
                 query = "select pt from ProductTheoric pt " +
                         "where (pt.title = :title)"),
+        @NamedQuery(name= "ProductTheoric.SelectManyByFilter",
+                query = "select distinct pt from ProductTheoric pt " +
+                        "join ProductTheoricCategory ptc on (ptc.productTheoric.id = pt.id) " +
+                        "join fetch ptc.category c " +
+                        "join ProductTheoricPegi ptp on (ptp.productTheoric.id = pt.id) " +
+                        "join fetch ptp.pegi p " +
+                        "join ProductTheoricLanguage ptl on (ptl.productTheoric.id = pt.id) " +
+                        "join fetch ptl.language l " +
+                        "join ProductTheoricOperatingSystem ptos on (ptos.productTheoric.id = pt.id) " +
+                        "join fetch ptos.operatingSystem os " +
+                        "join SocietyProducer sp on (sp.id = pt.societyProducer.id) " +
+                        "where ( " +
+                        "  ( " +
+                        "    ( lower(pt.title) like concat('%', :filter, '%') ) or " +
+                        "    ( lower(c.title) like concat('%', :filter, '%') ) or " +
+                        "    ( lower(p.title) like concat('%', :filter, '%') ) or " +
+                        "    ( lower(l.title) like concat('%', :filter, '%') ) or " +
+                        "    ( lower(os.title) like concat('%', :filter, '%') ) or " +
+                        "    ( lower(sp.title) like concat('%', :filter, '%') ) " +
+                        "  ) and ( " +
+                        "    ( :isShowEntityDisable = true or ( pt.isActive = true ) ) " +
+                        "  ) " +
+                        ")"), // and pt.releaseDate <= current_date()
 })
 @Entity
 @Table(name = "producttheoric", schema = "gamepath", catalog = "")
 public class ProductTheoric extends EntityGenerique {
+
+    public ProductTheoric(){
+        this.tva = Tva.D_VINGHTETUN;
+    }
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idProductTheoric", nullable = false)
@@ -59,7 +87,8 @@ public class ProductTheoric extends EntityGenerique {
     private MultyPlayer multiPlayer;
     @NotNull
     @Column(name = "releaseDate", nullable = false)
-    private LocalDateTime releaseDate;
+    @Temporal(TemporalType.DATE)
+    private Date releaseDate;
     @NotNull
     @Size(min = 3, max = 255)
     //@Pattern(regexp = "^[a-zA-Z0-9 çéâêîôûàèìòùëïü!?.,-]{3,255}$")
@@ -126,13 +155,15 @@ public class ProductTheoric extends EntityGenerique {
     }
 
     public Date getReleaseDate() {
-        if(this.releaseDate == null)
-            return null;
-        return Utility.castLocalDateTimeToDate(this.releaseDate);
+        return this.releaseDate;
+        //if(this.releaseDate == null)
+        //    return null;
+        //return Utility.castLocalDateTimeToDate(this.releaseDate);
     }
 
     public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = Utility.castDateToLocalDateTime(releaseDate);
+        this.releaseDate = releaseDate;
+        //this.releaseDate = Utility.castDateToLocalDateTime(releaseDate);
     }
 
     public String getDescription() {
@@ -184,6 +215,7 @@ public class ProductTheoric extends EntityGenerique {
 
 
     @Transient
+    @Size(min=1)
     private List<Category> listCategory;
     public List<Category> getListCategory() {
         if (this.listCategory == null)
@@ -195,6 +227,7 @@ public class ProductTheoric extends EntityGenerique {
     }
 
     @Transient
+    @Size(min=1)
     private List<Pegi> listPegi;
     public List<Pegi> getListPegi() {
         if (this.listPegi == null)
@@ -206,6 +239,7 @@ public class ProductTheoric extends EntityGenerique {
     }
 
     @Transient
+    @Size(min=1)
     private List<OperatingSystem> listOperatingSystem;
     public List<OperatingSystem> getListOperatingSystem() {
         if (this.listOperatingSystem == null)
@@ -217,6 +251,7 @@ public class ProductTheoric extends EntityGenerique {
     }
 
     @Transient
+    @Size(min=1)
     private List<Language> listLanguage;
     public List<Language> getListLanguage() {
         if (this.listLanguage == null)

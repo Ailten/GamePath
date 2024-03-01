@@ -23,6 +23,8 @@ public class ConnectionBean implements Serializable {
 
     @Inject
     PopUpMessageBean popUpMessageBean;
+    @Inject
+    HistoricalBean historicalBean;
 
     private static String pathHomePage = "/accueil";
     public String getPathHomePage() { return pathHomePage; }
@@ -103,8 +105,6 @@ public class ConnectionBean implements Serializable {
     }
 
 
-    @Inject
-    HistoricalBean historicalBean;
 
     /**
      * Redirect to another page (if redirect to same page, reload it).
@@ -147,10 +147,10 @@ public class ConnectionBean implements Serializable {
     }
 
     //return if the user has a permission.
-    public boolean isUserHasPermission(String permissionAsk){
+    public boolean isUserHasPermission(String permissionAskStr){
         if(this.user == null)
             return false;
-        return this.user.verifyPermission(permissionAsk);
+        return this.user.verifyPermission(permissionAskStr);
     }
 
 

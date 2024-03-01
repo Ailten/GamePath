@@ -65,14 +65,14 @@
     animation-duration: 1s;
 }
 
-ul.ui-selectonemenu-items > li.ui-noselection-option[disabled][data-label="---"],
-table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"]
+#body:has(.content-form-body-center) ul.ui-selectonemenu-items > li.ui-noselection-option[disabled][data-label="---"], /* hide placeholder combo box (in page crud) */
+#body:has(.content-form-body-center) table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"] /* hide placeholder combo box table (in page crud) */
 {
     display: none;
 }
 
-div[id$="_panel"] *, /* panel combo box size text */
-table[id$="_table"] * /* panel combo box table */
+#body:has(.content-form-body-center) div[id$="_panel"] *, /* panel combo box size text (in page crud) */
+#body:has(.content-form-body-center) table[id$="_table"] * /* panel combo box table (in page crud) */
 {
     font-size: 1.3rem;
 }
@@ -133,6 +133,12 @@ table[id$="_table"] * /* panel combo box table */
     margin: 20px auto 20px auto;
 }
 #content .content-table-body-center {
+    margin: 20px;
+}
+
+#content .content-table-body-center th,
+#content .content-table-body-center tr.ui-datatable-empty-message
+{
     text-align: center;
 }
 
@@ -155,16 +161,30 @@ table[id$="_table"] * /* panel combo box table */
     height: 33px;
 }
 
+#content .content-table-body-center .ui-datatable tr > th:nth-child(n + 2),
+#content .content-table-body-center .ui-datatable tr > td:nth-child(n + 2)
+{
+    border-left: solid 1px #ebebeb;
+}
+#content .content-table-body-center .ui-datatable tr > td {
+    border-color: #ebebeb;
+}
+
+#content .content-table-body-center .ui-datatable .ui-paginator-bottom {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: #f8f9fa;
+}
+
 /* --- accueil --- */
 
 #content-bg-accueil {
     background-image: url("http://localhost:8080/ProjectGamePath_war_exploded/images/webSiteBase/BackgroundAccueilTeck.jpg");
-    background-size: cover;
-    background-position: right;
 }
-
 #content{
     background-image: url("http://localhost:8080/ProjectGamePath_war_exploded/images/webSiteBase/BackgroundAccueilTeck_20.png");
+}
+#content, #content-bg-accueil {
     background-size: cover;
     background-position: right;
 }
@@ -207,6 +227,9 @@ table[id$="_table"] * /* panel combo box table */
 }
 #footer .block-footer .icon-reseau:hover {
     color: #effffe;
+}
+#footer a.ui-commandlink:has(.icon-reseau):hover {
+    text-decoration: none;
 }
 
 /* --- responsive phone --- */

@@ -5,9 +5,13 @@ import be.gamepath.projectgamepath.entities.ProductTheoric;
 import be.gamepath.projectgamepath.entities.ProductTheoricCategory;
 import be.gamepath.projectgamepath.entities.RolePermission;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
+import be.gamepath.projectgamepath.utility.Utility;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductTheoricService extends ServiceGeneric<ProductTheoric> {
 
@@ -49,6 +53,20 @@ public class ProductTheoricService extends ServiceGeneric<ProductTheoric> {
                 .getResultStream()
                 .findFirst()
                 .orElse(null);
+    }
+
+
+    public List<ProductTheoric> selectManyByFilter(EntityManager em, String filter, boolean isShowEntityDisable){
+        return em.createNamedQuery("ProductTheoric.SelectManyByFilter", ProductTheoric.class)
+                .setParameter("filter", filter)
+                .setParameter("isShowEntityDisable", isShowEntityDisable)
+                .getResultList()
+                //FIXME: remove filter date and apply it in query (using current_date() but seem not working).
+                .stream().filter(pt -> isShowEntityDisable || LocalDateTime.now().isAfter(Utility.castDateToLocalDateTime(pt.getReleaseDate())))
+                .collect(Collectors.toList());
+    }
+    public List<ProductTheoric> selectManyByFilter(EntityManager em, String filter){
+        return this.selectManyByFilter(em, filter, false);
     }
 
 }

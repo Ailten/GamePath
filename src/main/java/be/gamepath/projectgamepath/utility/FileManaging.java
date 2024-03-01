@@ -40,9 +40,8 @@ public class FileManaging {
         try (OutputStream outputStream = Files.newOutputStream(filePath)) {
             outputStream.write(uploadingFile.getContent());
             out = true;
-        } catch (IOException error) {
-            Utility.debug("Error from write in file (FileManaging)");
-            Utility.debug(error.getMessage());
+        } catch (IOException e) {
+            Utility.debug("error into saveNewFile : " + e.getMessage());
         }
 
         return out;

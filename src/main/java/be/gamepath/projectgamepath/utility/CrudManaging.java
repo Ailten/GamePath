@@ -7,7 +7,12 @@ import be.gamepath.projectgamepath.managedBeans.PopUpMessageBean;
 
 import javax.inject.Inject;
 
-public class CrudManaging<TEntity> {
+public class CrudManaging<TEntity extends EntityGenerique> {
+
+    @Inject
+    ConnectionBean connectionBean;
+    @Inject
+    protected PopUpMessageBean popUpMessageBean;
 
     //char for type of page generate.
     protected Crud modeSelected = Crud.READ_LIST;
@@ -44,10 +49,6 @@ public class CrudManaging<TEntity> {
     public void setElementCrudSelected(TEntity elementCrudSelected){ this.elementCrudSelected = elementCrudSelected; }
 
 
-    @Inject
-    ConnectionBean connectionBean;
-    @Inject
-    protected PopUpMessageBean popUpMessageBean;
     protected String nameEntityForPermission;
     public String submitCrudForm(HistoricalBean historicalBean){
 
@@ -95,21 +96,4 @@ public class CrudManaging<TEntity> {
         throw new Exception("CrudManaging.update was not override");
     }
 
-
-/*
-    private TableFilter tableFilter;
-    public void setTableFilter(TableFilter tableFilter){
-        this.tableFilter=tableFilter;
-    }
-    public void resetFilterOfTableFilter(){
-        if(tableFilter==null)
-            return;
-        tableFilter.resetFilter();
-    }
-
-
-    private boolean errorSubmitDB;
-    public boolean getErrorSubmitDB(){ return this.errorSubmitDB; }
-    public void setErrorSubmitDB(boolean errorSubmitDB){ this.errorSubmitDB = errorSubmitDB; }
-*/
 }

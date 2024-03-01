@@ -3,6 +3,8 @@ package be.gamepath.projectgamepath.utility;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import javax.faces.context.FacesContext;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -64,11 +66,19 @@ public class Utility {
     }
 
     /**
-     * function to vonvert a date to a localdatetime
+     * function to convert a date to a localdatetime
      */
-    public static LocalDateTime castDateToLocalDateTime(Date dateConvert)
+    public static LocalDateTime castDateToLocalDateTime(Date date)
     {
-        return LocalDateTime.ofInstant(dateConvert.toInstant(), ZoneId.systemDefault());
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+    }
+
+    /**
+     * function to convert a date to a string
+     */
+    public static String castDateToString(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        return dateFormat.format(date);
     }
 
 }

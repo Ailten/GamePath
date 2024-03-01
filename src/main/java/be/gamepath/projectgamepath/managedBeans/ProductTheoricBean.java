@@ -116,6 +116,34 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         return success;
     }
 
+    public void delete(ProductTheoric productTheoric) {
+
+        this.elementCrudSelected = productTheoric;
+
+        EntityManager em = EMF.getEM();
+        ProductTheoricService productTheoricService = new ProductTheoricService();
+        EntityTransaction transaction = em.getTransaction();
+
+        try{
+            transaction.begin();
+
+            //insert/delete joins.
+            this.updateJoins(em);
+
+            //delete element into DB.
+            productTheoricService.delete(em, this.elementCrudSelected);
+
+            transaction.commit();
+        }catch(Exception e){
+            Utility.debug("error into delete : " + e.getMessage());
+        }finally{
+            if(transaction.isActive())
+                transaction.rollback();
+            em.close();
+        }
+
+    }
+
     private void updateJoins(EntityManager em) throws Exception {
 
         //--- Category joins.
@@ -139,8 +167,11 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
         //delete join table of ProductTheoricCategory.
         if(this.isModeSelected(Crud.UPDATE, Crud.DELETE)){
-            List<Category> listCategoryToDelete = listCategoryFromDB.stream()
-                    .filter(c -> !this.elementCrudSelected.getListCategory().contains(c)).collect(Collectors.toList());
+            List<Category> listCategoryToDelete = (this.isModeSelected(Crud.UPDATE)?
+                    listCategoryFromDB.stream()
+                            .filter(c -> !this.elementCrudSelected.getListCategory().contains(c)).collect(Collectors.toList()):
+                    this.elementCrudSelected.getListCategory()
+            );
             for(Category categoryToDelete : listCategoryToDelete) {
                 ProductTheoricCategory ptcToDelete = productTheoricCategoryService.selectByBothId(em, this.elementCrudSelected.getId(), categoryToDelete.getId());
                 if(ptcToDelete == null)
@@ -170,8 +201,11 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
         //delete join table of ProductTheoricPegi.
         if(this.isModeSelected(Crud.UPDATE, Crud.DELETE)){
-            List<Pegi> listPegiToDelete = listPegiFromDB.stream()
-                    .filter(c -> !this.elementCrudSelected.getListPegi().contains(c)).collect(Collectors.toList());
+            List<Pegi> listPegiToDelete = (this.isModeSelected(Crud.UPDATE)?
+                    listPegiFromDB.stream()
+                            .filter(c -> !this.elementCrudSelected.getListPegi().contains(c)).collect(Collectors.toList()):
+                    this.elementCrudSelected.getListPegi()
+            );
             for(Pegi pegiToDelete : listPegiToDelete) {
                 ProductTheoricPegi ptpToDelete = productTheoricPegiService.selectByBothId(em, this.elementCrudSelected.getId(), pegiToDelete.getId());
                 if(ptpToDelete == null)
@@ -201,8 +235,11 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
         //delete join table of ProductTheoricOperatingSystem.
         if(this.isModeSelected(Crud.UPDATE, Crud.DELETE)){
-            List<OperatingSystem> listOperatingSystemToDelete = listOperatingSystemFromDB.stream()
-                    .filter(c -> !this.elementCrudSelected.getListOperatingSystem().contains(c)).collect(Collectors.toList());
+            List<OperatingSystem> listOperatingSystemToDelete = (this.isModeSelected(Crud.UPDATE)?
+                    listOperatingSystemFromDB.stream()
+                            .filter(c -> !this.elementCrudSelected.getListOperatingSystem().contains(c)).collect(Collectors.toList()):
+                    this.elementCrudSelected.getListOperatingSystem()
+            );
             for(OperatingSystem operatingSystemToDelete : listOperatingSystemToDelete) {
                 ProductTheoricOperatingSystem ptopToDelete = productTheoricOperatingSystemService.selectByBothId(em, this.elementCrudSelected.getId(), operatingSystemToDelete.getId());
                 if(ptopToDelete == null)
@@ -230,19 +267,20 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             }
         }
 
-        //delete join table of ProductTheoricPegi.
+        //delete join table of ProductTheoricLanguage.
         if(this.isModeSelected(Crud.UPDATE, Crud.DELETE)){
-            List<Pegi> listPegiToDelete = listPegiFromDB.stream()
-                    .filter(c -> !this.elementCrudSelected.getListPegi().contains(c)).collect(Collectors.toList());
-            for(Pegi pegiToDelete : listPegiToDelete) {
-                ProductTheoricPegi ptpToDelete = productTheoricPegiService.selectByBothId(em, this.elementCrudSelected.getId(), pegiToDelete.getId());
-                if(ptpToDelete == null)
+            List<Language> listLanguageToDelete = (this.isModeSelected(Crud.UPDATE)?
+                    listLanguageFromDB.stream()
+                            .filter(c -> !this.elementCrudSelected.getListLanguage().contains(c)).collect(Collectors.toList()):
+                    this.elementCrudSelected.getListLanguage()
+            );
+            for(Language languageToDelete : listLanguageToDelete) {
+                ProductTheoricLanguage ptlToDelete = productTheoricLanguageService.selectByBothId(em, this.elementCrudSelected.getId(), languageToDelete.getId());
+                if(ptlToDelete == null)
                     continue;
-                productTheoricPegiService.delete(em, ptpToDelete);
+                productTheoricLanguageService.delete(em, ptlToDelete);
             }
         }
-
-
 
     }
 

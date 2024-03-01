@@ -14,6 +14,9 @@ import java.util.Locale;
 @SessionScoped
 public class I18nBean implements Serializable {
 
+    @Inject
+    ConnectionBean connectionBean;
+
     //private static final long serialVersionUID = 1L;
 
     // Log4j
@@ -87,8 +90,7 @@ public class I18nBean implements Serializable {
     }
 
 
-    @Inject
-    ConnectionBean connectionBean;
+
     public void changeLanguage(String language){
         //apply and load new language.
         this.setLanguage(language);

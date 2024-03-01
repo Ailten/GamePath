@@ -26,7 +26,115 @@
 
         <div class="content-table-body-center">
 
-            <!-- table catalog -->
+            <h:form id="form-table-product">
+
+                <!-- load list research -->
+                <f:metadata>
+                    <f:event type="preRenderView" listener="#{productTheoricListBean.doResearch()}"/>
+                </f:metadata>
+
+                <!-- table -->
+                <p:dataTable var="product"
+                             value="#{productTheoricListBean.entityFiltered}"
+                             sortMode="single"
+                             allowUnsorting="true"
+                             rows="10"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} sur {totalRecords}"
+                             rowsPerPageTemplate="5,10,20"
+                             >
+
+                    <f:facet name="header">
+                        <!-- input research -->
+                        <p:inputText value="#{productTheoricListBean.filter}"
+                                     placeholder="#{I18N['application.tablePage.placeHolderInputFilter']}"
+                                     validatorMessage="#{I18N['application.tablePage.errorInputFilter']}">
+                            <p:ajax event="keyup" update="form-table-product"/>
+                        </p:inputText>
+                    </f:facet>
+
+
+                    <!-- ______ start column data ______ -->
+
+
+                    <p:column headerText="#{I18N['application.crudPage.headerComboBox']}"
+                              sortBy="#{product.title}">
+                        <h:outputText value="#{product.title}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelPrice']}"
+                              sortBy="#{product.priceWithReduction}">
+                        <p:outputPanel class="#{(product.hasReduction()? 'text-line-through': '')}">
+                            <h:outputText value="#{product.price}">
+                                <f:convertNumber minFractionDigits="2"/>
+                            </h:outputText>
+                            <span>€</span>
+                        </p:outputPanel>
+                        <p:outputPanel rendered="#{product.hasReduction()}">
+                            <h:outputText value="#{product.priceWithReduction}">
+                                <f:convertNumber minFractionDigits="2"/>
+                            </h:outputText>
+                            <span>€</span>
+                        </p:outputPanel>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelCategory']}"
+                              responsivePriority="2">
+                        <h:outputText value="#{product.listCategory.get(0).title}"/>
+                        <h:outputText value=", ..." rendered="#{product.listCategory.size() > 1}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelOperatingSystem']}"
+                              responsivePriority="3">
+                        <h:outputText value="#{product.listOperatingSystem.get(0).title}"/>
+                        <h:outputText value=", ..." rendered="#{product.listOperatingSystem.size() > 1}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelLanguage']}"
+                              responsivePriority="4">
+                        <h:outputText value="#{product.listLanguage.get(0).title}"/>
+                        <h:outputText value=", ..." rendered="#{product.listLanguage.size() > 1}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelPegi']}"
+                              responsivePriority="5">
+                        <h:outputText value="#{product.listPegi.get(0).title}"/>
+                        <h:outputText value=", ..." rendered="#{product.listPegi.size() > 1}"/>
+                    </p:column>
+
+
+                    <!-- ______ end column data ______ -->
+
+
+                    <p:column headerText="#{I18N['application.tablePage.buttonRead']}">
+                        <p:commandButton action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, product, 'read')}"
+                                         icon="bars"/>
+                    </p:column>
+                    <p:column headerText="#{I18N['application.tablePage.buttonUpdate']}"
+                              rendered="#{connectionBean.isUserHasPermission('update-product')}">
+                        <p:commandButton action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, product, 'update')}"
+                                         icon="pencil"/>
+                    </p:column>
+                    <p:column headerText="#{I18N['application.tablePage.buttonDelete']}"
+                              rendered="#{connectionBean.isUserHasPermission('delete-product')}">
+                        <p:commandButton action="#{productTheoricBean.delete(product)}"
+                                         update="form-table-product"
+                                         icon="trash"/>
+                    </p:column>
+                    <p:column headerText="#{I18N['application.tablePage.buttonDelete']}"
+                              rendered="#{connectionBean.isUserHasPermission('addbasket-product')}">
+                        <p:commandButton action="#{productTheoricBean.delete(product)}"
+                                         update="form-table-product"
+                                         icon="shopping-cart"/>
+                    </p:column>
+
+
+
+                </p:dataTable>
+
+            </h:form>
 
         </div>
 
