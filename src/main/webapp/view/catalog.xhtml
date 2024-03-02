@@ -14,7 +14,7 @@
 
         <!-- save historic -->
         <f:metadata>
-            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/catalogue')}"/>
+            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/catalog')}"/>
         </f:metadata>
 
         <!-- title page -->
@@ -110,24 +110,24 @@
 
                     <p:column headerText="#{I18N['application.tablePage.buttonRead']}">
                         <p:commandButton action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, product, 'read')}"
-                                         icon="bars"/>
+                                         icon="pi pi-bars"/>
                     </p:column>
                     <p:column headerText="#{I18N['application.tablePage.buttonUpdate']}"
                               rendered="#{connectionBean.isUserHasPermission('update-product')}">
                         <p:commandButton action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, product, 'update')}"
-                                         icon="pencil"/>
+                                         icon="pi pi-pencil"/>
                     </p:column>
                     <p:column headerText="#{I18N['application.tablePage.buttonDelete']}"
                               rendered="#{connectionBean.isUserHasPermission('delete-product')}">
                         <p:commandButton action="#{productTheoricBean.delete(product)}"
                                          update="form-table-product"
-                                         icon="trash"/>
+                                         icon="pi pi-trash"/>
                     </p:column>
-                    <p:column headerText="#{I18N['application.tablePage.buttonDelete']}"
+                    <p:column headerText="#{I18N['application.tableProductTheoric.buttonAddBasket']}"
                               rendered="#{connectionBean.isUserHasPermission('addbasket-product')}">
                         <p:commandButton action="#{productTheoricBean.delete(product)}"
                                          update="form-table-product"
-                                         icon="shopping-cart"/>
+                                         icon="pi pi-shopping-cart"/>
                     </p:column>
 
 

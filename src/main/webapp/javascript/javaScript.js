@@ -53,6 +53,7 @@ function focusOnComboBox(comboBoxFocused){
 
     //get id of element and sanitise it.
     let idFocused = comboBoxFocused.getAttribute('id');
+    idFocused ||= comboBoxFocused.parentElement().getAttribute('id');
     let idSanitise = idFocused.replace(/_.{1,}$/, '');
 
     //get panel combo box by id.
@@ -76,4 +77,9 @@ function focusOnComboBox(comboBoxFocused){
     //form-crud-...:input-... //or from this.
     //form-crud-...:input-..._panel .ui-inputtext //to that.
 
+}
+
+//function to reload current page.
+function reloadPage(){
+    document.getElementById('reload-page').click();
 }

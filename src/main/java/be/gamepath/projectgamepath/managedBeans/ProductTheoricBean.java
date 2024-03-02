@@ -88,7 +88,8 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             transaction.begin();
 
             //try get an element from DB with same title, if found : error.
-            if(productTheoricService.selectByTitle(em, this.elementCrudSelected.getTitle()) != null){
+            ProductTheoric productGetByTitle = productTheoricService.selectByTitle(em, this.elementCrudSelected.getTitle());
+            if(productGetByTitle != null && productGetByTitle.getId() != this.elementCrudSelected.getId()){
                 popUpMessageBean.setPopUpMessage(
                         Utility.stringFromI18N("application.crudPage.titleSuccess"),
                         Utility.stringFromI18N("application.crudProductTheoric.errorMessageTitleDuplicate"),
@@ -421,6 +422,8 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
                 pictureProduct.setProductTheoric(this.elementCrudSelected);
                 pictureProduct.setUrlImage(this.imageFile.getFileName());
 
+                //--- error catch upper.
+
                 //insert image in DB.
                 pictureProduct = pictureProductService.insert(em, pictureProduct);
 
@@ -475,6 +478,11 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
     }
 
 
+
+    public void test(){
+        Utility.debug("AAA");
+    }
+
     public void deletePictureProduct(PictureProduct pictureProduct) {
 
         EntityManager em = EMF.getEM();
@@ -484,17 +492,24 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         try{
             transaction.begin();
 
-            //remove picture from listPicture transient.
-            this.elementCrudSelected.getListPictureProduct().remove(pictureProduct);
+            //remember id of picture after delete.
+            int idPictureToDelete = pictureProduct.getId();
 
             //delete pictureProduct.
             pictureProductService.delete(em, pictureProduct);
 
+            //remove picture from listPicture transient.
+            this.elementCrudSelected.setListPictureProduct(
+                    this.elementCrudSelected.getListPictureProduct().stream()
+                            .filter(pp -> pp.getId() != idPictureToDelete).collect(Collectors.toList())
+            );
+
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.crudPage.successTitleDelete"),
                     Utility.stringFromI18N("application.crudPage.successDelete"),
-                    false
+                    true
             );
+
             transaction.commit();
         }catch(Exception e){
             Utility.debug("error into deletePictureProduct : " + e.getMessage());

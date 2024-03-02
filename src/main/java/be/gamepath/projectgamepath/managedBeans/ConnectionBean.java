@@ -91,8 +91,7 @@ public class ConnectionBean implements Serializable {
      */
     public String deconnection() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); //Logout session connectionBean.
-        this.reloadPage();
-        return pathHomePage;
+        return this.redirectPage(pathHomePage);
     }
 
     /**
@@ -160,7 +159,7 @@ public class ConnectionBean implements Serializable {
     }
 
     public void reloadPage(){
-        PrimeFaces.current().executeScript("submitFormById(\"header-language-button-container\")");
+        PrimeFaces.current().executeScript("reloadPage()");
     }
 
 

@@ -65,8 +65,8 @@
     animation-duration: 1s;
 }
 
-#body:has(.content-form-body-center) ul.ui-selectonemenu-items > li.ui-noselection-option[disabled][data-label="---"], /* hide placeholder combo box (in page crud) */
-#body:has(.content-form-body-center) table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"] /* hide placeholder combo box table (in page crud) */
+#body:has(.content-form-body-center) ul.ui-selectonemenu-items > li.ui-noselection-option[disabled][data-label="---"], /* hidde placeholder combo box (in page crud) */
+#body:has(.content-form-body-center) table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"] /* hidde placeholder combo box table (in page crud) */
 {
     display: none;
 }
@@ -75,6 +75,18 @@
 #body:has(.content-form-body-center) table[id$="_table"] * /* panel combo box table (in page crud) */
 {
     font-size: 1.3rem;
+}
+
+.content-form-body-center .panel-input .picture-resize {
+    width: 100px;
+}
+.content-form-body-center .panel-input .button-delete-picture {
+    width: 4rem;
+    aspect-ratio: 1;
+}
+.content-form-body-center .panel-input .button-delete-picture > span {
+    font-size: 2rem;
+    transform: translate(-4px, -4px);
 }
 
 /* --- header --- */
@@ -169,11 +181,20 @@
 #content .content-table-body-center .ui-datatable tr > td {
     border-color: #ebebeb;
 }
+#content .content-table-body-center .ui-datatable tr td:has(button) {
+    text-align: center;
+}
 
 #content .content-table-body-center .ui-datatable .ui-paginator-bottom {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     background-color: #f8f9fa;
+}
+
+#content .content-form-body-center .panel-input:empty + hr.ui-separator,
+#content .content-form-body-center hr.ui-separator + hr.ui-separator
+{
+    display: none;
 }
 
 /* --- accueil --- */
@@ -228,7 +249,10 @@
 #footer .block-footer .icon-reseau:hover {
     color: #effffe;
 }
-#footer a.ui-commandlink:has(.icon-reseau):hover {
+#footer a.ui-commandlink:has(.icon-reseau):hover,
+#footer a.ui-commandlink:has(.icon-reseau):focus,
+#footer a.ui-commandlink:has(.icon-reseau):active
+{
     text-decoration: none;
 }
 

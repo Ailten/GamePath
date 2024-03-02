@@ -32,15 +32,17 @@
 
         <p>Reseaux</p>
         <p>
-            <p:commandLink action="#{connectionBean.redirectPage(null)}">
-                <i class="pi pi-facebook icon-reseau"/>
-            </p:commandLink>
-            <p:commandLink action="#{connectionBean.redirectPage(null)}">
-                <i class="pi pi-twitter icon-reseau"/>
-            </p:commandLink>
-            <p:commandLink action="#{connectionBean.redirectPage(null)}">
-                <i class="pi pi-youtube icon-reseau"/>
-            </p:commandLink>
+            <h:form>
+                <p:commandLink action="#{connectionBean.redirectPage(null)}">
+                    <i class="pi pi-facebook icon-reseau"/>
+                </p:commandLink>
+                <p:commandLink action="#{connectionBean.redirectPage(null)}">
+                    <i class="pi pi-twitter icon-reseau"/>
+                </p:commandLink>
+                <p:commandLink action="#{connectionBean.redirectPage(null)}">
+                    <i class="pi pi-youtube icon-reseau"/>
+                </p:commandLink>
+            </h:form>
         </p>
 
         <p>

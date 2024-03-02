@@ -32,7 +32,7 @@ public class PictureProduct extends EntityGenerique {
     private ProductTheoric productTheoric;
     @NotNull
     @Size(min = 3, max = 255)
-    @Pattern(regexp = "^http://") //canvas : http://localhost/imageFolderLocalHost/******.png
+    //@Pattern(regexp = "(.png|.jpg|.jpeg)$") //canvas : http://localhost/imageFolderLocalHost/******.png
     @Column(name = "urlImage", nullable = false, length = 255)
     private String urlImage;
 

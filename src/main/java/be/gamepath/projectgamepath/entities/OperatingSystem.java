@@ -17,7 +17,7 @@ import java.util.Objects;
                 query = "select os from OperatingSystem os "),
         @NamedQuery(name= "OperatingSystem.SelectManyByIdProduct",
                 query = "select os from ProductTheoricOperatingSystem ptos " +
-                        "join Category os on (ptos.operatingSystem.id = os.id) " +
+                        "join OperatingSystem os on (ptos.operatingSystem.id = os.id) " +
                         "where (ptos.productTheoric.id = :idProductTheoric)"),
 })
 @Entity

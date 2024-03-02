@@ -22,6 +22,10 @@
             <h1>
                 <h:outputText value="#{I18N['application.header.menuAddProduct']}"
                               rendered="#{productTheoricBean.isModeSelected('create')}"/>
+                <h:outputText value="#{I18N['application.crudProductTheoric.titlePageDetails']}"
+                              rendered="#{productTheoricBean.isModeSelected('read')}"/>
+                <h:outputText value="#{I18N['application.crudProductTheoric.titlePageUpdate']}"
+                              rendered="#{productTheoricBean.isModeSelected('update')}"/>
             </h1>
         </div>
 
@@ -268,13 +272,14 @@
                 <!-- input File image-->
                 <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('update')}">
                     <p:outputLabel for="input-product-inputfileimage" value="#{I18N['application.crudProductTheoric.labelInputFileImage']}"/>
-                    <p:fileUpload value="#{productTheoricBean.imageFile}"
+                    <p:fileUpload id="input-product-inputfileimage"
+                                  value="#{productTheoricBean.imageFile}"
                                   mode="advanced"
                                   listener="#{productTheoricBean.fileUploadListener}"
                                   auto="true"
                                   allowTypes="/(\.|\/)(jpe?g|png)$/"
                                   sizeLimit="102400"
-                                  update="error-input-product-inputfileimage, input-product-inputfileimage, panel-draw-picture"
+                                  update="error-input-product-inputfileimage, input-product-inputfileimage, @form:panel-draw-picture"
                                   invalidSizeMessage="#{I18N['application.crudProductTheoric.errorInputFileImageSize']}"
                                   invalidFileMessage="#{I18N['application.crudProductTheoric.errorInputFileImageType']}"/>
                 </p:outputPanel>
@@ -287,17 +292,21 @@
                     <ui:repeat value="${productTheoricBean.elementCrudSelected.listPictureProduct}" var="pictureProduct">
                         <p:outputPanel> <!-- container for one image -->
                             <h:graphicImage url="#{pictureProduct.urlImageToDraw}"
+                                            class="picture-resize"
                                             alt="#{I18N['application.crudProductTheoric.altImagePicture']}"/> <!-- image draw -->
-                            <p:commandLink action="#{productTheoricBean.deletePictureProduct(pictureProduct)}"
-                                           update="panel-draw-picture"> <!-- button delete image -->
-                                <i class="pi pi-times-circle"/>
-                            </p:commandLink>
+                            <p:commandButton class="button-delete-picture"
+                                             action="#{productTheoricBean.deletePictureProduct(pictureProduct)}"
+                                             update="@form:panel-draw-picture"
+                                             rendered="#{productTheoricBean.isModeSelected('update')}"
+                                             ajax="false"
+                                             immediate="true"
+                                             icon="pi pi-times-circle"/> <!-- button delete image -->
                         </p:outputPanel>
                     </ui:repeat>
                 </p:outputPanel>
 
                 <!-- separator -->
-                <p:separator rendered="#{productTheoricBean.isModeSelected('read', 'update')}"/>
+                <p:separator/>
 
                 <!-- input Date release -->
                 <p:outputPanel class="panel-input">
@@ -403,10 +412,9 @@
                 </p:outputPanel>
 
                 <!-- input boolean active -->
-                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('read')}">
+                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
                     <p:outputLabel for="input-product-active" value="#{I18N['application.crudPage.labelActive']}"/>
                     <p:selectBooleanCheckbox id="input-product-active"
-                                             disabled="#{productTheoricBean.isModeSelected('read')}"
                                              value="#{productTheoricBean.elementCrudSelected.isActive}"/>
                 </p:outputPanel>
 
