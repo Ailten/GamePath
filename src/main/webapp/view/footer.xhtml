@@ -4,7 +4,7 @@
 <html lang="fr"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:c="http://java.sun.com/jsf/html">
 
 <!-- ______ ______ -->
 
@@ -33,6 +33,22 @@
         <p>Reseaux</p>
         <p>
             <h:form>
+                <p:commandButton action="#{connectionBean.redirectPage(null)}"
+                                 class="icon-reseau"
+                                 ajax="false"
+                                 icon="pi pi-facebook"
+                                 validateClient="true"/>
+                <p:commandButton action="#{connectionBean.redirectPage(null)}"
+                                 class="icon-reseau"
+                                 ajax="false"
+                                 icon="pi pi-twitter"
+                                 validateClient="true"/>
+                <p:commandButton action="#{connectionBean.redirectPage(null)}"
+                                 class="icon-reseau"
+                                 ajax="false"
+                                 icon="pi pi-youtube"
+                                 validateClient="true"/>
+                <!--
                 <p:commandLink action="#{connectionBean.redirectPage(null)}">
                     <i class="pi pi-facebook icon-reseau"/>
                 </p:commandLink>
@@ -42,6 +58,7 @@
                 <p:commandLink action="#{connectionBean.redirectPage(null)}">
                     <i class="pi pi-youtube icon-reseau"/>
                 </p:commandLink>
+                -->
             </h:form>
         </p>
 

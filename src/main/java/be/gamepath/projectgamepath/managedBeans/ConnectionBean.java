@@ -10,6 +10,7 @@ import be.gamepath.projectgamepath.utility.Utility;
 import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -109,16 +110,17 @@ public class ConnectionBean implements Serializable {
      * Redirect to another page (if redirect to same page, reload it).
      */
     public String redirectPage(String path) {
-        if(path == null){
+        if(path == null || path.equals("")) {
+            //this.reloadPage();
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.header.titleRedirectPageNotFound"),
                     Utility.stringFromI18N("application.header.errorRedirectPageNotFound"),
                     false
             );
-            this.reloadPage();
-        }else if(historicalBean.currentPage().equals(path)){
-            this.reloadPage(); //reload if same page.
         }
+        //}else if(historicalBean.currentPage().equals(path)){
+        //    this.reloadPage(); //reload if same page.
+        //}
         return path;
     }
 

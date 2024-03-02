@@ -283,6 +283,16 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             }
         }
 
+        //--- delete PictureProduct joins.
+
+        if(this.isModeSelected(Crud.DELETE)){
+            PictureProductService pictureProductService = new PictureProductService();
+            List<PictureProduct> listPictureProductToDelete = this.elementCrudSelected.getListPictureProduct();
+            for(PictureProduct pictureProductToDelete : listPictureProductToDelete) {
+                pictureProductService.delete(em, pictureProductToDelete);
+            }
+        }
+
     }
 
 
@@ -478,10 +488,6 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
     }
 
 
-
-    public void test(){
-        Utility.debug("AAA");
-    }
 
     public void deletePictureProduct(PictureProduct pictureProduct) {
 

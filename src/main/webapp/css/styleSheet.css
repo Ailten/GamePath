@@ -20,9 +20,10 @@
 #header, #footer {
     padding: 10px;
 }
-#content {
-    background-color: #effffe;
-    padding: 5px 0 5px 0;
+
+#content, #content-bg-accueil {
+    background-size: cover;
+    background-position: right;
 }
 
 #header .ui-button-info, /* button in header */
@@ -34,26 +35,10 @@
     font-size: 1.5rem;
 }
 
-.panel-input {
-    display: flex;
-    margin: 5px 0 5px 0;
-}
-.panel-input > * {
-    /*flex-grow: 1;*/
-    flex: 1;
-}
-.panel-input label.ui-widget {
-    font-size: 1.5rem;
-    padding-top: 0.5rem;
-}
-.panel-input-without-error {
-    margin-bottom: 20px;
-}
-
-#body #content .text-line-through {
+#content .text-line-through {
     text-decoration: line-through;
 }
-#body #content .text-line-through * {
+#content .text-line-through * {
     text-decoration: line-through;
 }
 
@@ -63,30 +48,6 @@
 .show-input-line {
     animation-name: show-input-line;
     animation-duration: 1s;
-}
-
-#body:has(.content-form-body-center) ul.ui-selectonemenu-items > li.ui-noselection-option[disabled][data-label="---"], /* hidde placeholder combo box (in page crud) */
-#body:has(.content-form-body-center) table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"] /* hidde placeholder combo box table (in page crud) */
-{
-    display: none;
-}
-
-#body:has(.content-form-body-center) div[id$="_panel"] *, /* panel combo box size text (in page crud) */
-#body:has(.content-form-body-center) table[id$="_table"] * /* panel combo box table (in page crud) */
-{
-    font-size: 1.3rem;
-}
-
-.content-form-body-center .panel-input .picture-resize {
-    width: 100px;
-}
-.content-form-body-center .panel-input .button-delete-picture {
-    width: 4rem;
-    aspect-ratio: 1;
-}
-.content-form-body-center .panel-input .button-delete-picture > span {
-    font-size: 2rem;
-    transform: translate(-4px, -4px);
 }
 
 /* --- header --- */
@@ -136,14 +97,18 @@
 
 /* --- content --- */
 
-#content h1{
+#content {
+    background-color: #effffe;
+    padding: 5px 0 5px 0;
+    background-image: url("http://localhost:8080/ProjectGamePath_war_exploded/images/webSiteBase/BackgroundAccueilTeck_20.png");
+}
+
+#content h1 {
     text-align: center;
 }
 
-#content .content-form-body-center {
-    width: 60%;
-    margin: 20px auto 20px auto;
-}
+/* --- generic table --- */
+
 #content .content-table-body-center {
     margin: 20px;
 }
@@ -152,25 +117,6 @@
 #content .content-table-body-center tr.ui-datatable-empty-message
 {
     text-align: center;
-}
-
-#content .panel-submit-crud {
-    margin-top: 25px;
-}
-#content .panel-submit-crud > button{
-    margin: 0 10px 0 10px;
-}
-
-#content .content-form-body-center .panel-input .p-datepicker > input,
-#content .content-form-body-center .panel-input .ui-inputnumber > input
-{
-    width: 100%;
-}
-
-#content .content-form-body-center .panel-input .ui-selectbooleancheckbox > .ui-chkbox-box {
-    margin-left: auto;
-    width: 33px;
-    height: 33px;
 }
 
 #content .content-table-body-center .ui-datatable tr > th:nth-child(n + 2),
@@ -191,10 +137,63 @@
     background-color: #f8f9fa;
 }
 
+/* --- generic form crud --- */
+
+#content .content-form-body-center {
+    width: 60%;
+    margin: 20px auto 20px auto;
+}
+
+#content .content-form-body-center .panel-input {
+    display: flex;
+    margin: 5px 0 5px 0;
+}
+#content .content-form-body-center .panel-input > * {
+    flex: 1;
+}
+#content .content-form-body-center .panel-input label.ui-widget {
+    font-size: 1.5rem;
+    padding-top: 0.5rem;
+}
+#content .content-form-body-center .panel-input-without-error {
+    margin-bottom: 20px;
+}
+
+#content .content-form-body-center .panel-submit-crud {
+    margin-top: 25px;
+}
+#content .content-form-body-center .panel-submit-crud > button{
+    margin: 0 10px 0 10px;
+}
+
+#content .content-form-body-center .panel-input .p-datepicker > input,
+#content .content-form-body-center .panel-input .ui-inputnumber > input
+{
+    width: 100%;
+}
+
+#content .content-form-body-center .panel-input .ui-selectbooleancheckbox > .ui-chkbox-box {
+    margin-left: auto;
+    width: 33px;
+    height: 33px;
+}
+
 #content .content-form-body-center .panel-input:empty + hr.ui-separator,
 #content .content-form-body-center hr.ui-separator + hr.ui-separator
 {
     display: none;
+}
+
+#body:has(.content-form-body-center) ul.ui-selectonemenu-items > li.ui-noselection-option[disabled][data-label="---"], /* hidde placeholder combo box (in page crud) */
+#body:has(.content-form-body-center) table.ui-selectonemenu-items tbody > tr.ui-noselection-option[data-label="---"] /* hidde placeholder combo box table (in page crud) */
+{
+    display: none;
+}
+
+#body:has(.content-form-body-center) div[id$="_panel"] *, /* panel combo box size text (in page crud) */
+#body:has(.content-form-body-center) table[id$="_table"] * /* panel combo box table (in page crud) */
+{
+    font-size: 1.3rem;
 }
 
 /* --- accueil --- */
@@ -202,42 +201,44 @@
 #content-bg-accueil {
     background-image: url("http://localhost:8080/ProjectGamePath_war_exploded/images/webSiteBase/BackgroundAccueilTeck.jpg");
 }
-#content{
-    background-image: url("http://localhost:8080/ProjectGamePath_war_exploded/images/webSiteBase/BackgroundAccueilTeck_20.png");
-}
-#content, #content-bg-accueil {
-    background-size: cover;
-    background-position: right;
-}
 
 #content:has(> #content-bg-accueil) {
     padding: 0;
 }
 
-.h-accueil {
+#content-bg-accueil .h-content {
     padding-top: 5px;
 }
-.h-accueil > h1{
+#content-bg-accueil .h-content > h1{
     background-color: rgb(239, 255, 254, 0.2);
     color: #000;
 }
-.h-accueil-top {
-    height: 5em;
+
+#content-bg-accueil .content-body-center {
+    height: 40em;
 }
 
-.height-accueil {
-    height: 25em;
+/* --- form crud catalog --- */
+
+#content .content-form-body-center .panel-input .picture-resize {
+    width: 100px;
+}
+#content .content-form-body-center .panel-input .button-delete-picture {
+    width: 4rem;
+    aspect-ratio: 1;
+}
+#content .content-form-body-center .panel-input .button-delete-picture > span {
+    font-size: 2rem;
+    transform: translate(-4px, -4px);
+}
+
+/* --- table catalog --- */
+
+#content .content-table-body-center td:has(.price-reduction) {
+    background-color: #e2ffe2;
 }
 
 /* --- footer --- */
-
-#footer .pi.icon-reseau {
-    font-size: 3rem;
-    color: #333;
-}
-#footer .pi.icon-reseau:nth-child(n + 2) {
-    margin-left: 10px;
-}
 
 #footer .block-footer {
     text-align: center;
@@ -246,14 +247,24 @@
 #footer .block-footer:nth-child(n + 2) {
     border-left: #333 solid 2px;
 }
+
+#footer .icon-reseau {
+    color: #333;
+    background-color: rgb(0,0,0,0);
+    border: none;
+    box-shadow: none;
+    width: 30px;
+    height: 30px;
+}
+#footer .icon-reseau:nth-child(n + 3) {
+    margin-left: 10px;
+}
+#footer .icon-reseau > span.ui-icon {
+    font-size: 3rem;
+    transform: translate(-10px, -10px);
+}
 #footer .block-footer .icon-reseau:hover {
     color: #effffe;
-}
-#footer a.ui-commandlink:has(.icon-reseau):hover,
-#footer a.ui-commandlink:has(.icon-reseau):focus,
-#footer a.ui-commandlink:has(.icon-reseau):active
-{
-    text-decoration: none;
 }
 
 /* --- responsive phone --- */
@@ -273,12 +284,10 @@
 /* --- animation --- */
 @keyframes show-input-line {
     0% {
-        /*transform: scale(1, 0);*/
         margin-top: -53px;
         opacity: 0;
     }
     100% {
-        /*transform: scale(1, 1);*/
         margin-top: 5px;
         opacity: 1;
     }

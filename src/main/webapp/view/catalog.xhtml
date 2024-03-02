@@ -72,7 +72,7 @@
                             </h:outputText>
                             <span>€</span>
                         </p:outputPanel>
-                        <p:outputPanel rendered="#{product.hasReduction()}">
+                        <p:outputPanel rendered="#{product.hasReduction()}" class="price-reduction">
                             <h:outputText value="#{product.priceWithReduction}">
                                 <f:convertNumber minFractionDigits="2"/>
                             </h:outputText>
