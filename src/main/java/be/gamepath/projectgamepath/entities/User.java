@@ -1,7 +1,10 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.managedBeans.PopUpMessageBean;
 import be.gamepath.projectgamepath.utility.EntityGenerique;
+import be.gamepath.projectgamepath.utility.Utility;
 
+import javax.inject.Inject;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -39,7 +42,7 @@ public class User extends EntityGenerique {
     @NotNull
     @Size(max = 255)
     @Column(name = "password", nullable = false, length = 255)
-    private String password;
+    private String password; //password in DB (hash)
     @NotNull
     @Size(min = 3, max = 60)
     @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
@@ -181,6 +184,42 @@ public class User extends EntityGenerique {
         if(this.role == null)
             return false;
         return this.role.verifyPermission(permissionTitle);
+    }
+
+
+
+    @Inject
+    private PopUpMessageBean popUpMessageBean;
+
+    @Transient
+    @NotNull
+    @Size(min = 9)
+    @Pattern(regexp = "^.{9,60}$")
+    private String passwordVania; //use this one for form crud user.
+
+    public String getPasswordVania(){
+        return this.passwordVania;
+    }
+    public void setPasswordVania(String passwordVania){
+        this.passwordVania = passwordVania;
+        this.setPassword(Utility.hashPassword(passwordVania));
+    }
+
+    @Transient
+    private String passwordCompare;
+
+    public String getPasswordCompare(){
+        return this.passwordCompare;
+    }
+    public void setPasswordCompare(String passwordCompare){
+        this.passwordCompare = passwordCompare;
+        if(passwordCompare != null && !passwordCompare.equals(this.password)){
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.crudUser.titleErrorPasswordCompare"),
+                    Utility.stringFromI18N("application.crudUser.messageErrorPasswordCompare"),
+                    false
+            );
+        }
     }
 
 }

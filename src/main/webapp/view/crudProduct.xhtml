@@ -444,6 +444,14 @@
                                      validateClient="true"
                                      class="ui-button-success"
                                      action="#{productTheoricBean.submitCrudForm(historicalBean)}"/>
+
+                    <p:commandButton value="#{I18N['application.crudPage.buttonBackLastPage']}"
+                                     rendered="#{productTheoricBean.isModeSelected('read')}"
+                                     ajax="false"
+                                     validateClient="false"
+                                     immediate="true"
+                                     class="ui-button-secondary"
+                                     action="#{basketBean.addBasket(productTheoricBean.elementCrudSelected)}"/>
                 </p:outputPanel>
 
             </h:form>

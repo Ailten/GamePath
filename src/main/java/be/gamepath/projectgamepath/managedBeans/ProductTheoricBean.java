@@ -119,6 +119,15 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
     public void delete(ProductTheoric productTheoric) {
 
+        if(!connectionBean.isUserHasPermission(Crud.DELETE.getTxtValue()+"-"+nameEntityForPermission)){
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.crudPage.titleErrorNoPermission"),
+                    Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
+                    false
+            );
+            return;
+        }
+
         this.elementCrudSelected = productTheoric;
 
         EntityManager em = EMF.getEM();
@@ -406,6 +415,15 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
     //}
     public void fileUploadListener(FileUploadEvent event) throws IOException {
 
+        if(!connectionBean.isUserHasPermission(Crud.CREATE.getTxtValue()+"-picture")){
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.crudPage.titleErrorNoPermission"),
+                    Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
+                    false
+            );
+            return;
+        }
+
         EntityManager em = EMF.getEM();
         PictureProductService pictureProductService = new PictureProductService();
         EntityTransaction transaction = em.getTransaction();
@@ -490,6 +508,15 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
 
     public void deletePictureProduct(PictureProduct pictureProduct) {
+
+        if(!connectionBean.isUserHasPermission(Crud.DELETE.getTxtValue()+"-picture")){
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.crudPage.titleErrorNoPermission"),
+                    Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
+                    false
+            );
+            return;
+        }
 
         EntityManager em = EMF.getEM();
         PictureProductService pictureProductService = new PictureProductService();

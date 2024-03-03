@@ -10,7 +10,7 @@ import javax.inject.Inject;
 public class CrudManaging<TEntity extends EntityGenerique> {
 
     @Inject
-    ConnectionBean connectionBean;
+    protected ConnectionBean connectionBean;
     @Inject
     protected PopUpMessageBean popUpMessageBean;
 

@@ -12,12 +12,17 @@ function eventLoadPage(urlPath){
     replacePopUpError();
 
     //set event focus input text combo box tag with class.
-    let checkBoxMenuOnFocus = document.getElementsByClassName('check-box-menu-on-focus');
-    for(let i=0; i<checkBoxMenuOnFocus.length; i++){
-        checkBoxMenuOnFocus[i].addEventListener('click', function(evnt){
-            focusOnComboBox(evnt.target.parentElement);
-        });
-    }
+    $('.check-box-menu-on-focus').on('click', function(event){
+        focusOnComboBox(event.target.parentElement);
+    });
+
+    //set event focus input text combo box tag with class.
+    //let checkBoxMenuOnFocus = document.getElementsByClassName('check-box-menu-on-focus');
+    //for(let i=0; i<checkBoxMenuOnFocus.length; i++){
+    //    checkBoxMenuOnFocus[i].addEventListener('click', function(event){
+    //        focusOnComboBox(event.target.parentElement);
+    //    });
+    //}
 
 }
 

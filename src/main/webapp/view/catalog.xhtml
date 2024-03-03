@@ -125,7 +125,7 @@
                     </p:column>
                     <p:column headerText="#{I18N['application.tableProductTheoric.buttonAddBasket']}"
                               rendered="#{connectionBean.isUserHasPermission('addbasket-product')}">
-                        <p:commandButton action="#{productTheoricBean.delete(product)}"
+                        <p:commandButton action="#{basketBean.addBasket(product)}"
                                          update="form-table-product"
                                          icon="pi pi-shopping-cart"/>
                     </p:column>
