@@ -45,6 +45,11 @@ import java.util.Objects;
                         "    ( :isShowEntityDisable = true or ( pt.isActive = true ) ) " +
                         "  ) " +
                         ")"), // and pt.releaseDate <= current_date()
+        @NamedQuery(name= "ProductTheoric.SelectManyByIdBasket",
+                query = "select pt from BasketProductTheoric bpt " +
+                        "join ProductTheoric pt on (pt.id = bpt.productTheoric.id) " +
+                        "join Basket b on (b.id = bpt.basket.id) " +
+                        "where (b.id = :idBasket)"),
 })
 @Entity
 @Table(name = "producttheoric", schema = "gamepath", catalog = "")
@@ -273,4 +278,9 @@ public class ProductTheoric extends EntityGenerique {
         this.listPictureProduct = listPictureProduct;
     }
 
+
+    //used for disable button addBasket for employe.
+    public boolean isValideForSell(){
+        return this.getIsActive() && LocalDateTime.now().isAfter(Utility.castDateToLocalDateTime(this.getReleaseDate()));
+    }
 }

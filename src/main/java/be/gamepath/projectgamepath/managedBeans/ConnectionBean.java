@@ -68,14 +68,10 @@ public class ConnectionBean implements Serializable {
                 throw new Exception("User not found");
             }
             //transaction.commit();
-        }
-        catch(Exception e)
-        {
+        }catch(Exception e){
             isError = true;
             this.user = null;
-        }
-        finally
-        {
+        }finally{
             //if(transaction.isActive())
             //    transaction.rollback();
             em.close();

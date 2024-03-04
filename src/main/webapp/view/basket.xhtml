@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
+    <ui:define name="title">
+        #{I18N['application.header.title']}
+    </ui:define>
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/basket')}"/>
+        </f:metadata>
+
+        <!-- title page -->
+        <div class="h-content">
+            <h1>
+                <h:outputText value="#{I18N['application.header.menuBasket']}"/>
+            </h1>
+        </div>
+
+        <div class="content-table-body-center">
+
+            <h:form id="form-table-basketproduct">
+
+                <!-- load basket from DB -->
+                <f:metadata>
+                    <f:event type="preRenderView" listener="#{basketBean.loadBasketFromDB()}"/>
+                </f:metadata>
+
+                <!-- table -->
+                <p:dataTable var="product"
+                             value="#{basketBean.elementCrudSelected.listProductTheoric}"
+                             sortMode="single"
+                             allowUnsorting="true"
+                             rows="10"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} sur {totalRecords}"
+                             rowsPerPageTemplate="5,10,20">
+
+
+                    <!-- ______ start column data ______ -->
+
+
+                    <p:column headerText="#{I18N['application.crudPage.headerComboBox']}"
+                              sortBy="#{product.title}">
+                        <h:outputText value="#{product.title}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelPrice']}"
+                              sortBy="#{product.priceWithReduction}">
+                        <p:outputPanel class="#{(product.hasReduction()? 'text-line-through': '')}">
+                            <h:outputText value="#{product.price}">
+                                <f:convertNumber minFractionDigits="2"/>
+                            </h:outputText>
+                            <span>€</span>
+                        </p:outputPanel>
+                        <p:outputPanel rendered="#{product.hasReduction()}" class="price-reduction">
+                            <h:outputText value="#{product.priceWithReduction}">
+                                <f:convertNumber minFractionDigits="2"/>
+                            </h:outputText>
+                            <span>€</span>
+                        </p:outputPanel>
+                    </p:column>
+
+
+                    <!-- ______ end column data ______ -->
+
+
+                    <p:column headerText="#{I18N['application.tablePage.buttonRead']}">
+                        <p:commandButton action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, product, 'read')}"
+                                         icon="pi pi-bars"/>
+                    </p:column>
+                    <p:column headerText="#{I18N['application.tablePage.buttonDelete']}"
+                              rendered="#{connectionBean.isUserHasPermission('delete-basketproduct')}">
+                        <p:commandButton action="#{basketProductTheoricBean.delete(basketBean.elementCrudSelected, product)}"
+                                         update="form-table-basketproduct"
+                                         icon="pi pi-trash"/>
+                    </p:column>
+
+
+                    <!-- table footer -->
+
+
+                    <f:facet name="footer">
+
+                        <div class="content-form-body-center">
+
+                            <!-- input float fullprice (total not editable) -->
+                            <p:outputPanel class="panel-input panel-input-without-error" rendered="#{basketBean.elementCrudSelected.listProductTheoric.size() != 0}">
+                                <p:outputLabel for="input-basket-fullprice" value="#{I18N['application.basket.labelBasketFullPrice']}"/>
+                                <p:inputNumber id="input-basket-fullprice"
+                                               disabled="true"
+                                               value="#{basketBean.elementCrudSelected.fullPrice}"
+                                               decimalPlaces="2"
+                                               decimalSeparator="#{I18N['application.crudPage.decimalSeparator']}"
+                                               thousandSeparator="'"
+                                               symbol="€"
+                                               symbolPosition="s">
+                                </p:inputNumber>
+                            </p:outputPanel>
+
+                            <!-- input enum modeOfPayement -->
+                            <p:outputPanel class="panel-input" rendered="#{basketBean.elementCrudSelected.listProductTheoric.size() != 0}">
+                                <p:outputLabel for="input-basket-payementtype" value="#{I18N['application.basket.labelBasketPayementTybe']}"/>
+                                <p:selectOneMenu id="input-basket-payementtype"
+                                                 required="true"
+                                                 disabled="false"
+                                                 value="#{basketBean.elementCrudSelected.payementType}"
+                                                 converter="PayementTypeConverter"
+                                                 validatorMessage="#{I18N['application.basket.errorPayementType']}">
+                                    <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
+                                                  itemValue="#{null}"
+                                                  itemDisabled="true"
+                                                  noSelectionOption="true"/>
+                                    <!-- import all enum -->
+                                    <p:importEnum type="be.gamepath.projectgamepath.enumeration.PayementType"
+                                                  var="enumImportPayementType"
+                                                  allSuffix="getAll"/>
+                                    <f:selectItems value="#{enumImportPayementType.getAll}"
+                                                   var="payementType"
+                                                   itemLabel="#{payementType.getTxtValue()}"
+                                                   itemValue="#{payementType}"/>
+                                    <p:ajax event="change" update="error-input-basket-payementtype, input-basket-payementtype"/>
+                                </p:selectOneMenu>
+                            </p:outputPanel>
+                            <p:outputPanel class="panel-input" rendered="#{basketBean.elementCrudSelected.listProductTheoric.size() != 0}">
+                                <p:message id="error-input-basket-payementtype" for="input-basket-payementtype"/>
+                            </p:outputPanel>
+
+
+                            <!-- submit buttons -->
+                            <p:outputPanel class="panel-input panel-submit-crud">
+                                <p:commandButton value="#{I18N['application.crudPage.buttonBackLastPage']}"
+                                                 rendered="true"
+                                                 ajax="false"
+                                                 validateClient="false"
+                                                 immediate="true"
+                                                 class="ui-button-secondary"
+                                                 action="#{historicalBean.backLastPageHistoric()}"/>
+                                <p:commandButton value="#{I18N['application.basket.buttonSubmitBasket']}"
+                                                 rendered="#{basketBean.elementCrudSelected.listProductTheoric.size() != 0}"
+                                                 ajax="false"
+                                                 validateClient="false"
+                                                 immediate="true"
+                                                 class="ui-button-success"
+                                                 action="#{basketBean.submitBasket()}"/>
+                            </p:outputPanel>
+                        </div>
+
+                    </f:facet>
+
+
+                </p:dataTable>
+
+            </h:form>
+
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

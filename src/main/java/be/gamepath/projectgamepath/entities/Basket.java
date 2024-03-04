@@ -1,8 +1,13 @@
 package be.gamepath.projectgamepath.entities;
 
+import be.gamepath.projectgamepath.enumeration.PayementType;
+import be.gamepath.projectgamepath.managedBeans.BasketBean;
+import be.gamepath.projectgamepath.managedBeans.ProductTheoricBean;
 import be.gamepath.projectgamepath.utility.EntityGenerique;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -11,10 +16,19 @@ import java.util.Objects;
                         "where (b.id = :id)"),
         @NamedQuery(name= "Basket.SelectMany",
                 query = "select b from Basket b "),
+        @NamedQuery(name= "Basket.SelectByIdUser",
+                query = "select b from Basket b " +
+                        "join User u on (b.user.id = u.id) " +
+                        "where (u.id = :idUser)"),
 })
 @Entity
 @Table(name = "basket", schema = "gamepath", catalog = "")
 public class Basket extends EntityGenerique {
+
+    public Basket(){
+        this.payementType = PayementType.MASTERCARD;
+    }
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idBasket", nullable = false)
@@ -53,5 +67,39 @@ public class Basket extends EntityGenerique {
     @Override
     public int hashCode() {
         return Objects.hash(id, user);
+    }
+
+
+    @Transient
+    private List<ProductTheoric> listProductTheoric;
+    public List<ProductTheoric> getListProductTheoric() {
+        if (this.listProductTheoric == null)
+            BasketBean.initListProductTheoric(this);
+        return this.listProductTheoric;
+    }
+    public void setListProductTheoric(List<ProductTheoric> listProductTheoric) {
+        this.listProductTheoric = listProductTheoric;
+    }
+
+
+    //return the sum of price with reduction of all product in basket.
+    public float getFullPrice(){
+        return this.getListProductTheoric().stream()
+                .map(ProductTheoric::getPriceWithReduction)
+                .reduce(0f, Float::sum);
+    }
+    public void setFullPrice(Float fullPrice){
+        /* for interact with input front */
+    }
+
+
+    @Transient
+    @NotNull
+    private PayementType payementType;
+    public PayementType getPayementType(){
+        return this.payementType;
+    }
+    public void setPayementType(PayementType payementType){
+        this.payementType = payementType;
     }
 }

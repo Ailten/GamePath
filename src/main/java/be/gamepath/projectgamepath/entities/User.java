@@ -188,6 +188,7 @@ public class User extends EntityGenerique {
 
 
 
+    @Transient
     @Inject
     private PopUpMessageBean popUpMessageBean;
 

@@ -6,16 +6,12 @@ import be.gamepath.projectgamepath.entities.*;
 import be.gamepath.projectgamepath.enumeration.Crud;
 import be.gamepath.projectgamepath.service.*;
 import be.gamepath.projectgamepath.utility.CrudManaging;
-import be.gamepath.projectgamepath.utility.FileManaging;
 import be.gamepath.projectgamepath.utility.Utility;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.file.UploadedFile;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +47,7 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             //try get an element from DB with same title, if found : error.
             if(productTheoricService.selectByTitle(em, this.elementCrudSelected.getTitle()) != null){
                 popUpMessageBean.setPopUpMessage(
-                        Utility.stringFromI18N("application.crudPage.titleSuccess"),
+                        Utility.stringFromI18N("application.crudPage.errorTitleDuplicate"),
                         Utility.stringFromI18N("application.crudProductTheoric.errorMessageTitleDuplicate"),
                         false
                 );
@@ -91,7 +87,7 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             ProductTheoric productGetByTitle = productTheoricService.selectByTitle(em, this.elementCrudSelected.getTitle());
             if(productGetByTitle != null && productGetByTitle.getId() != this.elementCrudSelected.getId()){
                 popUpMessageBean.setPopUpMessage(
-                        Utility.stringFromI18N("application.crudPage.titleSuccess"),
+                        Utility.stringFromI18N("application.crudPage.errorTitleDuplicate"),
                         Utility.stringFromI18N("application.crudProductTheoric.errorMessageTitleDuplicate"),
                         false
                 );
@@ -119,7 +115,7 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
     public void delete(ProductTheoric productTheoric) {
 
-        if(!connectionBean.isUserHasPermission(Crud.DELETE.getTxtValue()+"-"+nameEntityForPermission)){
+        if(!connectionBean.isUserHasPermission(Crud.DELETE.getTxtValue() + "-" + nameEntityForPermission)){
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.crudPage.titleErrorNoPermission"),
                     Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
@@ -142,6 +138,9 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
             //delete element into DB.
             productTheoricService.delete(em, this.elementCrudSelected);
+
+            //clean var object selected.
+            this.elementCrudSelected = null;
 
             transaction.commit();
         }catch(Exception e){
@@ -313,19 +312,14 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         EntityManager em = EMF.getEM();
         CategoryService categoryService = new CategoryService();
 
-        try
-        {
+        try{
             productTheoric.setListCategory(
                     categoryService.selectManyByIdProductTheoric(em, productTheoric.getId())
             );
-        }
-        catch(Exception e)
-        {
+        }catch(Exception e){
             Utility.debug("error into initListCategory : " + e.getMessage());
             productTheoric.setListCategory(new ArrayList<>());
-        }
-        finally
-        {
+        }finally{
             em.close();
         }
     }
@@ -338,19 +332,14 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         EntityManager em = EMF.getEM();
         PegiService pegiService = new PegiService();
 
-        try
-        {
+        try{
             productTheoric.setListPegi(
                     pegiService.selectManyByIdProductTheoric(em, productTheoric.getId())
             );
-        }
-        catch(Exception e)
-        {
+        }catch(Exception e){
             Utility.debug("error into initListPegi : " + e.getMessage());
             productTheoric.setListPegi(new ArrayList<>());
-        }
-        finally
-        {
+        }finally{
             em.close();
         }
     }
@@ -363,19 +352,14 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         EntityManager em = EMF.getEM();
         OperatingSystemService operatingSystemService = new OperatingSystemService();
 
-        try
-        {
+        try{
             productTheoric.setListOperatingSystem(
                     operatingSystemService.selectManyByIdProductTheoric(em, productTheoric.getId())
             );
-        }
-        catch(Exception e)
-        {
+        }catch(Exception e){
             Utility.debug("error into initListOperatingSystem : " + e.getMessage());
             productTheoric.setListOperatingSystem(new ArrayList<>());
-        }
-        finally
-        {
+        }finally{
             em.close();
         }
     }
@@ -388,95 +372,16 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         EntityManager em = EMF.getEM();
         LanguageService languageService = new LanguageService();
 
-        try
-        {
+        try{
             productTheoric.setListLanguage(
                     languageService.selectManyByIdProductTheoric(em, productTheoric.getId())
             );
-        }
-        catch(Exception e)
-        {
+        }catch(Exception e){
             Utility.debug("error into initListLanguage : " + e.getMessage());
             productTheoric.setListLanguage(new ArrayList<>());
-        }
-        finally
-        {
-            em.close();
-        }
-    }
-
-
-    //for image file.
-    private UploadedFile imageFile;
-    public UploadedFile getImageFile(){ return this.imageFile; }
-    public void setImageFile(UploadedFile imageFile){ this.imageFile = imageFile; }
-    //public boolean imageFileIsNull(){
-    //    return (imageFile == null && (this.elementCrudSelected.getPicture() == null || this.elementCrudSelected.getPicture().equals("")));
-    //}
-    public void fileUploadListener(FileUploadEvent event) throws IOException {
-
-        if(!connectionBean.isUserHasPermission(Crud.CREATE.getTxtValue()+"-picture")){
-            popUpMessageBean.setPopUpMessage(
-                    Utility.stringFromI18N("application.crudPage.titleErrorNoPermission"),
-                    Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
-                    false
-            );
-            return;
-        }
-
-        EntityManager em = EMF.getEM();
-        PictureProductService pictureProductService = new PictureProductService();
-        EntityTransaction transaction = em.getTransaction();
-
-        try{
-            transaction.begin();
-
-            this.imageFile = event.getFile(); //get file from event.
-
-            //save file and set picture in entity.
-            if(FileManaging.saveNewFile(this.imageFile, "pictureProduct")){ //save new file.
-                //this.elementCrudSelected.setPicture(this.imageFile.getFileName()); //save in entity the name of image.
-
-                //make entity pictureProduct.
-                PictureProduct pictureProduct = new PictureProduct();
-                if(this.elementCrudSelected.getId() == 0){
-                    popUpMessageBean.setPopUpMessage(
-                            Utility.stringFromI18N("application.crudProductTheoric.errorInputFileImageProductEmpty"),
-                            Utility.stringFromI18N("application.crudProductTheoric.errorInputFileImageProductEmpty"),
-                            false
-                    );
-                    throw new Exception("ProductTheoric has no Id (not create in DB), can't assign Id 0 has FK PictureProduct");
-                }
-                pictureProduct.setProductTheoric(this.elementCrudSelected);
-                pictureProduct.setUrlImage(this.imageFile.getFileName());
-
-                //--- error catch upper.
-
-                //insert image in DB.
-                pictureProduct = pictureProductService.insert(em, pictureProduct);
-
-                //add image push into list in product transient (import to check before, because list can be select when call).
-                if(!this.elementCrudSelected.getListPictureProduct().contains(pictureProduct)){
-                    this.elementCrudSelected.getListPictureProduct().add(pictureProduct);
-                }
-
-            }
-
-            popUpMessageBean.setPopUpMessage(
-                    Utility.stringFromI18N("application.crudProductTheoric.successInputFileImage"),
-                    Utility.stringFromI18N("application.crudProductTheoric.successInputFileImage"),
-                    true
-            );
-
-            transaction.commit();
-        }catch(Exception e){
-            Utility.debug("error into fileUploadListener : " + e.getMessage());
         }finally{
-            if(transaction.isActive())
-                transaction.rollback();
             em.close();
         }
-
     }
 
 
@@ -488,75 +393,16 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         EntityManager em = EMF.getEM();
         PictureProductService pictureProductService = new PictureProductService();
 
-        try
-        {
+        try{
             productTheoric.setListPictureProduct(
                     pictureProductService.selectManyByIdProductTheoric(em, productTheoric.getId())
             );
-        }
-        catch(Exception e)
-        {
+        }catch(Exception e){
             Utility.debug("error into initListPictureProduct : " + e.getMessage());
             productTheoric.setListPictureProduct(new ArrayList<>());
-        }
-        finally
-        {
-            em.close();
-        }
-    }
-
-
-
-    public void deletePictureProduct(PictureProduct pictureProduct) {
-
-        if(!connectionBean.isUserHasPermission(Crud.DELETE.getTxtValue()+"-picture")){
-            popUpMessageBean.setPopUpMessage(
-                    Utility.stringFromI18N("application.crudPage.titleErrorNoPermission"),
-                    Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
-                    false
-            );
-            return;
-        }
-
-        EntityManager em = EMF.getEM();
-        PictureProductService pictureProductService = new PictureProductService();
-        EntityTransaction transaction = em.getTransaction();
-
-        try{
-            transaction.begin();
-
-            //remember id of picture after delete.
-            int idPictureToDelete = pictureProduct.getId();
-
-            //delete pictureProduct.
-            pictureProductService.delete(em, pictureProduct);
-
-            //remove picture from listPicture transient.
-            this.elementCrudSelected.setListPictureProduct(
-                    this.elementCrudSelected.getListPictureProduct().stream()
-                            .filter(pp -> pp.getId() != idPictureToDelete).collect(Collectors.toList())
-            );
-
-            popUpMessageBean.setPopUpMessage(
-                    Utility.stringFromI18N("application.crudPage.successTitleDelete"),
-                    Utility.stringFromI18N("application.crudPage.successDelete"),
-                    true
-            );
-
-            transaction.commit();
-        }catch(Exception e){
-            Utility.debug("error into deletePictureProduct : " + e.getMessage());
-            popUpMessageBean.setPopUpMessage(
-                    Utility.stringFromI18N("application.crudPage.errorTitleDelete"),
-                    Utility.stringFromI18N("application.crudPage.errorDelete"),
-                    false
-            );
         }finally{
-            if(transaction.isActive())
-                transaction.rollback();
             em.close();
         }
-
     }
 
 }

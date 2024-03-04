@@ -273,9 +273,9 @@
                 <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('update')}">
                     <p:outputLabel for="input-product-inputfileimage" value="#{I18N['application.crudProductTheoric.labelInputFileImage']}"/>
                     <p:fileUpload id="input-product-inputfileimage"
-                                  value="#{productTheoricBean.imageFile}"
+                                  value="#{pictureProductBean.imageFile}"
                                   mode="advanced"
-                                  listener="#{productTheoricBean.fileUploadListener}"
+                                  listener="#{pictureProductBean.fileUploadListener}"
                                   auto="true"
                                   allowTypes="/(\.|\/)(jpe?g|png)$/"
                                   sizeLimit="102400"
@@ -295,10 +295,9 @@
                                             class="picture-resize"
                                             alt="#{I18N['application.crudProductTheoric.altImagePicture']}"/> <!-- image draw -->
                             <p:commandButton class="button-delete-picture"
-                                             action="#{productTheoricBean.deletePictureProduct(pictureProduct)}"
+                                             action="#{pictureProductBean.deletePictureProduct(pictureProduct)}"
                                              update="@form:panel-draw-picture"
                                              rendered="#{productTheoricBean.isModeSelected('update')}"
-                                             ajax="false"
                                              immediate="true"
                                              icon="pi pi-times-circle"/> <!-- button delete image -->
                         </p:outputPanel>
@@ -445,13 +444,13 @@
                                      class="ui-button-success"
                                      action="#{productTheoricBean.submitCrudForm(historicalBean)}"/>
 
-                    <p:commandButton value="#{I18N['application.crudPage.buttonBackLastPage']}"
-                                     rendered="#{productTheoricBean.isModeSelected('read')}"
+                    <p:commandButton value="#{I18N['application.tableProductTheoric.buttonAddBasket']}"
+                                     rendered="#{productTheoricBean.isModeSelected('read') and connectionBean.isUserHasPermission('create-basketproduct')}"
                                      ajax="false"
                                      validateClient="false"
                                      immediate="true"
-                                     class="ui-button-secondary"
-                                     action="#{basketBean.addBasket(productTheoricBean.elementCrudSelected)}"/>
+                                     class="ui-button-success"
+                                     action="#{basketProductTheoricBean.addBasket(productTheoricBean.elementCrudSelected)}"/>
                 </p:outputPanel>
 
             </h:form>

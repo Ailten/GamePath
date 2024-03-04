@@ -69,4 +69,11 @@ public class ProductTheoricService extends ServiceGeneric<ProductTheoric> {
         return this.selectManyByFilter(em, filter, false);
     }
 
+
+    public List<ProductTheoric> selectManyByIdBasket(EntityManager em, int idBasket){
+        return em.createNamedQuery("ProductTheoric.SelectManyByIdBasket", ProductTheoric.class)
+                .setParameter("idBasket", idBasket)
+                .getResultList();
+    }
+
 }

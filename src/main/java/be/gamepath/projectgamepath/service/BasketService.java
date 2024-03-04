@@ -35,4 +35,19 @@ public class BasketService extends ServiceGeneric<Basket> {
     }
 
 
+    /**
+     * get basket of user (if has one).
+     * @param em entity manager.
+     * @param idUser id of user ask.
+     * @return basket or null.
+     */
+    public Basket selectByIdUser(EntityManager em, int idUser){
+        return em.createNamedQuery("Basket.SelectByIdUser", Basket.class)
+                .setParameter("idUser", idUser)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+    }
+
+
 }

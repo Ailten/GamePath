@@ -136,6 +136,20 @@
     border-bottom-right-radius: 4px;
     background-color: #f8f9fa;
 }
+#content .content-table-body-center .ui-datatable:has(> .ui-datatable-footer) .ui-paginator-bottom {
+    border-radius: 0; /* if table has footer, no radius on paginator bottom */
+}
+#content .content-table-body-center .ui-datatable-tablewrapper thead tr th:first-child {
+    border-top-left-radius: 4px;
+}
+#content .content-table-body-center .ui-datatable-tablewrapper thead tr th:last-child {
+    border-top-right-radius: 4px;
+}
+#content .content-table-body-center .ui-datatable-header+ .ui-datatable-tablewrapper thead tr th:first-child,
+#content .content-table-body-center .ui-datatable-header+ .ui-datatable-tablewrapper thead tr th:last-child
+{
+    border-radius: 0; /* if table has header, no radius on th */
+}
 
 /* --- generic form crud --- */
 

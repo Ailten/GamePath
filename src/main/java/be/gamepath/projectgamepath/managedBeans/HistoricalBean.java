@@ -16,8 +16,8 @@ public class HistoricalBean implements Serializable {
 
     @PostConstruct
     public void init(){
-        this.historic = new String[]{"","","",""};
-        this.index = 10;
+        this.historic = new String[]{"","","","","","","",""};
+        this.index = 20;
     }
 
     public void saveNewPageHistoric(String url){

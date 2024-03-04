@@ -79,7 +79,7 @@ public class CrudManaging<TEntity extends EntityGenerique> {
         //load a success message and back to last page.
         if(success){
             popUpMessageBean.setPopUpMessage(
-                    Utility.stringFromI18N("application.crudPage.errorTitleDuplicate"),
+                    Utility.stringFromI18N("application.crudPage.titleSuccess"),
                     Utility.stringFromI18N("application.crudPage.messageSuccess"),
                     true
             );

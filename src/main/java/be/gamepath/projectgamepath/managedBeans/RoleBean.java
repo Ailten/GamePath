@@ -27,17 +27,12 @@ public class RoleBean implements Serializable {
         EntityManager em = EMF.getEM();
         PermissionService permissionService = new PermissionService();
 
-        try
-        {
+        try{
             role.setListPermission(permissionService.selectManyByIdRole(em, role.getId()));
-        }
-        catch(Exception e)
-        {
+        }catch(Exception e){
             Utility.debug("error into initListPermission : " + e.getMessage());
             role.setListPermission(new ArrayList<>());
-        }
-        finally
-        {
+        }finally{
             em.close();
         }
     }
