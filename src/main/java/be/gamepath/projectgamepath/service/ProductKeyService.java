@@ -1,5 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.entities.ProductKey;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
@@ -31,6 +32,14 @@ public class ProductKeyService extends ServiceGeneric<ProductKey> {
     public List<ProductKey> selectMany(EntityManager em)
     {
         return em.createNamedQuery("ProductKey.SelectMany", ProductKey.class)
+                .getResultList();
+    }
+
+
+
+    public List<ProductKey> selectManyByIdOrder(EntityManager em, int idOrder) {
+        return em.createNamedQuery("ProductKey.SelectManyByIdOrder", ProductKey.class)
+                .setParameter("idOrder", idOrder)
                 .getResultList();
     }
 

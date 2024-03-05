@@ -13,6 +13,10 @@ import java.util.Objects;
                         "where (pk.id = :id)"),
         @NamedQuery(name= "ProductKey.SelectMany",
                 query = "select pk from ProductKey pk "),
+        @NamedQuery(name= "ProductKey.SelectManyByIdOrder",
+                query = "select pk from ProductKey pk " +
+                        "join Order o on (o.id = pk.order.id) " +
+                        "where o.id = :idOrder"),
 })
 @Entity
 @Table(name = "productkey", schema = "gamepath", catalog = "")
@@ -30,9 +34,9 @@ public class ProductKey extends EntityGenerique {
     @JoinColumn(name = "idProductTheoric", nullable = false)
     private ProductTheoric productTheoric;
     @NotNull
-    @Size(min = 3, max = 255)
-    @Pattern(regexp = "^[0-9]{3,255}$") //TODO: set a valide regex.
-    @Column(name = "key", nullable = false, length = 255)
+    @Size(min = 20, max = 255)
+    @Pattern(regexp = "^[A-V0-9]{6,}-[A-V0-9]{6,}-[A-V0-9]{6,}$")
+    @Column(name = "keyCode", nullable = false, length = 255)
     private String key;
 
     @NotNull
@@ -50,7 +54,7 @@ public class ProductKey extends EntityGenerique {
     private int currentReduction;
 
     @Column(name = "isValid", nullable = false)
-    private byte isValid;
+    private boolean isValid;
 
     public int getId() {
         return id;
@@ -108,11 +112,11 @@ public class ProductKey extends EntityGenerique {
         this.currentReduction = currentReduction;
     }
 
-    public byte getIsValid() {
+    public boolean getIsValid() {
         return isValid;
     }
 
-    public void setIsValid(byte isValid) {
+    public void setIsValid(boolean isValid) {
         this.isValid = isValid;
     }
 
@@ -129,5 +133,29 @@ public class ProductKey extends EntityGenerique {
     @Override
     public int hashCode() {
         return Objects.hash(id, order, productTheoric, key, currentPriceHtva, currentTva, currentReduction, isValid);
+    }
+
+
+    //generate key.
+    public void generateKey() throws Exception {
+        if((this.order == null || this.order.getId() == 0) ||
+            this.getId() == 0 ||
+            (this.productTheoric == null || this.productTheoric.getId() == 0)
+        ){
+            throw new Exception("error can't generate key with every id.");
+        }
+
+        StringBuilder orderNum = new StringBuilder(Integer.toString(this.order.getId(), 32));
+        StringBuilder keyNum = new StringBuilder(Integer.toString(this.getId(), 32));
+        StringBuilder productNum = new StringBuilder(Integer.toString(this.productTheoric.getId(), 32));
+
+        while(orderNum.length() < 6)
+            orderNum.insert(0, "0");
+        while(keyNum.length() < 6)
+            keyNum.insert(0, "0");
+        while(productNum.length() < 6)
+            productNum.insert(0, "0");
+
+        this.key = (orderNum.toString()+"-"+keyNum.toString()+"-"+productNum.toString()).toUpperCase();
     }
 }

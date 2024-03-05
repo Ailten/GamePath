@@ -1,11 +1,15 @@
 package be.gamepath.projectgamepath.entities;
 
 import be.gamepath.projectgamepath.enumeration.PayementType;
+import be.gamepath.projectgamepath.managedBeans.OrderBean;
+import be.gamepath.projectgamepath.managedBeans.ProductTheoricBean;
 import be.gamepath.projectgamepath.utility.EntityGenerique;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -27,8 +31,9 @@ public class Order extends EntityGenerique {
     @JoinColumn(name = "idUser", nullable = false)
     private User user;
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "validateBasketDate", nullable = false)
-    private Timestamp validateBasketDate;
+    private Date validateBasketDate; //Timestamp
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -51,11 +56,11 @@ public class Order extends EntityGenerique {
         this.user = user;
     }
 
-    public Timestamp getValidateBasketDate() {
+    public Date getValidateBasketDate() {
         return validateBasketDate;
     }
 
-    public void setValidateBasketDate(Timestamp validateBasketDate) {
+    public void setValidateBasketDate(Date validateBasketDate) {
         this.validateBasketDate = validateBasketDate;
     }
 
@@ -80,5 +85,17 @@ public class Order extends EntityGenerique {
     @Override
     public int hashCode() {
         return Objects.hash(id, user, validateBasketDate, payementType);
+    }
+
+
+    @Transient
+    private List<ProductKey> listProductKey;
+    public List<ProductKey> getListProductKey() {
+        if (this.listProductKey == null)
+            OrderBean.initListProductKey(this);
+        return this.listProductKey;
+    }
+    public void setListProductKey(List<ProductKey> listProductKey) {
+        this.listProductKey = listProductKey;
     }
 }

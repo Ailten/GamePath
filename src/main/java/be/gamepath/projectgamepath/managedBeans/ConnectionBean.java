@@ -78,7 +78,7 @@ public class ConnectionBean implements Serializable {
         }
 
         if(isError)
-            return "";
+            return null;
 
         return this.redirectPage(pathHomePage);
     }

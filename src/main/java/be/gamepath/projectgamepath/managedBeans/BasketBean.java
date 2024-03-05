@@ -1,13 +1,9 @@
 package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.Basket;
-import be.gamepath.projectgamepath.entities.ProductTheoric;
+import be.gamepath.projectgamepath.entities.*;
 import be.gamepath.projectgamepath.enumeration.Crud;
-import be.gamepath.projectgamepath.service.BasketProductTheoricService;
-import be.gamepath.projectgamepath.service.BasketService;
-import be.gamepath.projectgamepath.service.PictureProductService;
-import be.gamepath.projectgamepath.service.ProductTheoricService;
+import be.gamepath.projectgamepath.service.*;
 import be.gamepath.projectgamepath.utility.CrudManaging;
 import be.gamepath.projectgamepath.utility.Utility;
 
@@ -16,6 +12,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Named
@@ -60,7 +57,97 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
 
         //TODO: create order, delete basket, redirect page home (+ do verification).
 
-        return connectionBean.getPathHomePage();
+        if(!connectionBean.isUserHasPermission(Crud.CREATE.getTxtValue() + "-order")){
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.crudPage.titleErrorNoPermission"),
+                    Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
+                    false
+            );
+            return null;
+        }
+
+        EntityManager em = EMF.getEM();
+        OrderService orderService = new OrderService();
+        ProductKeyService productKeyService = new ProductKeyService();
+        BasketProductTheoricService basketProductTheoricService = new BasketProductTheoricService();
+        BasketService basketService = new BasketService();
+        EntityTransaction transaction = em.getTransaction();
+        boolean isSuccess = false;
+
+        try{
+            transaction.begin();
+
+            //make order.
+            Order order = new Order();
+            order.setUser(this.elementCrudSelected.getUser());
+            order.setPayementType(this.elementCrudSelected.getPayementType());
+            order.setValidateBasketDate(Utility.castLocalDateTimeToDate(LocalDateTime.now()));
+
+            //insert order.
+            order = orderService.insert(em, order);
+
+            //loop on every product in basket for add to order.
+            ProductKey currentProducKey;
+            order.setListProductKey(new ArrayList<>());
+            for(ProductTheoric product : this.elementCrudSelected.getListProductTheoric()){
+                currentProducKey = new ProductKey();
+                currentProducKey.setOrder(order);
+                currentProducKey.setProductTheoric(product);
+                //currentProducKey.generateKey(); //need self id, so can't generate before insert.
+                currentProducKey.setKey("000000-000000-000000"); //set fake key placeholder.
+                currentProducKey.setCurrentPriceHtva(product.getPriceHtva());
+                currentProducKey.setCurrentTva(product.getTva());
+                currentProducKey.setCurrentReduction(product.getReduction());
+                currentProducKey.setIsValid(true);
+
+                //insert productKey.
+                currentProducKey = productKeyService.insert(em, currentProducKey);
+
+                //generate key.
+                currentProducKey.generateKey();
+
+                //update productKey (for key generated).
+                currentProducKey = productKeyService.update(em, currentProducKey);
+
+                //push in list transient.
+                order.getListProductKey().add(currentProducKey);
+            }
+
+            //if order make successfully, delete basket and his joins.
+            for(ProductTheoric product : this.elementCrudSelected.getListProductTheoric()){
+                basketProductTheoricService.delete(em,
+                        basketProductTheoricService.selectByBothId(em,
+                                this.elementCrudSelected.getId(), product.getId()));
+            }
+            basketService.delete(em, this.elementCrudSelected);
+            this.elementCrudSelected = null;
+
+            //TODO: generate PDF.
+            //TODO: send mail.
+
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.basket.titleSuccessSubmit"),
+                    Utility.stringFromI18N("application.basket.messageSuccessSubmit"),
+                    true
+            );
+
+            isSuccess = true;
+            transaction.commit();
+        }catch(Exception e){
+            Utility.debug("error into submitBasket : " + e.getMessage());
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.basket.titleErrorSubmit"),
+                    Utility.stringFromI18N("application.basket.messageErrorSubmit"),
+                    false
+            );
+            isSuccess = false;
+        }finally{
+            if(transaction.isActive())
+                transaction.rollback();
+            em.close();
+        }
+
+        return (isSuccess? connectionBean.getPathHomePage(): null);
     }
 
 

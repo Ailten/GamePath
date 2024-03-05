@@ -34,9 +34,9 @@ public class UserProductTheoric extends EntityGenerique {
     @NotNull
     @Column(name = "unlockDate", nullable = false)
     private Timestamp unlockDate;
-    @NotNull
-    @Size(min = 3, max = 255)
-    @Pattern(regexp = "^[0-9]{3,255}$") //TODO: set a valide regex.
+    //@NotNull
+    @Size(min = 20, max = 255)
+    @Pattern(regexp = "^[A-V0-9]{6,}-[A-V0-9]{6,}-[A-V0-9]{6,}$")
     @Column(name = "keyUsed", nullable = false, length = 255)
     private String keyUsed;
 

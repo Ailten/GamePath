@@ -61,23 +61,23 @@ public class CrudManaging<TEntity extends EntityGenerique> {
                     Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
                     false
             );
-            return "";
+            return null;
         }
 
         //make action crud.
-        boolean success = false;
+        boolean isSuccess = false;
         try {
             if (this.isModeSelected(Crud.CREATE))
-                success = this.insert();
+                isSuccess = this.insert();
             else if (this.isModeSelected(Crud.UPDATE))
-                success = this.update();
+                isSuccess = this.update();
         }catch(Exception e){
             Utility.debug("error into submitCrudForm : " + e.getMessage());
-            success = false;
+            isSuccess = false;
         }
 
         //load a success message and back to last page.
-        if(success){
+        if(isSuccess){
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.crudPage.titleSuccess"),
                     Utility.stringFromI18N("application.crudPage.messageSuccess"),
