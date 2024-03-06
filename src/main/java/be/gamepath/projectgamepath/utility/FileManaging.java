@@ -201,12 +201,11 @@ public class FileManaging {
             document.add(spacingElements);
             document.add(footerParagraph);
 
-            //close at end.
-            document.close();
-
         }catch(Exception e){
             Utility.debug("error catch in createPDF : " + e.getMessage());
             throw e; //throw the error before catch, only catch for print in console if the error is from createPDF function.
+        }finally{
+            document.close(); //close at end (in finally).
         }
 
         return pathPDF;
