@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.utility;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class ServiceGeneric<TEntity extends EntityGenerique> {

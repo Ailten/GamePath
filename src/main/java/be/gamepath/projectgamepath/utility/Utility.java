@@ -11,6 +11,8 @@ import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utility {
 
@@ -73,12 +75,47 @@ public class Utility {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
+
     /**
      * function to convert a date to a string
+     * @param date object date.
+     * @param pattern pattern of date you need (example: "yyyy-MM-dd hh:mm:ss").
+     * @return date in string.
      */
-    public static String castDateToString(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    public static String castDateToString(Date date, String pattern) {
+        DateFormat dateFormat = new SimpleDateFormat(pattern);
         return dateFormat.format(date);
+    }
+
+
+    //cast a float to a string, and normalize the decimals.
+    public static String castFloatToString(float floatValue, int decimalAsk) {
+        String out = Float.toString(floatValue);
+
+        Pattern patternDecimal = Pattern.compile("[.][0-9]{1,}$");
+        Matcher matcher;
+        String decimalGet;
+        while(true) {
+            matcher = patternDecimal.matcher(out);
+            if(!matcher.find())
+                break;
+            decimalGet = matcher.group(0);
+            if(decimalGet.length()-1 > decimalAsk){ //to much decimals.
+                if(decimalGet.length()-2 == 0){
+                    out = out.substring(0, out.length()-2);
+                    break; //stop if 0 decimal.
+                }
+                out = out.substring(0, out.length()-1);
+                continue;
+            }
+            if(decimalGet.length()-1 < decimalAsk){ //not enough decimals.
+                out += "0";
+                continue;
+            }
+            break;
+        }
+
+        return out;
     }
 
 }

@@ -5,12 +5,15 @@ import be.gamepath.projectgamepath.entities.*;
 import be.gamepath.projectgamepath.enumeration.Crud;
 import be.gamepath.projectgamepath.service.*;
 import be.gamepath.projectgamepath.utility.CrudManaging;
+import be.gamepath.projectgamepath.utility.FileManaging;
+import be.gamepath.projectgamepath.utility.MailManager;
 import be.gamepath.projectgamepath.utility.Utility;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -54,8 +57,6 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
 
 
     public String submitBasket(){
-
-        //TODO: create order, delete basket, redirect page home (+ do verification).
 
         if(!connectionBean.isUserHasPermission(Crud.CREATE.getTxtValue() + "-order")){
             popUpMessageBean.setPopUpMessage(
@@ -122,8 +123,18 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             basketService.delete(em, this.elementCrudSelected);
             this.elementCrudSelected = null;
 
-            //TODO: generate PDF.
-            //TODO: send mail.
+            //create PDF file.
+            String pathPDF = FileManaging.createPDFOrder(order);
+
+            //email to the user.
+            MailManager.sendMail(
+                    order.getUser().getEmail(),
+                    "Votre commande",
+                    "Votre commande à bien été passée ! \n\n" +
+                            "Vous trouverez ci-dessous les détailles de votre commande. \n\n" +
+                            "L'équipe de GamePath vous remercie.",
+                    pathPDF
+            );
 
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.basket.titleSuccessSubmit"),

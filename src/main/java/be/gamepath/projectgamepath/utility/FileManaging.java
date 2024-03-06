@@ -1,5 +1,11 @@
 package be.gamepath.projectgamepath.utility;
 
+import be.gamepath.projectgamepath.entities.Order;
+import be.gamepath.projectgamepath.entities.ProductKey;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.primefaces.model.file.UploadedFile;
 
 import java.io.File;
@@ -7,6 +13,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileManaging {
 
@@ -15,19 +22,19 @@ public class FileManaging {
     private static final String FOLDER_PATH_APPLY = "http://localhost/imageFolderLocalHost/";
     private static final String DEFAULT_FILE = "default.png";
 
+    private static final String FOLDER_DOCUMENT = "pdf/";
 
-    public static boolean saveNewFile(UploadedFile uploadingFile){
-        return FileManaging.saveNewFile(uploadingFile, null);
-    }
 
-    //save a file (from input file).
+
+
+    //save a file (from input file, like image).
     public static boolean saveNewFile(UploadedFile uploadingFile, String pathFolder){
         boolean out = false;
 
         //instance file and path.
         File file = new File(
                 FOLDER_PATH_DOWNLOAD +
-                (pathFolder != null? pathFolder + "/": "") +
+                (pathFolder == null || pathFolder.equals("")? "": pathFolder + "/") +
                 uploadingFile.getFileName()
         );
         Path filePath = file.toPath();
@@ -47,6 +54,10 @@ public class FileManaging {
         return out;
     }
 
+    public static boolean saveNewFile(UploadedFile uploadingFile){
+        return FileManaging.saveNewFile(uploadingFile, null);
+    }
+
 
 
     //get seed of file in folder download.
@@ -64,6 +75,141 @@ public class FileManaging {
     }
     public static String getDefaultUrlForApply(){
         return getUrlForApply(DEFAULT_FILE);
+    }
+
+
+
+    /**
+     * function to create a file PDF.
+     * @param order entity order (already in DB), used for get data to print in pdf.
+     * @return full path of file PDF create (C://---/---.pdf).
+     */
+    public static String createPDFOrder(Order order) throws Exception {
+
+        if(order.getId() == 0){
+            Utility.debug("error catch in createPDFOrder, order id equals 0.");
+            throw new Exception("order invalid");
+        }
+
+        //prepare file name and path.
+        String namePDF = "commande_"+order.getId();
+        String pathPDF = FOLDER_PATH_DOWNLOAD + FOLDER_DOCUMENT + namePDF + ".pdf";
+
+        //prepare document.
+        Document document = new Document();
+
+        try {
+
+            //prepare to write on document.
+            PdfWriter.getInstance(document, Files.newOutputStream(Paths.get(pathPDF)));
+            document.open();
+
+            //create font need for the pdf.
+            Font fontTitle = new Font(Font.FontFamily.HELVETICA); //font for title.
+            fontTitle.setSize(18);
+            fontTitle.setStyle(Font.BOLD);
+            fontTitle.isUnderlined();
+            Font fontTable = new Font(Font.FontFamily.HELVETICA); //font for text in table data.
+            fontTable.setSize(12);
+            Font fontTableHeader = new Font(Font.FontFamily.HELVETICA); //font for text table header.
+            fontTableHeader.setSize(12);
+            fontTableHeader.setStyle(Font.BOLD);
+            Font fontTableMoney = new Font(Font.FontFamily.HELVETICA); //font for text table money.
+            fontTableMoney.setSize(12);
+            Font fontTableMoneyCrossed = new Font(Font.FontFamily.HELVETICA); //font for text table money (crossed).
+            fontTableMoneyCrossed.setSize(12);
+            fontTableMoneyCrossed.setStyle(Font.STRIKETHRU);
+
+            //create spacing elements.
+            Paragraph spacingElements = new Paragraph(" ");
+            spacingElements.setExtraParagraphSpace(10f);
+
+            //logo of society.
+            Image imageLogo = Image.getInstance(FOLDER_PATH_DOWNLOAD + "logoGamePath.png");
+            imageLogo.scaleAbsolute(125f, 60f);
+
+            //title.
+            Paragraph titleParagraph = new Paragraph("Commande", fontTitle);
+            titleParagraph.setAlignment(Element.ALIGN_CENTER);
+            titleParagraph.setMultipliedLeading(1.5f); //spacing top.
+
+            //paragraph user name.
+            Paragraph paragraphUser = new Paragraph("Commande de "+order.getUser().getLastName()+" "+order.getUser().getFirstName()+".", fontTable);
+            paragraphUser.add("\n");
+            paragraphUser.add("Passée le "+Utility.castDateToString(order.getValidateBasketDate(), "dd/MM/yyyy"));
+
+            //create table of data.
+            float[] tableColumnWidth = {150f, 150f, 150f}; //width.
+            PdfPTable table = new PdfPTable(tableColumnWidth);
+            String[] tableTitles = {"Produit", "Clef d'activation", "Prix"}; //th.
+            PdfPCell cell;
+            Paragraph paragraph;
+            for(String tableTitle : tableTitles){ //make table header.
+                cell = new PdfPCell();
+                paragraph = new Paragraph(tableTitle, fontTableHeader);
+                cell.addElement(paragraph);
+                table.addCell(cell);
+            }
+            for(ProductKey productKey : order.getListProductKey()){ //lines of td.
+                cell = new PdfPCell(); //product column.
+                cell.addElement(new Paragraph(productKey.getProductTheoric().getTitle(), fontTable));
+                table.addCell(cell);
+
+                cell = new PdfPCell(); //key column.
+                cell.addElement(new Paragraph(productKey.getKey(), fontTable));
+                table.addCell(cell);
+
+                cell = new PdfPCell(); //price column.
+                if(productKey.getProductTheoric().hasReduction()){ //line with price crossed (before reduction).
+                    paragraph = new Paragraph(Utility.castFloatToString(productKey.getProductTheoric().getPrice(), 2)+" €", fontTableMoneyCrossed);
+                    paragraph.setAlignment(Element.ALIGN_RIGHT);
+                    cell.addElement(paragraph);
+                }
+                paragraph = new Paragraph(Utility.castFloatToString(productKey.getProductTheoric().getPriceWithReduction(), 2)+" €", fontTableMoney);
+                paragraph.setAlignment(Element.ALIGN_RIGHT);
+                cell.addElement(paragraph);
+                table.addCell(cell);
+            }
+
+            //create second table for total.
+            float[] tableTotalColumnWidth = {0f}; //width.
+            for(float columnWidth : tableColumnWidth)
+                tableTotalColumnWidth[0] += columnWidth;
+            PdfPTable tableTotal = new PdfPTable(tableTotalColumnWidth);
+            cell = new PdfPCell();
+            float total = order.getListProductKey().stream() //sum of order.
+                    .map(pk -> pk.getProductTheoric().getPriceWithReduction())
+                    .reduce(0f, Float::sum);
+            paragraph = new Paragraph("Total : "+Utility.castFloatToString(total,2)+" €", fontTableMoney);
+            paragraph.setAlignment(Element.ALIGN_RIGHT);
+            cell.addElement(paragraph);
+            tableTotal.addCell(cell);
+
+            //footer page.
+            Paragraph footerParagraph = new Paragraph("L'équipe de GamePath vous remercie.", fontTable);
+
+            //write in document.
+            document.add(imageLogo);
+            document.add(spacingElements);
+            document.add(titleParagraph);
+            document.add(spacingElements);
+            document.add(paragraphUser);
+            document.add(spacingElements);
+            document.add(table);
+            document.add(spacingElements);
+            document.add(tableTotal);
+            document.add(spacingElements);
+            document.add(footerParagraph);
+
+            //close at end.
+            document.close();
+
+        }catch(Exception e){
+            Utility.debug("error catch in createPDF : " + e.getMessage());
+            throw e; //throw the error before catch, only catch for print in console if the error is from createPDF function.
+        }
+
+        return pathPDF;
     }
 
 }
