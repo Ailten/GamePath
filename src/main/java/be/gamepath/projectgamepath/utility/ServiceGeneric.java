@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
 public class ServiceGeneric<TEntity extends EntityGenerique> {
 
     /**
@@ -33,6 +34,7 @@ public class ServiceGeneric<TEntity extends EntityGenerique> {
      * @param entityToInsert entity to insert.
      * @return entity inserted.
      */
+    @Transactional(rollbackOn = Exception.class)
     public TEntity insert(EntityManager em, TEntity entityToInsert)
     {
         em.persist(entityToInsert);
@@ -46,6 +48,7 @@ public class ServiceGeneric<TEntity extends EntityGenerique> {
      * @param em entity manager.
      * @return entity updated.
      */
+    @Transactional(rollbackOn = Exception.class)
     public TEntity update(EntityManager em, TEntity entityToUpdate)
     {
         em.merge(entityToUpdate);
@@ -58,6 +61,7 @@ public class ServiceGeneric<TEntity extends EntityGenerique> {
      * @param em entity manager.
      * @param entityToDelete entity to delete.
      */
+    @Transactional(rollbackOn = Exception.class)
     public void delete(EntityManager em, TEntity entityToDelete){
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);

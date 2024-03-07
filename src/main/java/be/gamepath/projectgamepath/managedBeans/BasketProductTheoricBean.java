@@ -71,6 +71,7 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
 
             transaction.commit();
         }catch(Exception e){
+            transaction.rollback();
             Utility.debug("error into addBasket : " + e.getMessage());
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.crudPage.errorTitleInsert"),
@@ -78,8 +79,6 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
                     false
             );
         }finally{
-            if(transaction.isActive())
-                transaction.rollback();
             em.close();
         }
 
@@ -132,6 +131,7 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
 
             transaction.commit();
         }catch(Exception e){
+            transaction.rollback();
             Utility.debug("error into delete : " + e.getMessage());
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.crudPage.errorTitleDelete"),
@@ -139,8 +139,6 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
                     false
             );
         }finally{
-            if(transaction.isActive())
-                transaction.rollback();
             em.close();
         }
 

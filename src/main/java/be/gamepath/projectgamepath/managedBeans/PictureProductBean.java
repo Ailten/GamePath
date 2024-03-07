@@ -93,10 +93,9 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
 
             transaction.commit();
         }catch(Exception e){
+            transaction.rollback();
             Utility.debug("error into fileUploadListener : " + e.getMessage());
         }finally{
-            if(transaction.isActive())
-                transaction.rollback();
             em.close();
         }
 
@@ -142,6 +141,7 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
 
             transaction.commit();
         }catch(Exception e){
+            transaction.rollback();
             Utility.debug("error into deletePictureProduct : " + e.getMessage());
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.crudPage.errorTitleDelete"),
@@ -149,8 +149,6 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
                     false
             );
         }finally{
-            if(transaction.isActive())
-                transaction.rollback();
             em.close();
         }
 

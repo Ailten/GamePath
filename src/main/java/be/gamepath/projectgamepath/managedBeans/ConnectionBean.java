@@ -48,13 +48,12 @@ public class ConnectionBean implements Serializable {
 
         EntityManager em = EMF.getEM();
         UserService userService = new UserService();
-        //EntityTransaction transaction = em.getTransaction();
         boolean isError = false;
 
         this.user = new User();
 
         try{
-            //transaction.begin();
+
             this.user = userService.selectUserByLogin(em, login);
 
             if(this.user == null || //no user with this login was found in DB.
@@ -67,13 +66,11 @@ public class ConnectionBean implements Serializable {
                 );
                 throw new Exception("User not found");
             }
-            //transaction.commit();
+
         }catch(Exception e){
             isError = true;
             this.user = null;
         }finally{
-            //if(transaction.isActive())
-            //    transaction.rollback();
             em.close();
         }
 

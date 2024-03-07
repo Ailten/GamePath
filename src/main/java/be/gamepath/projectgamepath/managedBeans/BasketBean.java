@@ -94,7 +94,6 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
                 currentProducKey = new ProductKey();
                 currentProducKey.setOrder(order);
                 currentProducKey.setProductTheoric(product);
-                //currentProducKey.generateKey(); //need self id, so can't generate before insert.
                 currentProducKey.setKey("000000-000000-000000"); //set fake key placeholder.
                 currentProducKey.setCurrentPriceHtva(product.getPriceHtva());
                 currentProducKey.setCurrentTva(product.getTva());
@@ -123,6 +122,9 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             basketService.delete(em, this.elementCrudSelected);
             this.elementCrudSelected = null;
 
+            if(order.getId() != 0)
+                throw new Exception("fake error");
+
             //create PDF file.
             String pathPDF = FileManaging.createPDFOrder(order);
 
@@ -145,6 +147,7 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             isSuccess = true;
             transaction.commit();
         }catch(Exception e){
+            transaction.rollback();
             Utility.debug("error into submitBasket : " + e.getMessage());
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.basket.titleErrorSubmit"),
@@ -153,8 +156,6 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             );
             isSuccess = false;
         }finally{
-            if(transaction.isActive())
-                transaction.rollback();
             em.close();
         }
 
