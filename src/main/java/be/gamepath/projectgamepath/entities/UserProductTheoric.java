@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @NamedQueries(value = {
@@ -15,6 +16,9 @@ import java.util.Objects;
                         "where (upt.id = :id)"),
         @NamedQuery(name= "UserProductTheoric.SelectMany",
                 query = "select upt from UserProductTheoric upt "),
+        @NamedQuery(name= "UserProductTheoric.SelectByBothId",
+                query = "select upt from UserProductTheoric upt " +
+                        "where (upt.user.id = :idUser and upt.productTheoric.id = :idProductTheoric)"),
 })
 @Entity
 @Table(name = "userproducttheoric", schema = "gamepath", catalog = "")
@@ -32,8 +36,9 @@ public class UserProductTheoric extends EntityGenerique {
     private ProductTheoric productTheoric;
 
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "unlockDate", nullable = false)
-    private Timestamp unlockDate;
+    private Date unlockDate;
     //@NotNull
     @Size(min = 20, max = 255)
     @Pattern(regexp = "^[A-V0-9]{6,}-[A-V0-9]{6,}-[A-V0-9]{6,}$")
@@ -64,11 +69,11 @@ public class UserProductTheoric extends EntityGenerique {
         this.productTheoric = productTheoric;
     }
 
-    public Timestamp getUnlockDate() {
+    public Date getUnlockDate() {
         return unlockDate;
     }
 
-    public void setUnlockDate(Timestamp unlockDate) {
+    public void setUnlockDate(Date unlockDate) {
         this.unlockDate = unlockDate;
     }
 

@@ -2,6 +2,7 @@ package be.gamepath.projectgamepath.utility;
 
 import be.gamepath.projectgamepath.entities.Order;
 import be.gamepath.projectgamepath.entities.ProductKey;
+import com.itextpdf.kernel.colors.WebColors;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -114,22 +115,29 @@ public class FileManaging {
             Font fontTableHeader = new Font(Font.FontFamily.HELVETICA); //font for text table header.
             fontTableHeader.setSize(12);
             fontTableHeader.setStyle(Font.BOLD);
-            Font fontTableMoney = new Font(Font.FontFamily.HELVETICA); //font for text table money.
-            fontTableMoney.setSize(12);
-            Font fontTableMoneyCrossed = new Font(Font.FontFamily.HELVETICA); //font for text table money (crossed).
-            fontTableMoneyCrossed.setSize(12);
-            fontTableMoneyCrossed.setStyle(Font.STRIKETHRU);
+            Font fontTableCrossed = new Font(Font.FontFamily.HELVETICA); //font for text table money (crossed).
+            fontTableCrossed.setSize(12);
+            fontTableCrossed.setStyle(Font.STRIKETHRU);
+            Font fontAddress = new Font(Font.FontFamily.HELVETICA); //font for text address game path.
+            fontAddress.setSize(9);
 
             //create spacing elements.
             Paragraph spacingElements = new Paragraph(" ");
             spacingElements.setExtraParagraphSpace(10f);
 
+
             //logo of society.
             Image imageLogo = Image.getInstance(FOLDER_PATH_DOWNLOAD + "logoGamePath.png");
             imageLogo.scaleAbsolute(125f, 60f);
 
+            //address game path.
+            Paragraph addressGamePath = new Paragraph("Boulevard Joseph Tirou, 42", fontAddress);
+            addressGamePath.add("\n");
+            addressGamePath.add("6000 Charleroi (Belgique)");
+            spacingElements.setExtraParagraphSpace(10f);
+
             //title.
-            Paragraph titleParagraph = new Paragraph("Commande", fontTitle);
+            Paragraph titleParagraph = new Paragraph("Détailles de commande "+order.getId(), fontTitle);
             titleParagraph.setAlignment(Element.ALIGN_CENTER);
             titleParagraph.setMultipliedLeading(1.5f); //spacing top.
 
@@ -139,35 +147,49 @@ public class FileManaging {
             paragraphUser.add("Passée le "+Utility.castDateToString(order.getValidateBasketDate(), "dd/MM/yyyy"));
 
             //create table of data.
-            float[] tableColumnWidth = {150f, 150f, 150f}; //width.
+            float[] tableColumnWidth = {150f, 220f, 130f, 100f}; //width.
             PdfPTable table = new PdfPTable(tableColumnWidth);
-            String[] tableTitles = {"Produit", "Clef d'activation", "Prix"}; //th.
+            String[] tableTitles = {"Produit", "Clef d'activation", "Réduction", "Prix"}; //th.
             PdfPCell cell;
             Paragraph paragraph;
             for(String tableTitle : tableTitles){ //make table header.
                 cell = new PdfPCell();
                 paragraph = new Paragraph(tableTitle, fontTableHeader);
                 cell.addElement(paragraph);
+                cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                cell.setPadding(6f);
                 table.addCell(cell);
             }
             for(ProductKey productKey : order.getListProductKey()){ //lines of td.
                 cell = new PdfPCell(); //product column.
                 cell.addElement(new Paragraph(productKey.getProductTheoric().getTitle(), fontTable));
+                cell.setPadding(6f);
                 table.addCell(cell);
 
                 cell = new PdfPCell(); //key column.
                 cell.addElement(new Paragraph(productKey.getKey(), fontTable));
+                cell.setPadding(6f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(); //reduction column.
+                paragraph = new Paragraph(" ", fontTable);
+                if(productKey.getProductTheoric().hasReduction())
+                    paragraph.add(productKey.getProductTheoric().getReduction()+"%");
+                paragraph.setAlignment(Element.ALIGN_RIGHT);
+                cell.addElement(paragraph);
+                cell.setPadding(6f);
                 table.addCell(cell);
 
                 cell = new PdfPCell(); //price column.
                 if(productKey.getProductTheoric().hasReduction()){ //line with price crossed (before reduction).
-                    paragraph = new Paragraph(Utility.castFloatToString(productKey.getProductTheoric().getPrice(), 2)+" €", fontTableMoneyCrossed);
+                    paragraph = new Paragraph(Utility.castFloatToString(productKey.getProductTheoric().getPrice(), 2)+" €", fontTableCrossed);
                     paragraph.setAlignment(Element.ALIGN_RIGHT);
                     cell.addElement(paragraph);
                 }
-                paragraph = new Paragraph(Utility.castFloatToString(productKey.getProductTheoric().getPriceWithReduction(), 2)+" €", fontTableMoney);
+                paragraph = new Paragraph(Utility.castFloatToString(productKey.getProductTheoric().getPriceWithReduction(), 2)+" €", fontTable);
                 paragraph.setAlignment(Element.ALIGN_RIGHT);
                 cell.addElement(paragraph);
+                cell.setPadding(6f);
                 table.addCell(cell);
             }
 
@@ -180,9 +202,10 @@ public class FileManaging {
             float total = order.getListProductKey().stream() //sum of order.
                     .map(pk -> pk.getProductTheoric().getPriceWithReduction())
                     .reduce(0f, Float::sum);
-            paragraph = new Paragraph("Total : "+Utility.castFloatToString(total,2)+" €", fontTableMoney);
+            paragraph = new Paragraph("Total : "+Utility.castFloatToString(total,2)+" €", fontTable);
             paragraph.setAlignment(Element.ALIGN_RIGHT);
             cell.addElement(paragraph);
+            cell.setPadding(6f);
             tableTotal.addCell(cell);
 
             //footer page.
@@ -190,6 +213,7 @@ public class FileManaging {
 
             //write in document.
             document.add(imageLogo);
+            document.add(addressGamePath);
             document.add(spacingElements);
             document.add(titleParagraph);
             document.add(spacingElements);

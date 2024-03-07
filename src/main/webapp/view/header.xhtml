@@ -116,6 +116,18 @@
                         action="#{connectionBean.redirectPage(null)}"/> <!-- TODO: page listOrders -->
         </p:submenu>
 
+        <!-- user's products -->
+        <p:submenu label="#{I18N['application.header.menuListLibrary']}"
+                   icon="pi pi-fw pi-bars"
+                   rendered="#{connectionBean.isUserHasPermission('create-basketproduct')}"> <!-- min permission for this submenu -->
+            <p:menuitem value="#{I18N['application.header.menuListLibrary']}"
+                        icon="pi pi-fw pi-bars"
+                        action="#{connectionBean.redirectPage(null)}"/> <!-- TODO: page listUserProducts -->
+            <p:menuitem value="#{I18N['application.header.menuUseProductKey']}"
+                        icon="pi pi-fw pi-plus"
+                        action="#{connectionBean.redirectCrudPage('/view/unlockProductKey', userProductTheoricBean, null, 'create')}"/>
+        </p:submenu>
+
 
 
     </p:menubar>

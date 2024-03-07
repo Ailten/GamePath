@@ -44,4 +44,14 @@ public class ProductKeyService extends ServiceGeneric<ProductKey> {
     }
 
 
+
+    public ProductKey selectByKeyCode(EntityManager em, String key) {
+        return em.createNamedQuery("ProductKey.SelectByKeyCode", ProductKey.class)
+                .setParameter("key", key)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+    }
+
+
 }

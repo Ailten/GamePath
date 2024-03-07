@@ -35,4 +35,14 @@ public class UserProductTheoricService extends ServiceGeneric<UserProductTheoric
     }
 
 
+
+    public UserProductTheoric selectByBothId(EntityManager em, int idUser, int idProductTheoric){
+        return em.createNamedQuery("UserProductTheoric.SelectByBothId", UserProductTheoric.class)
+                .setParameter("idUser", idUser)
+                .setParameter("idProductTheoric", idProductTheoric)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+    }
+
 }

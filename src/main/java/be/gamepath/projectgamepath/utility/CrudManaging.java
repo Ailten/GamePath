@@ -50,7 +50,7 @@ public class CrudManaging<TEntity extends EntityGenerique> {
 
 
     protected String nameEntityForPermission;
-    public String submitCrudForm(HistoricalBean historicalBean){
+    private boolean trySubmitCrudForm(){
 
         //verify permission user.
         String permissionExpected = this.modeSelected.getTxtValue() + "-" + nameEntityForPermission;
@@ -61,7 +61,7 @@ public class CrudManaging<TEntity extends EntityGenerique> {
                     Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
                     false
             );
-            return null;
+            return false;
         }
 
         //make action crud.
@@ -83,10 +83,19 @@ public class CrudManaging<TEntity extends EntityGenerique> {
                     Utility.stringFromI18N("application.crudPage.messageSuccess"),
                     true
             );
-            return historicalBean.backLastPageHistoric(); //back to last page.
+            return true; //back to last page.
         }
 
-        return null; //if error, stay same page.
+        return false; //if error, stay same page.
+    }
+    public String submitCrudForm(HistoricalBean historicalBean){
+        return (trySubmitCrudForm()? historicalBean.backLastPageHistoric(): null);
+    }
+    public String submitCrudForm(String redirectPage){
+        return (trySubmitCrudForm()? redirectPage: null);
+    }
+    public String submitCrudForm(){
+        return (trySubmitCrudForm()? connectionBean.getPathHomePage(): null);
     }
 
     protected boolean insert() throws Exception {

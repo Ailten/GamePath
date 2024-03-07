@@ -17,6 +17,9 @@ import java.util.Objects;
                 query = "select pk from ProductKey pk " +
                         "join Order o on (o.id = pk.order.id) " +
                         "where o.id = :idOrder"),
+        @NamedQuery(name= "ProductKey.SelectByKeyCode",
+                query = "select pk from ProductKey pk " +
+                        "where pk.key = :key"),
 })
 @Entity
 @Table(name = "productkey", schema = "gamepath", catalog = "")
