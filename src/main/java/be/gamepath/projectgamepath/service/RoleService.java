@@ -6,6 +6,7 @@ import be.gamepath.projectgamepath.entities.RolePermission;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class RoleService extends ServiceGeneric<Role> {

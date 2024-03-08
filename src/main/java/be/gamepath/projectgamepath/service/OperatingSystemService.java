@@ -5,6 +5,7 @@ import be.gamepath.projectgamepath.entities.OperatingSystem;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class OperatingSystemService extends ServiceGeneric<OperatingSystem> {

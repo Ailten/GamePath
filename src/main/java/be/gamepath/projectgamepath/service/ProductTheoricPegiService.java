@@ -5,6 +5,7 @@ import be.gamepath.projectgamepath.entities.ProductTheoricPegi;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 public class ProductTheoricPegiService extends ServiceGeneric<ProductTheoricPegi> {
 

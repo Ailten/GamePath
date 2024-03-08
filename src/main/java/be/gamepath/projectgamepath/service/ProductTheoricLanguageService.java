@@ -5,6 +5,7 @@ import be.gamepath.projectgamepath.entities.ProductTheoricLanguage;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 public class ProductTheoricLanguageService extends ServiceGeneric<ProductTheoricLanguage> {
 

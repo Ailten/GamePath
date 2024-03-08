@@ -13,7 +13,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -156,6 +155,8 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             );
             isSuccess = false;
         }finally{
+            if(transaction.isActive()) //last security.
+                transaction.rollback();
             em.close();
         }
 

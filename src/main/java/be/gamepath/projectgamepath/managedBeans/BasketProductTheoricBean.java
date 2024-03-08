@@ -79,6 +79,8 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
                     false
             );
         }finally{
+            if(transaction.isActive()) //last security.
+                transaction.rollback();
             em.close();
         }
 
@@ -139,6 +141,8 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
                     false
             );
         }finally{
+            if(transaction.isActive()) //last security.
+                transaction.rollback();
             em.close();
         }
 

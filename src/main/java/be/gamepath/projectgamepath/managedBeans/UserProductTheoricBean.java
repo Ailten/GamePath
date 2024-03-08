@@ -95,6 +95,8 @@ public class UserProductTheoricBean extends CrudManaging<UserProductTheoric> imp
             Utility.debug("Error catch in insert : " + e.getMessage());
             isSuccess = false;
         }finally{
+            if(transaction.isActive()) //last security.
+                transaction.rollback();
             em.close();
         }
 

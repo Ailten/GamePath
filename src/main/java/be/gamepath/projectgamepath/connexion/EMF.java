@@ -12,12 +12,12 @@ import javax.persistence.Persistence;
  */
 public class EMF {
 
-    protected EntityManager em;
+//    protected EntityManager em;
 
     private static EntityManagerFactory emfInstance =
             Persistence.createEntityManagerFactory("gamepath");
 
-//    //public EMF(){
+//    public EMF(){
 //        this.em = EMF.getEM();
 //    }
 
@@ -29,26 +29,12 @@ public class EMF {
 //        return this.em.getTransaction();
 //    }
 
-    public static EntityManagerFactory getEMF() {
-        return emfInstance;
-    }
+//    public static EntityManagerFactory getEMF() {
+//        return emfInstance;
+//    }
 
     public static EntityManager getEM() {
         return emfInstance.createEntityManager();
     }
 
-    /*	Create EntityManager in others classes
-     * EntityManager em = EMF.getEM();
-     * try {
-     *     // ... do stuff with em ...
-     * } finally {
-     *        mettre le roolback si jamais
-     *        if isActive()
-     *         {
-     *             rollback
-     *         }
-     *     em.close();
-     * }
-     * // voir page 135 du cours de jpa
-     * */
 }

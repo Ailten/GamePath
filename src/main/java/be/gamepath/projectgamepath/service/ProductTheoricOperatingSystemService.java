@@ -5,6 +5,7 @@ import be.gamepath.projectgamepath.entities.ProductTheoricOperatingSystem;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 public class ProductTheoricOperatingSystemService extends ServiceGeneric<ProductTheoricOperatingSystem> {
 

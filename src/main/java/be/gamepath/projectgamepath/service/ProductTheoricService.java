@@ -8,6 +8,7 @@ import be.gamepath.projectgamepath.utility.ServiceGeneric;
 import be.gamepath.projectgamepath.utility.Utility;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;

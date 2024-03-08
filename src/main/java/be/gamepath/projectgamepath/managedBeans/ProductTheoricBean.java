@@ -66,6 +66,8 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             transaction.rollback();
             success = false;
         }finally{
+            if(transaction.isActive()) //last security.
+                transaction.rollback();
             em.close();
         }
 
@@ -105,6 +107,8 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             transaction.rollback();
             success = false;
         }finally{
+            if(transaction.isActive()) //last security.
+                transaction.rollback();
             em.close();
         }
 
@@ -145,6 +149,8 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             transaction.rollback();
             Utility.debug("error into delete : " + e.getMessage());
         }finally{
+            if(transaction.isActive()) //last security.
+                transaction.rollback();
             em.close();
         }
 

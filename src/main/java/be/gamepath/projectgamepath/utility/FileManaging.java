@@ -134,7 +134,7 @@ public class FileManaging {
             Paragraph addressGamePath = new Paragraph("Boulevard Joseph Tirou, 42", fontAddress);
             addressGamePath.add("\n");
             addressGamePath.add("6000 Charleroi (Belgique)");
-            spacingElements.setExtraParagraphSpace(10f);
+            addressGamePath.setExtraParagraphSpace(10f);
 
             //title.
             Paragraph titleParagraph = new Paragraph("Détailles de commande "+order.getId(), fontTitle);

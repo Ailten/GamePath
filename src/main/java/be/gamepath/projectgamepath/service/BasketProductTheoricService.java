@@ -5,6 +5,7 @@ import be.gamepath.projectgamepath.entities.ProductTheoricCategory;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 public class BasketProductTheoricService extends ServiceGeneric<BasketProductTheoric> {
 

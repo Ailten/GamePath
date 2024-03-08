@@ -4,6 +4,7 @@ import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class CategoryService extends ServiceGeneric<Category> {

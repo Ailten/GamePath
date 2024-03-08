@@ -5,6 +5,7 @@ import be.gamepath.projectgamepath.entities.Pegi;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class PegiService extends ServiceGeneric<Pegi> {

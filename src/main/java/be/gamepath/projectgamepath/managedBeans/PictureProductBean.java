@@ -96,6 +96,8 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
             transaction.rollback();
             Utility.debug("error into fileUploadListener : " + e.getMessage());
         }finally{
+            if(transaction.isActive()) //last security.
+                transaction.rollback();
             em.close();
         }
 
@@ -149,6 +151,8 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
                     false
             );
         }finally{
+            if(transaction.isActive()) //last security.
+                transaction.rollback();
             em.close();
         }
 
