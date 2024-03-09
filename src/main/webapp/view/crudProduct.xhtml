@@ -411,7 +411,7 @@
                 </p:outputPanel>
 
                 <!-- input boolean active -->
-                <p:outputPanel class="panel-input" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
+                <p:outputPanel class="panel-input panel-input-without-error" rendered="#{productTheoricBean.isModeSelected('create', 'update')}">
                     <p:outputLabel for="input-product-active" value="#{I18N['application.crudPage.labelActive']}"/>
                     <p:selectBooleanCheckbox id="input-product-active"
                                              value="#{productTheoricBean.elementCrudSelected.isActive}"/>

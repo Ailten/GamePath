@@ -4,7 +4,6 @@ import be.gamepath.projectgamepath.entities.Order;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
 
 public class OrderService extends ServiceGeneric<Order> {
@@ -32,6 +31,19 @@ public class OrderService extends ServiceGeneric<Order> {
     public List<Order> selectMany(EntityManager em)
     {
         return em.createNamedQuery("Order.SelectMany", Order.class)
+                .getResultList();
+    }
+
+
+    public List<Order> selectManyByFilter(EntityManager em, String filter){
+        return em.createNamedQuery("Order.SelectManyByFilter", Order.class)
+                .setParameter("filter", filter)
+                .getResultList();
+    }
+    public List<Order> selectManyByFilterOneUser(EntityManager em, String filter, int idUser){
+        return em.createNamedQuery("Order.SelectManyByFilterOneUser", Order.class)
+                .setParameter("filter", filter)
+                .setParameter("idUser", idUser)
                 .getResultList();
     }
 

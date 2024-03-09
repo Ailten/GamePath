@@ -8,11 +8,14 @@ import be.gamepath.projectgamepath.utility.CrudManaging;
 import be.gamepath.projectgamepath.utility.FileManaging;
 import be.gamepath.projectgamepath.utility.MailManager;
 import be.gamepath.projectgamepath.utility.Utility;
+import org.eclipse.persistence.internal.jpa.transaction.EntityTransactionImpl;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -55,6 +58,7 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
     }
 
 
+
     public String submitBasket(){
 
         if(!connectionBean.isUserHasPermission(Crud.CREATE.getTxtValue() + "-order")){
@@ -71,6 +75,7 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
         ProductKeyService productKeyService = new ProductKeyService();
         BasketProductTheoricService basketProductTheoricService = new BasketProductTheoricService();
         BasketService basketService = new BasketService();
+        UserProductTheoricService userProductTheoricService = new UserProductTheoricService();
         EntityTransaction transaction = em.getTransaction();
         boolean isSuccess = false;
 
@@ -82,6 +87,7 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             order.setUser(this.elementCrudSelected.getUser());
             order.setPayementType(this.elementCrudSelected.getPayementType());
             order.setValidateBasketDate(Utility.castLocalDateTimeToDate(LocalDateTime.now()));
+            order.setIsForMe(this.elementCrudSelected.getIsForMe());
 
             //insert order.
             order = orderService.insert(em, order);
@@ -104,6 +110,31 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
 
                 //generate key.
                 currentProducKey.generateKey();
+
+                //auto assign to my library.
+                if(this.elementCrudSelected.getIsForMe()){
+                    currentProducKey.setIsValid(false);
+
+                    //verify if user already has product.
+                    UserProductTheoric userProductTheoric = userProductTheoricService.selectByBothId(em,
+                            connectionBean.getUser().getId(), currentProducKey.getProductTheoric().getId());
+                    if(userProductTheoric != null){
+                        popUpMessageBean.setPopUpMessage(
+                                Utility.stringFromI18N("application.crudUserProductTheoric.errorTitleAlreadyHaveProduct"),
+                                Utility.stringFromI18N("application.crudUserProductTheoric.errorMessageAlreadyHaveProduct"),
+                                false
+                        );
+                        throw new Exception("error, user already has this product.");
+                    }
+
+                    //create userProduct.
+                    userProductTheoric = new UserProductTheoric();
+                    userProductTheoric.setUser(connectionBean.getUser());
+                    userProductTheoric.setProductTheoric(currentProducKey.getProductTheoric());
+                    userProductTheoric.setKeyUsed(currentProducKey.getKey());
+                    userProductTheoric.setUnlockDate(Utility.castLocalDateTimeToDate(LocalDateTime.now()));
+                    userProductTheoricService.insert(em, userProductTheoric);
+                }
 
                 //update productKey (for key generated).
                 currentProducKey = productKeyService.update(em, currentProducKey);
@@ -160,7 +191,11 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             em.close();
         }
 
-        return (isSuccess? connectionBean.getPathHomePage(): null);
+        if(!isSuccess)
+            return null;
+        //if(this.elementCrudSelected.getIsForMe()) //idee, for redirect to my library if order for me.
+        //    return "";
+        return connectionBean.getPathHomePage();
     }
 
 

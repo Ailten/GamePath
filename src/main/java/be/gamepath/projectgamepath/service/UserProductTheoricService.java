@@ -1,5 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.User;
 import be.gamepath.projectgamepath.entities.UserProductTheoric;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 
@@ -44,6 +45,14 @@ public class UserProductTheoricService extends ServiceGeneric<UserProductTheoric
                 .getResultStream()
                 .findFirst()
                 .orElse(null);
+    }
+
+
+    public List<UserProductTheoric> selectManyByFilter(EntityManager em, String filter, int idUser) {
+        return em.createNamedQuery("UserProductTheoric.SelectManyByFilter", UserProductTheoric.class)
+                .setParameter("filter", filter)
+                .setParameter("idUser", idUser)
+                .getResultList();
     }
 
 }

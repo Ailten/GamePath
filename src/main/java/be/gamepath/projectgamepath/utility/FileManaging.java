@@ -149,6 +149,7 @@ public class FileManaging {
             //create table of data.
             float[] tableColumnWidth = {150f, 220f, 130f, 100f}; //width.
             PdfPTable table = new PdfPTable(tableColumnWidth);
+            table.setWidthPercentage(100); //width full page.
             String[] tableTitles = {"Produit", "Clef d'activation", "Réduction", "Prix"}; //th.
             PdfPCell cell;
             Paragraph paragraph;
@@ -167,14 +168,14 @@ public class FileManaging {
                 table.addCell(cell);
 
                 cell = new PdfPCell(); //key column.
-                cell.addElement(new Paragraph(productKey.getKey(), fontTable));
+                cell.addElement(new Paragraph(productKey.getKey(), (order.getIsForMe()? fontTableCrossed: fontTable)));
                 cell.setPadding(6f);
                 table.addCell(cell);
 
                 cell = new PdfPCell(); //reduction column.
                 paragraph = new Paragraph(" ", fontTable);
                 if(productKey.getProductTheoric().hasReduction())
-                    paragraph.add(productKey.getProductTheoric().getReduction()+"%");
+                    paragraph.add(productKey.getCurrentReduction()+"%");
                 paragraph.setAlignment(Element.ALIGN_RIGHT);
                 cell.addElement(paragraph);
                 cell.setPadding(6f);
@@ -182,11 +183,11 @@ public class FileManaging {
 
                 cell = new PdfPCell(); //price column.
                 if(productKey.getProductTheoric().hasReduction()){ //line with price crossed (before reduction).
-                    paragraph = new Paragraph(Utility.castFloatToString(productKey.getProductTheoric().getPrice(), 2)+" €", fontTableCrossed);
+                    paragraph = new Paragraph(Utility.castFloatToString(productKey.getPrice(), 2)+" €", fontTableCrossed);
                     paragraph.setAlignment(Element.ALIGN_RIGHT);
                     cell.addElement(paragraph);
                 }
-                paragraph = new Paragraph(Utility.castFloatToString(productKey.getProductTheoric().getPriceWithReduction(), 2)+" €", fontTable);
+                paragraph = new Paragraph(Utility.castFloatToString(productKey.getPriceWithReduction(), 2)+" €", fontTable);
                 paragraph.setAlignment(Element.ALIGN_RIGHT);
                 cell.addElement(paragraph);
                 cell.setPadding(6f);
@@ -198,11 +199,9 @@ public class FileManaging {
             for(float columnWidth : tableColumnWidth)
                 tableTotalColumnWidth[0] += columnWidth;
             PdfPTable tableTotal = new PdfPTable(tableTotalColumnWidth);
+            tableTotal.setWidthPercentage(100); //width full page.
             cell = new PdfPCell();
-            float total = order.getListProductKey().stream() //sum of order.
-                    .map(pk -> pk.getProductTheoric().getPriceWithReduction())
-                    .reduce(0f, Float::sum);
-            paragraph = new Paragraph("Total : "+Utility.castFloatToString(total,2)+" €", fontTable);
+            paragraph = new Paragraph("Total : "+Utility.castFloatToString(order.getTotalPrice(),2)+" €", fontTable);
             paragraph.setAlignment(Element.ALIGN_RIGHT);
             cell.addElement(paragraph);
             cell.setPadding(6f);

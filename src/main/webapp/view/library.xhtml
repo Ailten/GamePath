@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
+    <ui:define name="title">
+        #{I18N['application.header.title']}
+    </ui:define>
+    <ui:define name="content">
+
+        <!-- save historic -->
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/library')}"/>
+        </f:metadata>
+
+        <!-- title page -->
+        <div class="h-content">
+            <h1>
+                <h:outputText value="#{I18N['application.header.menuListLibrary']}"/>
+            </h1>
+        </div>
+
+        <div class="content-table-body-center">
+
+            <h:form id="form-table-userproduct">
+
+                <!-- load list research -->
+                <f:metadata>
+                    <f:event type="preRenderView" listener="#{userProductTheoricListBean.doResearch()}"/>
+                </f:metadata>
+
+                <!-- table -->
+                <p:dataTable var="userproduct"
+                             value="#{userProductTheoricListBean.entityFiltered}"
+                             sortMode="single"
+                             allowUnsorting="true"
+                             rows="10"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} sur {totalRecords}"
+                             rowsPerPageTemplate="5,10,20">
+
+                    <f:facet name="header">
+                        <p:outputPanel class="panel-table-header">
+                            <p:outputPanel>
+                                <!-- input research -->
+                                <p:inputText value="#{userProductTheoricListBean.filter}"
+                                             placeholder="#{I18N['application.tablePage.placeHolderInputFilter']}"
+                                             validatorMessage="#{I18N['application.tablePage.errorInputFilter']}">
+                                    <p:ajax event="keyup" update="form-table-userproduct"/>
+                                </p:inputText>
+                            </p:outputPanel>
+                        </p:outputPanel>
+                    </f:facet>
+
+
+                    <!-- ______ start column data ______ -->
+
+
+                    <p:column headerText="#{I18N['application.crudPage.headerComboBox']}"
+                              sortBy="#{userproduct.productTheoric.title}">
+                        <h:outputText value="#{userproduct.productTheoric.title}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelCategory']}"
+                              responsivePriority="2">
+                        <h:outputText value="#{userproduct.productTheoric.listCategory.get(0).title}"/>
+                        <h:outputText value=", ..." rendered="#{userproduct.productTheoric.listCategory.size() > 1}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelUnlockDate']}"
+                              responsivePriority="3"
+                              sortBy="#{userproduct.unlockDate}">
+                        <h:outputText value="#{userproduct.unlockDate}">
+                            <f:convertDateTime pattern="#{I18N['application.crudPage.patternDate']}"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelOperatingSystem']}"
+                              responsivePriority="4">
+                        <h:outputText value="#{userproduct.productTheoric.listOperatingSystem.get(0).title}"/>
+                        <h:outputText value=", ..." rendered="#{userproduct.productTheoric.listOperatingSystem.size() > 1}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelLanguage']}"
+                              responsivePriority="5">
+                        <h:outputText value="#{userproduct.productTheoric.listLanguage.get(0).title}"/>
+                        <h:outputText value=", ..." rendered="#{userproduct.productTheoric.listLanguage.size() > 1}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelPegi']}"
+                              responsivePriority="6">
+                        <h:outputText value="#{userproduct.productTheoric.listPegi.get(0).title}"/>
+                        <h:outputText value=", ..." rendered="#{userproduct.productTheoric.listPegi.size() > 1}"/>
+                    </p:column>
+
+
+                    <!-- ______ end column data ______ -->
+
+
+                    <p:column headerText="#{I18N['application.tablePage.buttonRead']}">
+                        <p:commandButton action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, userproduct.productTheoric, 'read')}"
+                                         icon="pi pi-bars"/>
+                    </p:column>
+                    <p:column headerText="#{I18N['application.tableProductTheoric.buttonDownload']}">
+                        <p:commandButton action="#{connectionBean.redirectPage(null)}"
+                                         icon="pi pi-download"/>
+                    </p:column>
+
+
+
+                </p:dataTable>
+
+            </h:form>
+
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

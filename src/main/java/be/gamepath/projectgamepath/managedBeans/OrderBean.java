@@ -1,17 +1,36 @@
 package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
+import be.gamepath.projectgamepath.entities.Basket;
 import be.gamepath.projectgamepath.entities.Order;
 import be.gamepath.projectgamepath.entities.ProductKey;
 import be.gamepath.projectgamepath.entities.ProductTheoric;
 import be.gamepath.projectgamepath.service.CategoryService;
 import be.gamepath.projectgamepath.service.ProductKeyService;
+import be.gamepath.projectgamepath.utility.CrudManaging;
 import be.gamepath.projectgamepath.utility.Utility;
 
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class OrderBean {
+@Named
+@SessionScoped
+public class OrderBean extends CrudManaging<Order> implements Serializable {
+
+    public OrderBean(){
+        this.nameEntityForPermission = "order"; //send name of entity for check permission generic.
+    }
+
+    //overide getter, if has no basket, use a fake basket empty.
+    public Order getElementCrudSelected(){
+        if(this.elementCrudSelected == null)
+            this.elementCrudSelected = new Order();
+        return this.elementCrudSelected;
+    }
+
 
     /**
      * Initialize list productKey into an order

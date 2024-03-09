@@ -1,5 +1,6 @@
 package be.gamepath.projectgamepath.managedBeans;
 
+import be.gamepath.projectgamepath.utility.Utility;
 import org.primefaces.PrimeFaces;
 
 import javax.annotation.PostConstruct;

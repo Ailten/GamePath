@@ -50,6 +50,10 @@
     animation-duration: 1s;
 }
 
+.panel-align-right {
+    text-align: right;
+}
+
 /* --- header --- */
 
 #header #header-login-block{
@@ -149,6 +153,13 @@
 #content .content-table-body-center .ui-datatable-header+ .ui-datatable-tablewrapper thead tr th:last-child
 {
     border-radius: 0; /* if table has header, no radius on th */
+}
+
+#content .content-table-body-center .panel-table-header {
+    display: flex;
+}
+#content .content-table-body-center .panel-table-header > * {
+    flex-grow: 1;
 }
 
 /* --- generic form crud --- */

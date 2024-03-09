@@ -2,60 +2,48 @@ package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.ProductKey;
-import be.gamepath.projectgamepath.entities.ProductTheoric;
 import be.gamepath.projectgamepath.entities.UserProductTheoric;
 import be.gamepath.projectgamepath.enumeration.Crud;
 import be.gamepath.projectgamepath.service.ProductKeyService;
-import be.gamepath.projectgamepath.service.ProductTheoricService;
 import be.gamepath.projectgamepath.service.UserProductTheoricService;
-import be.gamepath.projectgamepath.utility.CrudManaging;
 import be.gamepath.projectgamepath.utility.Utility;
 
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.rmi.CORBA.Util;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Named
 @SessionScoped
-public class UserProductTheoricBean extends CrudManaging<UserProductTheoric> implements Serializable {
+public class ProductKeyBean implements Serializable {
 
-    public UserProductTheoricBean(){
-        this.nameEntityForPermission = "userproduct"; //send name of entity for check permission generic.
-    }
+    @Inject
+    ConnectionBean connectionBean;
+    @Inject
+    PopUpMessageBean popUpMessageBean;
 
-    /**
-     * Get entity select for crud page (if null and create mode, instance a new entity).
-     */
-    public UserProductTheoric getElementCrudSelected(){
-        if(elementCrudSelected == null && modeSelected == Crud.CREATE)
-            elementCrudSelected = new UserProductTheoric();
-        return elementCrudSelected;
-    }
+    public void useKey(ProductKey productKey){
 
-    protected boolean insert() {
+        if(!connectionBean.isUserHasPermission("create-userproduct")){
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.crudPage.titleErrorNoPermission"),
+                    Utility.stringFromI18N("application.crudPage.messageErrorNoPermission"),
+                    false
+            );
+            return;
+        }
 
         EntityManager em = EMF.getEM();
-        ProductKeyService productKeyService = new ProductKeyService();
         UserProductTheoricService userProductTheoricService = new UserProductTheoricService();
+        ProductKeyService productKeyService = new ProductKeyService();
         EntityTransaction transaction = em.getTransaction();
-        boolean isSuccess = false;
 
         try{
             transaction.begin();
 
-            ProductKey productKey = productKeyService.selectByKeyCode(em, this.elementCrudSelected.getKeyUsed());
-            if(productKey == null){
-                popUpMessageBean.setPopUpMessage(
-                        Utility.stringFromI18N("application.crudUserProductTheoric.errorTitleKeyNotFound"),
-                        Utility.stringFromI18N("application.crudUserProductTheoric.errorMessageKeyNotFound"),
-                        false
-                );
-                throw new Exception("error, no productKey found.");
-            }
             if(!productKey.getIsValid()){
                 popUpMessageBean.setPopUpMessage(
                         Utility.stringFromI18N("application.crudUserProductTheoric.errorTitleKeyAlreadyUsed"),
@@ -65,9 +53,9 @@ public class UserProductTheoricBean extends CrudManaging<UserProductTheoric> imp
                 throw new Exception("error, the key was already used.");
             }
 
-            UserProductTheoric userProductAlready = userProductTheoricService.selectByBothId(em,
+            UserProductTheoric userProduct = userProductTheoricService.selectByBothId(em,
                     connectionBean.getUser().getId(), productKey.getProductTheoric().getId());
-            if(userProductAlready != null){
+            if(userProduct != null){
                 popUpMessageBean.setPopUpMessage(
                         Utility.stringFromI18N("application.crudUserProductTheoric.errorTitleAlreadyHaveProduct"),
                         Utility.stringFromI18N("application.crudUserProductTheoric.errorMessageAlreadyHaveProduct"),
@@ -81,24 +69,23 @@ public class UserProductTheoricBean extends CrudManaging<UserProductTheoric> imp
             productKeyService.update(em, productKey);
 
             //create userProduct.
-            this.elementCrudSelected.setUser(connectionBean.getUser());
-            this.elementCrudSelected.setProductTheoric(productKey.getProductTheoric());
-            this.elementCrudSelected.setUnlockDate(Utility.castLocalDateTimeToDate(LocalDateTime.now()));
-            userProductTheoricService.insert(em, this.elementCrudSelected);
+            userProduct = new UserProductTheoric();
+            userProduct.setUser(connectionBean.getUser());
+            userProduct.setProductTheoric(productKey.getProductTheoric());
+            userProduct.setKeyUsed(productKey.getKey());
+            userProduct.setUnlockDate(Utility.castLocalDateTimeToDate(LocalDateTime.now()));
+            userProductTheoricService.insert(em, userProduct);
 
-            isSuccess = true;
             transaction.commit();
         }catch(Exception e){
             transaction.rollback();
-            Utility.debug("Error catch in insert : " + e.getMessage());
-            isSuccess = false;
+            Utility.debug("error into useKey : " + e.getMessage());
         }finally{
             if(transaction.isActive()) //last security.
                 transaction.rollback();
             em.close();
         }
 
-        return isSuccess;
     }
 
 }

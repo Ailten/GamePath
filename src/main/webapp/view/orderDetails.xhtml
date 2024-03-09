@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
+    <ui:define name="title">
+        #{I18N['application.header.title']}
+    </ui:define>
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/orderDetails')}"/>
+        </f:metadata>
+
+        <!-- title page -->
+        <div class="h-content">
+            <h1>
+                <h:outputText value="#{I18N['application.crudOrder.title']}"/>
+            </h1>
+        </div>
+
+        <div class="content-form-body-center">
+
+            <!-- form crud order -->
+            <h:form id="form-crud-order" class="form-crud">
+
+
+                <!-- ______ start form crud ______ -->
+
+
+                <!-- input String user first name -->
+                <p:outputPanel class="panel-input panel-input-without-error" rendered="#{connectionBean.isUserHasPermission('readList-order-all')}">
+                    <p:outputLabel for="input-order-firstname" value="#{I18N['application.crudOrder.labelFirstName']}"/>
+                    <p:inputText id="input-order-firstname"
+                                 disabled="true"
+                                 value="#{orderBean.elementCrudSelected.user.firstName}"/>
+                </p:outputPanel>
+
+                <!-- input String user last name -->
+                <p:outputPanel class="panel-input panel-input-without-error" rendered="#{connectionBean.isUserHasPermission('readList-order-all')}">
+                    <p:outputLabel for="input-order-lastname" value="#{I18N['application.crudOrder.labelLastName']}"/>
+                    <p:inputText id="input-order-lastname"
+                                 disabled="true"
+                                 value="#{orderBean.elementCrudSelected.user.lastName}"/>
+                </p:outputPanel>
+
+                <!-- input String user email -->
+                <p:outputPanel class="panel-input panel-input-without-error" rendered="#{connectionBean.isUserHasPermission('readList-order-all')}">
+                    <p:outputLabel for="input-order-email" value="#{I18N['application.crudOrder.labelEmail']}"/>
+                    <p:inputText id="input-order-email"
+                                 disabled="true"
+                                 value="#{orderBean.elementCrudSelected.user.email}"/>
+                </p:outputPanel>
+
+                <!-- input Date basketDate -->
+                <p:outputPanel class="panel-input panel-input-without-error">
+                    <p:outputLabel for="input-order-validatebasket" value="#{I18N['application.crudOrder.labelValidateBasket']}"/>
+                    <p:datePicker id="input-order-validatebasket"
+                                 disabled="true"
+                                 pattern="#{I18N['application.crudPage.patternDate']}"
+                                 value="#{orderBean.elementCrudSelected.validateBasketDate}"/>
+                </p:outputPanel>
+
+                <!-- input enum payementType -->
+                <p:outputPanel class="panel-input panel-input-without-error">
+                    <p:outputLabel for="input-order-payementtype" value="#{I18N['application.basket.labelBasketPayementTybe']}"/>
+                    <p:selectOneMenu id="input-order-payementtype"
+                                     disabled="true"
+                                     value="#{orderBean.elementCrudSelected.payementType}"
+                                     converter="PayementTypeConverter">
+                        <!-- import all enum -->
+                        <p:importEnum type="be.gamepath.projectgamepath.enumeration.PayementType"
+                                      var="enumImportPayementType"
+                                      allSuffix="getAll"/>
+                        <f:selectItems value="#{enumImportPayementType.getAll}"
+                                       var="payementType"
+                                       itemLabel="#{payementType.getTxtValue()}"
+                                       itemValue="#{payementType}"/>
+                    </p:selectOneMenu>
+                </p:outputPanel>
+
+
+                <!-- ______ end form crud ______ -->
+
+
+            </h:form>
+
+        </div>
+
+
+        <!-- list product key in order -->
+        <div class="content-table-body-center">
+
+            <h:form id="form-table-productkey">
+
+                <!-- table -->
+                <p:dataTable var="productkey"
+                             value="#{orderBean.elementCrudSelected.listProductKey}"
+                             sortMode="single"
+                             allowUnsorting="true"
+                             rows="10"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} sur {totalRecords}"
+                             rowsPerPageTemplate="5,10,20">
+
+                    <!-- title product -->
+                    <p:column headerText="#{I18N['application.crudPage.headerComboBox']}">
+                        <h:outputText value="#{productkey.productTheoric.title}"/>
+                    </p:column>
+
+                    <!-- price product -->
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelPrice']}">
+                        <p:outputPanel class=" #{(productkey.hasReduction()? 'text-line-through': '')} panel-align-right">
+                            <h:outputText value="#{productkey.price}">
+                                <f:convertNumber minFractionDigits="2"/>
+                            </h:outputText>
+                            <span>€</span>
+                        </p:outputPanel>
+                        <p:outputPanel rendered="#{productkey.hasReduction()}" class="price-reduction panel-align-right">
+                            <h:outputText value="#{productkey.priceWithReduction}">
+                                <f:convertNumber minFractionDigits="2"/>
+                            </h:outputText>
+                            <span>€</span>
+                        </p:outputPanel>
+                    </p:column>
+
+                    <!-- key code -->
+                    <p:column headerText="#{I18N['application.crudOrder.labelKeyCode']}">
+                        <h:outputText value="#{productkey.key}"/>
+                    </p:column>
+
+                    <!-- button -->
+                    <p:column headerText="#{I18N['application.crudOrder.buttonUseKey']}">
+                        <p:commandButton action="#{productKeyBean.useKey(productkey)}"
+                                         disabled="#{(not productkey.isValid)}"
+                                         update="form-table-productkey"
+                                         icon="pi pi-download"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </div>
+
+
+        <div class="content-form-body-center">
+
+            <!-- form crud order (submit button) -->
+            <h:form id="form-crud-product-submit" class="form-crud">
+
+                <!-- input float totalPrice -->
+                <p:outputPanel class="panel-input panel-input-without-error">
+                    <p:outputLabel for="input-order-totalprice" value="#{I18N['application.basket.labelBasketFullPrice']}"/>
+                    <p:inputNumber id="input-order-totalprice"
+                                   disabled="true"
+                                   value="#{orderBean.elementCrudSelected.totalPrice}"
+                                   decimalPlaces="2"
+                                   decimalSeparator="#{I18N['application.crudPage.decimalSeparator']}"
+                                   thousandSeparator="'"
+                                   symbol="€"
+                                   symbolPosition="s"/>
+                </p:outputPanel>
+
+                <!-- button submit form -->
+                <p:outputPanel class="panel-input panel-submit-crud">
+                    <p:commandButton value="#{I18N['application.crudPage.buttonBackLastPage']}"
+                                     rendered="true"
+                                     ajax="false"
+                                     validateClient="false"
+                                     immediate="true"
+                                     class="ui-button-secondary"
+                                     action="#{historicalBean.backLastPageHistoric()}"/>
+                </p:outputPanel>
+
+            </h:form>
+
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

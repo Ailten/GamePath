@@ -46,12 +46,25 @@
                              rowsPerPageTemplate="5,10,20">
 
                     <f:facet name="header">
-                        <!-- input research -->
-                        <p:inputText value="#{productTheoricListBean.filter}"
-                                     placeholder="#{I18N['application.tablePage.placeHolderInputFilter']}"
-                                     validatorMessage="#{I18N['application.tablePage.errorInputFilter']}">
-                            <p:ajax event="keyup" update="form-table-product"/>
-                        </p:inputText>
+                        <p:outputPanel class="panel-table-header">
+                            <p:outputPanel>
+                                <!-- input research -->
+                                <p:inputText value="#{productTheoricListBean.filter}"
+                                             placeholder="#{I18N['application.tablePage.placeHolderInputFilter']}"
+                                             validatorMessage="#{I18N['application.tablePage.errorInputFilter']}">
+                                    <p:ajax event="keyup" update="form-table-product"/>
+                                </p:inputText>
+                            </p:outputPanel>
+                            <p:outputPanel class="panel-align-right">
+                                <!-- button redirect page create element -->
+                                <p:commandButton value="#{I18N['application.header.menuAddProduct']}"
+                                                 rendered="#{connectionBean.isUserHasPermission('create-product')}"
+                                                 ajax="false"
+                                                 validateClient="false"
+                                                 immediate="true"
+                                                 action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, null, 'create')}"/>
+                            </p:outputPanel>
+                        </p:outputPanel>
                     </f:facet>
 
 
@@ -65,13 +78,13 @@
 
                     <p:column headerText="#{I18N['application.tableProductTheoric.labelPrice']}"
                               sortBy="#{product.priceWithReduction}">
-                        <p:outputPanel class="#{(product.hasReduction()? 'text-line-through': '')}">
+                        <p:outputPanel class=" #{(product.hasReduction()? 'text-line-through': '')} panel-align-right">
                             <h:outputText value="#{product.price}">
                                 <f:convertNumber minFractionDigits="2"/>
                             </h:outputText>
                             <span>€</span>
                         </p:outputPanel>
-                        <p:outputPanel rendered="#{product.hasReduction()}" class="price-reduction">
+                        <p:outputPanel rendered="#{product.hasReduction()}" class="price-reduction panel-align-right">
                             <h:outputText value="#{product.priceWithReduction}">
                                 <f:convertNumber minFractionDigits="2"/>
                             </h:outputText>

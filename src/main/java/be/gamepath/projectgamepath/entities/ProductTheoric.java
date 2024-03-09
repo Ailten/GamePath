@@ -55,9 +55,6 @@ import java.util.Objects;
 @Table(name = "producttheoric", schema = "gamepath", catalog = "")
 public class ProductTheoric extends EntityGenerique {
 
-    public ProductTheoric(){
-        this.tva = Tva.D_VINGHTETUN;
-    }
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -70,7 +67,7 @@ public class ProductTheoric extends EntityGenerique {
 
     @NotNull
     @Size(min = 3, max = 60) //message="I18N[application.crudPage.errorStringSize60]"
-    @Pattern(regexp = "^[a-zA-Z -]{3,60}$")
+    @Pattern(regexp = "^[a-zA-Z0-9 -]{3,60}$")
     @Column(name = "title", nullable = false, length = 60)
     private String title;
     @NotNull
@@ -80,7 +77,7 @@ public class ProductTheoric extends EntityGenerique {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "TVA", nullable = false)
-    private Tva tva;
+    private Tva tva = Tva.D_VINGHTETUN;
     @NotNull
     @Min(0)
     @Max(90)

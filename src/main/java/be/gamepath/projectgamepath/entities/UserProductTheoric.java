@@ -19,6 +19,26 @@ import java.util.Objects;
         @NamedQuery(name= "UserProductTheoric.SelectByBothId",
                 query = "select upt from UserProductTheoric upt " +
                         "where (upt.user.id = :idUser and upt.productTheoric.id = :idProductTheoric)"),
+        @NamedQuery(name= "UserProductTheoric.SelectManyByFilter",
+                query = "select distinct upt from UserProductTheoric upt " +
+                        "join ProductTheoric pt on (pt.id = upt.productTheoric.id) " +
+                        "join ProductTheoricCategory ptc on (ptc.productTheoric.id = pt.id) " +
+                        "join fetch ptc.category c " +
+                        "join ProductTheoricPegi ptp on (ptp.productTheoric.id = pt.id) " +
+                        "join fetch ptp.pegi p " +
+                        "join ProductTheoricLanguage ptl on (ptl.productTheoric.id = pt.id) " +
+                        "join fetch ptl.language l " +
+                        "join ProductTheoricOperatingSystem ptos on (ptos.productTheoric.id = pt.id) " +
+                        "join fetch ptos.operatingSystem os " +
+                        "join SocietyProducer sp on (sp.id = pt.societyProducer.id) " +
+                        "where (upt.user.id = :idUser and (" +
+                        "    (lower(pt.title) like concat('%', :filter, '%')) or " +
+                        "    ( lower(c.title) like concat('%', :filter, '%') ) or " +
+                        "    ( lower(p.title) like concat('%', :filter, '%') ) or " +
+                        "    ( lower(l.title) like concat('%', :filter, '%') ) or " +
+                        "    ( lower(os.title) like concat('%', :filter, '%') ) or " +
+                        "    ( lower(sp.title) like concat('%', :filter, '%') ) " +
+                        "))"),
 })
 @Entity
 @Table(name = "userproducttheoric", schema = "gamepath", catalog = "")

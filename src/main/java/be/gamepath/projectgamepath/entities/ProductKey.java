@@ -161,4 +161,20 @@ public class ProductKey extends EntityGenerique {
 
         this.key = (orderNum.toString()+"-"+keyNum.toString()+"-"+productNum.toString()).toUpperCase();
     }
+
+
+
+    public float getPrice(){
+        if(this.currentTva == null)
+            return this.currentPriceHtva;
+        return this.currentPriceHtva + this.currentTva.evalTva(this.currentPriceHtva);
+    }
+    public float getPriceWithReduction(){
+        return this.getPrice() * (1 - ((float)this.currentReduction)/100);
+    }
+
+
+    public boolean hasReduction(){
+        return this.getCurrentReduction() != 0;
+    }
 }

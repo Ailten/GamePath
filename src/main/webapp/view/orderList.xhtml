@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
+    <ui:define name="title">
+        #{I18N['application.header.title']}
+    </ui:define>
+    <ui:define name="content">
+
+        <!-- save historic -->
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/orderList')}"/>
+        </f:metadata>
+
+        <!-- title page -->
+        <div class="h-content">
+            <h1>
+                <h:outputText value="#{I18N['application.header.menuOrders']}"/>
+            </h1>
+        </div>
+
+        <div class="content-table-body-center">
+
+            <h:form id="form-table-order">
+
+                <!-- load list research -->
+                <f:metadata>
+                    <f:event type="preRenderView" listener="#{orderListBean.doResearch()}"/>
+                </f:metadata>
+
+                <!-- table -->
+                <p:dataTable var="order"
+                             value="#{orderListBean.entityFiltered}"
+                             sortMode="single"
+                             allowUnsorting="true"
+                             rows="10"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} sur {totalRecords}"
+                             rowsPerPageTemplate="5,10,20">
+
+                    <f:facet name="header">
+                        <p:outputPanel class="panel-table-header">
+                            <p:outputPanel>
+                                <!-- input research -->
+                                <p:inputText value="#{orderListBean.filter}"
+                                             placeholder="#{I18N['application.tablePage.placeHolderInputFilter']}"
+                                             validatorMessage="#{I18N['application.tablePage.errorInputFilter']}">
+                                    <p:ajax event="keyup" update="form-table-order"/>
+                                </p:inputText>
+                            </p:outputPanel>
+                        </p:outputPanel>
+                    </f:facet>
+
+
+                    <!-- ______ start column data ______ -->
+
+
+                    <p:column headerText="#{I18N['application.tableOrder.labelUserFullName']}"
+                              sortBy="#{order.userFullName}"
+                              rendered="#{connectionBean.isUserHasPermission('readList-order-all')}">
+                        <h:outputText value="#{order.userFullName}"/>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelUnlockDate']}"
+                              sortBy="#{order.validateBasketDate}">
+                        <h:outputText value="#{order.validateBasketDate}">
+                            <f:convertDateTime pattern="#{I18N['application.crudPage.patternDate']}"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{I18N['application.tableProductTheoric.labelPrice']}"
+                              sortBy="#{order.totalPrice}">
+                        <p:outputPanel class="panel-align-right">
+                            <h:outputText value="#{order.totalPrice}">
+                                <f:convertNumber minFractionDigits="2"/>
+                            </h:outputText>
+                            <span>€</span>
+                        </p:outputPanel>
+                    </p:column>
+
+
+                    <!-- ______ end column data ______ -->
+
+
+                    <p:column headerText="#{I18N['application.tablePage.buttonRead']}">
+                        <p:commandButton action="#{connectionBean.redirectCrudPage('/view/orderDetails', orderBean, order, 'read')}"
+                                         icon="pi pi-bars"/>
+                    </p:column>
+
+
+
+                </p:dataTable>
+
+            </h:form>
+
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

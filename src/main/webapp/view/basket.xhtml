@@ -134,6 +134,13 @@
                                 <p:message id="error-input-basket-payementtype" for="input-basket-payementtype"/>
                             </p:outputPanel>
 
+                            <!-- input checkbox for me -->
+                            <p:outputPanel class="panel-input panel-input-without-error">
+                                <p:outputLabel for="input-basket-forme" value="#{I18N['application.crudUserProductTheoric.labelBasketForMe']}"/>
+                                <p:selectBooleanCheckbox id="input-basket-forme"
+                                                         value="#{basketBean.elementCrudSelected.isForMe}"/>
+                            </p:outputPanel>
+
 
                             <!-- submit buttons -->
                             <p:outputPanel class="panel-input panel-submit-crud">

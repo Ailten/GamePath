@@ -1,14 +1,21 @@
 package be.gamepath.projectgamepath.utility;
 
+import be.gamepath.projectgamepath.managedBeans.ConnectionBean;
 import org.primefaces.PrimeFaces;
 
 import be.gamepath.projectgamepath.connexion.EMF;
+
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TableFilter<TEntity extends EntityGenerique> {
+
+    @Inject
+    protected ConnectionBean connectionBean;
+
 
     //entity filtered from db.
     protected List<TEntity> entityFiltered;

@@ -18,6 +18,23 @@ import java.util.Objects;
                         "where (o.id = :id)"),
         @NamedQuery(name= "Order.SelectMany",
                 query = "select o from Order o "),
+        @NamedQuery(name= "Order.SelectManyByFilter",
+                query = "select distinct o from Order o " +
+                        "join fetch o.user u " +
+                        "join ProductKey pk on (pk.order.id = o.id) " +
+                        "join fetch pk.productTheoric pt " +
+                        "where ( " +
+                        "  ( lower(pt.title) like concat('%', :filter, '%') ) or " +
+                        "  ( lower(concat(u.lastName,' ',u.firstName)) like concat('%', :filter, '%') ) " +
+                        ")"),
+        @NamedQuery(name= "Order.SelectManyByFilterOneUser",
+                query = "select distinct o from Order o " +
+                        "join fetch o.user u " +
+                        "join ProductKey pk on (pk.order.id = o.id) " +
+                        "join fetch pk.productTheoric pt " +
+                        "where ( u.id = :idUser and ( " +
+                        "  ( lower(pt.title) like concat('%', :filter, '%') ) " +
+                        "))"),
 })
 @Entity
 @Table(name = "order", schema = "gamepath", catalog = "")
@@ -97,5 +114,27 @@ public class Order extends EntityGenerique {
     }
     public void setListProductKey(List<ProductKey> listProductKey) {
         this.listProductKey = listProductKey;
+    }
+
+
+
+    @Transient
+    private boolean isForMe = true;
+    public boolean getIsForMe(){
+        return this.isForMe;
+    }
+    public void setIsForMe(boolean isForMe){ this.isForMe = isForMe; }
+
+
+
+    public float getTotalPrice() {
+        return this.getListProductKey().stream() //sum of order.
+                .map(ProductKey::getPriceWithReduction)
+                .reduce(0f, Float::sum);
+    }
+
+
+    public String getUserFullName() {
+        return this.getUser().getLastName()+" "+this.getUser().getFirstName();
     }
 }

@@ -25,9 +25,6 @@ import java.util.Objects;
 @Table(name = "basket", schema = "gamepath", catalog = "")
 public class Basket extends EntityGenerique {
 
-    public Basket(){
-        this.payementType = PayementType.MASTERCARD;
-    }
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -95,11 +92,20 @@ public class Basket extends EntityGenerique {
 
     @Transient
     @NotNull
-    private PayementType payementType;
+    private PayementType payementType = PayementType.MASTERCARD;
     public PayementType getPayementType(){
         return this.payementType;
     }
     public void setPayementType(PayementType payementType){
         this.payementType = payementType;
     }
+
+
+
+    @Transient
+    private boolean isForMe = true;
+    public boolean getIsForMe(){
+        return this.isForMe;
+    }
+    public void setIsForMe(boolean isForMe){ this.isForMe = isForMe; }
 }
