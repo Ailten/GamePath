@@ -1,9 +1,6 @@
 package be.gamepath.projectgamepath.connexion;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 
 /**
  * Class to get a connection to the database
@@ -12,29 +9,24 @@ import javax.persistence.Persistence;
  */
 public class EMF {
 
-//    protected EntityManager em;
-
     private static EntityManagerFactory emfInstance =
             Persistence.createEntityManagerFactory("gamepath");
 
-//    public EMF(){
-//        this.em = EMF.getEM();
-//    }
-
-//    public void close(){
-//        this.em.close();
-//    }
-
-//    public EntityTransaction getTransaction(){
-//        return this.em.getTransaction();
-//    }
-
-//    public static EntityManagerFactory getEMF() {
-//        return emfInstance;
-//    }
-
-    public static EntityManager getEM() {
+    public static EntityManager createEM() {
+        //EntityManager em = emfInstance.createEntityManager();
+        //em.setFlushMode(FlushModeType.COMMIT);
         return emfInstance.createEntityManager();
+    }
+
+    public static EntityTransaction getTransaction(EntityManager em) {
+        return em.getTransaction();
+    }
+
+    public static void transactionCommit(EntityManager em, EntityTransaction transaction) {
+        transaction.commit();
+    }
+    public static void transactionRollback(EntityManager em, EntityTransaction transaction) {
+        transaction.rollback();
     }
 
 }

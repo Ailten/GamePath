@@ -10,12 +10,10 @@ import be.gamepath.projectgamepath.utility.Utility;
 import org.primefaces.PrimeFaces;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.rmi.CORBA.Util;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 
@@ -47,7 +45,7 @@ public class ConnectionBean implements Serializable {
      */
     public String connection(String login, String password) {
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         UserService userService = new UserService();
         boolean isError = false;
 
@@ -86,6 +84,7 @@ public class ConnectionBean implements Serializable {
      */
     public String deconnection() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession(); //Logout session connectionBean.
+        this.user = null;
         return this.redirectPage(pathHomePage);
     }
 
@@ -111,10 +110,9 @@ public class ConnectionBean implements Serializable {
                     Utility.stringFromI18N("application.header.errorRedirectPageNotFound"),
                     false
             );
+        }else if(historicalBean.currentPage().equals(path)){
+            this.reloadPage(); //reload if same page.
         }
-        //}else if(historicalBean.currentPage().equals(path)){
-        //    this.reloadPage(); //reload if same page.
-        //}
         return path;
     }
 

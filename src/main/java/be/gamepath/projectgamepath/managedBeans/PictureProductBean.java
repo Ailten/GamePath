@@ -47,9 +47,9 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
             return;
         }
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         PictureProductService pictureProductService = new PictureProductService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
 
         try{
             transaction.begin();
@@ -91,13 +91,13 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
                     true
             );
 
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             Utility.debug("error into fileUploadListener : " + e.getMessage());
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 
@@ -116,9 +116,9 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
             return;
         }
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         PictureProductService pictureProductService = new PictureProductService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
 
         try{
             transaction.begin();
@@ -141,9 +141,9 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
                     true
             );
 
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             Utility.debug("error into deletePictureProduct : " + e.getMessage());
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.crudPage.errorTitleDelete"),
@@ -152,7 +152,7 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
             );
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 

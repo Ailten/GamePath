@@ -57,17 +57,26 @@ public class ProductTheoricService extends ServiceGeneric<ProductTheoric> {
     }
 
 
-    public List<ProductTheoric> selectManyByFilter(EntityManager em, String filter, boolean isShowEntityDisable){
+    public List<ProductTheoric> selectManyByFilter(
+            EntityManager em,
+            String filter,
+            float filterPriceMax,
+            int filterCategoryId,
+            int filterLanguageId,
+            int filterOperatingSystemId,
+            boolean isShowEntityDisable
+    ){
         return em.createNamedQuery("ProductTheoric.SelectManyByFilter", ProductTheoric.class)
                 .setParameter("filter", filter)
+                .setParameter("filterPriceMax", filterPriceMax)
+                .setParameter("filterCategoryId", filterCategoryId)
+                .setParameter("filterLanguageId", filterLanguageId)
+                .setParameter("filterOperatingSystemId", filterOperatingSystemId)
                 .setParameter("isShowEntityDisable", isShowEntityDisable)
                 .getResultList()
-                //FIXME: remove filter date and apply it in query (using current_date() but seem not working).
                 .stream().filter(pt -> isShowEntityDisable || LocalDateTime.now().isAfter(Utility.castDateToLocalDateTime(pt.getReleaseDate())))
+                //.filter(pt -> pt.getPrice() <= filterPriceMax || filterPriceMax == 0.0f) //move in query.
                 .collect(Collectors.toList());
-    }
-    public List<ProductTheoric> selectManyByFilter(EntityManager em, String filter){
-        return this.selectManyByFilter(em, filter, false);
     }
 
 

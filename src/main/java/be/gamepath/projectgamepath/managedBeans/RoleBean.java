@@ -3,10 +3,7 @@ package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Role;
-import be.gamepath.projectgamepath.entities.User;
 import be.gamepath.projectgamepath.service.PermissionService;
-import be.gamepath.projectgamepath.service.RoleService;
-import be.gamepath.projectgamepath.service.UserService;
 import be.gamepath.projectgamepath.utility.Utility;
 
 import javax.enterprise.context.SessionScoped;
@@ -24,7 +21,7 @@ public class RoleBean implements Serializable {
      */
     public static void initListPermission(Role role)
     {
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         PermissionService permissionService = new PermissionService();
 
         try{

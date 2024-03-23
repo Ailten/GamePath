@@ -31,7 +31,7 @@ public class EntityFinderImpl<T> implements EntityFinder<T>, Serializable {
     @Override
     public T findOne(T t, int id) {
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         Class<? extends Object> ec = t.getClass();
         try {
 
@@ -56,7 +56,7 @@ public class EntityFinderImpl<T> implements EntityFinder<T>, Serializable {
         List<T> listT = new ArrayList<T>();
         Class<? extends Object> ec = t.getClass();
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         try {
             Query query = em.createNamedQuery(namedQuery, ec);
 
@@ -85,7 +85,7 @@ public class EntityFinderImpl<T> implements EntityFinder<T>, Serializable {
         List<T> listT = new ArrayList<T>();
         Class<? extends Object> ec = t.getClass();
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         try {
             Query query = em.createQuery(customQuery, ec);
             if(param != null) {

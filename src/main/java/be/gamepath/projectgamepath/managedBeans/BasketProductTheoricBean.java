@@ -40,10 +40,10 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
             return;
         }
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         BasketProductTheoricService basketProductTheoricService = new BasketProductTheoricService();
         BasketService basketService = new BasketService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
 
         try{
             transaction.begin();
@@ -69,9 +69,9 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
                     true
             );
 
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             Utility.debug("error into addBasket : " + e.getMessage());
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.crudPage.errorTitleInsert"),
@@ -80,7 +80,7 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
             );
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 
@@ -89,12 +89,10 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
 
     public void delete(Basket basket, ProductTheoric productTheoric){
 
-        //TODO: em, select basketProductTheoric from DB. if null error. delete it. remove from list basket. if list size = 0 remove basket.
-
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         BasketProductTheoricService basketProductTheoricService = new BasketProductTheoricService();
         BasketService basketService = new BasketService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
 
         try{
             transaction.begin();
@@ -113,16 +111,22 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
             }
 
             //delete basketProductTheoric.
+            int idProductTheoric = this.elementCrudSelected.getProductTheoric().getId();
             basketProductTheoricService.delete(em, this.elementCrudSelected);
             this.elementCrudSelected = null;
 
-            //re-load list productTheoric transient from DB (without element deleted).
-            BasketBean.initListProductTheoric(basketBean.getElementCrudSelected());
+            //update list productTheoric transient (without element deleted).
+            basket.setListProductTheoric(
+                    basket.getListProductTheoric().stream()
+                            .filter(pt -> pt.getId()!=idProductTheoric).collect(Collectors.toList())
+            );
 
             //if basket empty, delete basket.
-            if(basketBean.getElementCrudSelected().getListProductTheoric().size() == 0){
-                basketService.delete(em, basketBean.getElementCrudSelected());
-                basketBean.setElementCrudSelected(null);
+            if(basket.getListProductTheoric().size() == 0){
+                boolean isBasketCrudSelected = (basketBean.getElementCrudSelected().getId() == basket.getId());
+                basketService.delete(em, basket);
+                if(isBasketCrudSelected)
+                    basketBean.setElementCrudSelected(null);
             }
 
             popUpMessageBean.setPopUpMessage(
@@ -131,9 +135,9 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
                     true
             );
 
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             Utility.debug("error into delete : " + e.getMessage());
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.crudPage.errorTitleDelete"),
@@ -142,7 +146,7 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
             );
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 

@@ -64,6 +64,114 @@
                                                  immediate="true"
                                                  action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, null, 'create')}"/>
                             </p:outputPanel>
+
+                        </p:outputPanel>
+                        <p:outputPanel class="panel-table-header">
+
+                            <!-- pannel for research more precise -->
+                            <p:accordionPanel>
+                                <p:tab title="#{I18N['application.tablePage.placeHolderInputFilter']}">
+
+                                    <!-- input price max -->
+                                    <p:outputPanel class="panel-input">
+                                        <p:outputLabel for="input-research-pricemax" value="#{I18N['application.tableProductTheoric.labelFilterPriceMax']}"/>
+                                        <p:inputNumber id="input-research-pricemax"
+                                                       value="#{productTheoricListBean.filterPriceMax}"
+                                                       minValue="0"
+                                                       decimalPlaces="2"
+                                                       decimalSeparator="#{I18N['application.crudPage.decimalSeparator']}"
+                                                       thousandSeparator="'"
+                                                       symbol="€"
+                                                       symbolPosition="s"
+                                                       validatorMessage="#{I18N['application.tableProductTheoric.errorFilterPriceMax']}">
+                                            <p:ajax event="change" update="form-table-product"/>
+                                        </p:inputNumber>
+                                    </p:outputPanel>
+                                    <p:outputPanel class="panel-input">
+                                        <p:message id="error-input-research-pricemax" for="input-research-pricemax"/>
+                                    </p:outputPanel>
+
+                                    <!-- input category -->
+                                    <p:outputPanel class="panel-input">
+                                        <p:outputLabel for="input-research-category" value="#{I18N['application.crudProductTheoric.labelCategory']}"/>
+                                        <p:selectOneMenu id="input-research-category"
+                                                         value="#{productTheoricListBean.filterCategory}"
+                                                         converter="CategoryConverter"
+                                                         filter="true"
+                                                         filterMatchMode="startsWith"
+                                                         validatorMessage="#{I18N['application.crudProductTheoric.errorCategory']}">
+                                            <!-- reload list entity from db. -->
+                                            <f:metadata>
+                                                <f:event type="preRenderView" listener="#{categoryBean.initAllCategory()}"/>
+                                            </f:metadata>
+                                            <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
+                                                          itemValue="#{null}"/>
+                                            <f:selectItems value="#{categoryBean.allCategory}"
+                                                           var="cateogry"
+                                                           itemLabel="#{cateogry.title}"
+                                                           itemValue="#{cateogry}"/>
+                                            <p:ajax event="change" update="form-table-product"/>
+                                        </p:selectOneMenu >
+                                    </p:outputPanel>
+                                    <p:outputPanel class="panel-input">
+                                        <p:message id="error-input-research-category" for="input-research-category"/>
+                                    </p:outputPanel>
+
+                                    <!-- input language -->
+                                    <p:outputPanel class="panel-input">
+                                        <p:outputLabel for="input-research-language" value="#{I18N['application.crudProductTheoric.labelLanguage']}"/>
+                                        <p:selectOneMenu id="input-research-language"
+                                                         value="#{productTheoricListBean.filterLanguage}"
+                                                         converter="LanguageConverter"
+                                                         filter="true"
+                                                         filterMatchMode="startsWith"
+                                                         validatorMessage="#{I18N['application.crudProductTheoric.errorLanguage']}">
+                                            <!-- reload list entity from db. -->
+                                            <f:metadata>
+                                                <f:event type="preRenderView" listener="#{languageBean.initAllLanguage()}"/>
+                                            </f:metadata>
+                                            <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
+                                                          itemValue="#{null}"/>
+                                            <f:selectItems value="#{languageBean.allLanguage}"
+                                                           var="language"
+                                                           itemLabel="#{language.title}"
+                                                           itemValue="#{language}"/>
+                                            <p:ajax event="change" update="form-table-product"/>
+                                        </p:selectOneMenu >
+                                    </p:outputPanel>
+                                    <p:outputPanel class="panel-input">
+                                        <p:message id="error-input-research-language" for="input-research-language"/>
+                                    </p:outputPanel>
+
+                                    <!-- input operating system -->
+                                    <p:outputPanel class="panel-input">
+                                        <p:outputLabel for="input-research-operatingsystem" value="#{I18N['application.crudProductTheoric.labelOperatingSystem']}"/>
+                                        <p:selectOneMenu id="input-research-operatingsystem"
+                                                         value="#{productTheoricListBean.filterOperatingSystem}"
+                                                         converter="OperatingSystemConverter"
+                                                         filter="true"
+                                                         filterMatchMode="startsWith"
+                                                         validatorMessage="#{I18N['application.crudProductTheoric.errorOperatingSystem']}">
+                                            <!-- reload list entity from db. -->
+                                            <f:metadata>
+                                                <f:event type="preRenderView" listener="#{operatingSystemBean.initAllOperatingSystem()}"/>
+                                            </f:metadata>
+                                            <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
+                                                          itemValue="#{null}"/>
+                                            <f:selectItems value="#{operatingSystemBean.allOperatingSystem}"
+                                                           var="os"
+                                                           itemLabel="#{os.title}"
+                                                           itemValue="#{os}"/>
+                                            <p:ajax event="change" update="form-table-product"/>
+                                        </p:selectOneMenu >
+                                    </p:outputPanel>
+                                    <p:outputPanel class="panel-input">
+                                        <p:message id="error-input-research-operatingsystem" for="input-research-operatingsystem"/>
+                                    </p:outputPanel>
+
+                                </p:tab>
+                            </p:accordionPanel>
+
                         </p:outputPanel>
                     </f:facet>
 

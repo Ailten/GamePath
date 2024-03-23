@@ -44,7 +44,7 @@
                          rendered="#{connectionBean.user == null}"
                          iconPos="right"/>
         <p:commandButton value="#{I18N['application.header.logoutButton']}"
-                         action="#{connectionBean.deconnection}"
+                         action="#{connectionBean.deconnection()}"
                          icon="pi pi-sign-in"
                          class="ui-button-info"
                          rendered="#{connectionBean.user != null}"

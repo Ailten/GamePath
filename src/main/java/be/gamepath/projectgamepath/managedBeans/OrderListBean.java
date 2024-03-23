@@ -9,8 +9,11 @@ import be.gamepath.projectgamepath.utility.Utility;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Named
 @SessionScoped
@@ -18,14 +21,14 @@ public class OrderListBean extends TableFilter<Order> implements Serializable {
 
     public void doResearch() {
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         OrderService orderService = new OrderService();
 
         try{
             if(connectionBean.isUserHasPermission("readList-order-all")) //get all orders of all users.
-                this.entityFiltered = orderService.selectManyByFilter(em, this.filter);
+                this.entityFiltered = orderService.selectManyByFilter(em, this.filter, this.filterDate);
             else //get orders of user connected.
-                this.entityFiltered = orderService.selectManyByFilterOneUser(em, this.filter,
+                this.entityFiltered = orderService.selectManyByFilterOneUser(em, this.filter, this.filterDate,
                         connectionBean.getUser().getId());
         }catch(Exception e){
             Utility.debug("error into doResearch : " + e.getMessage());
@@ -34,6 +37,16 @@ public class OrderListBean extends TableFilter<Order> implements Serializable {
             em.close();
         }
 
+    }
+
+
+    @Temporal(TemporalType.DATE)
+    private Date filterDate = null;
+    public Date getFilterDate() {
+        return filterDate;
+    }
+    public void setFilterDate(Date filterDate) {
+        this.filterDate = filterDate;
     }
 
 }

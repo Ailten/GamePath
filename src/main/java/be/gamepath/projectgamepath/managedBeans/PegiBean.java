@@ -1,9 +1,7 @@
 package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.entities.Pegi;
-import be.gamepath.projectgamepath.service.CategoryService;
 import be.gamepath.projectgamepath.service.PegiService;
 
 import javax.enterprise.context.SessionScoped;
@@ -23,7 +21,7 @@ public class PegiBean implements Serializable {
         return this.allPegi;
     }
     public void initAllPegi(){
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         PegiService pegiService = new PegiService();
         try{
             this.allPegi = pegiService.selectMany(em);

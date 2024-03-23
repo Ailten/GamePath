@@ -2,11 +2,9 @@ package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.ProductKey;
-import be.gamepath.projectgamepath.entities.ProductTheoric;
 import be.gamepath.projectgamepath.entities.UserProductTheoric;
 import be.gamepath.projectgamepath.enumeration.Crud;
 import be.gamepath.projectgamepath.service.ProductKeyService;
-import be.gamepath.projectgamepath.service.ProductTheoricService;
 import be.gamepath.projectgamepath.service.UserProductTheoricService;
 import be.gamepath.projectgamepath.utility.CrudManaging;
 import be.gamepath.projectgamepath.utility.Utility;
@@ -15,7 +13,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.rmi.CORBA.Util;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -38,10 +35,10 @@ public class UserProductTheoricBean extends CrudManaging<UserProductTheoric> imp
 
     protected boolean insert() {
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         ProductKeyService productKeyService = new ProductKeyService();
         UserProductTheoricService userProductTheoricService = new UserProductTheoricService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
         boolean isSuccess = false;
 
         try{
@@ -87,14 +84,14 @@ public class UserProductTheoricBean extends CrudManaging<UserProductTheoric> imp
             userProductTheoricService.insert(em, this.elementCrudSelected);
 
             isSuccess = true;
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             Utility.debug("Error catch in insert : " + e.getMessage());
             isSuccess = false;
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 

@@ -21,7 +21,7 @@ public class SocietyProducerBean implements Serializable {
         return this.allSocietyProducer;
     }
     public void initAllSocietyProducer(){
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         SocietyProducerService editorService = new SocietyProducerService();
         try{
             this.allSocietyProducer = editorService.selectMany(em);

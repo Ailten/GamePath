@@ -2,8 +2,10 @@ package be.gamepath.projectgamepath.service;
 
 import be.gamepath.projectgamepath.entities.Order;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
+import be.gamepath.projectgamepath.utility.Utility;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
 import java.util.List;
 
 public class OrderService extends ServiceGeneric<Order> {
@@ -35,14 +37,28 @@ public class OrderService extends ServiceGeneric<Order> {
     }
 
 
-    public List<Order> selectManyByFilter(EntityManager em, String filter){
+    public List<Order> selectManyByFilter(EntityManager em, String filter, Date filterDate){
+        Date filterDateNextMonth = null;
+        if(filterDate != null){
+            filterDateNextMonth = new Date(filterDate.getYear(),filterDate.getMonth(),filterDate.getDate());
+            filterDateNextMonth.setMonth(filterDateNextMonth.getMonth() + 1);
+        }
         return em.createNamedQuery("Order.SelectManyByFilter", Order.class)
                 .setParameter("filter", filter)
+                .setParameter("filterDate", filterDate)
+                .setParameter("filterDateNextMonth", filterDateNextMonth)
                 .getResultList();
     }
-    public List<Order> selectManyByFilterOneUser(EntityManager em, String filter, int idUser){
+    public List<Order> selectManyByFilterOneUser(EntityManager em, String filter, Date filterDate, int idUser){
+        Date filterDateNextMonth = null;
+        if(filterDate != null){
+            filterDateNextMonth = new Date(filterDate.getYear(),filterDate.getMonth(),filterDate.getDate());
+            filterDateNextMonth.setMonth(filterDateNextMonth.getMonth() + 1);
+        }
         return em.createNamedQuery("Order.SelectManyByFilterOneUser", Order.class)
                 .setParameter("filter", filter)
+                .setParameter("filterDate", filterDate)
+                .setParameter("filterDateNextMonth", filterDateNextMonth)
                 .setParameter("idUser", idUser)
                 .getResultList();
     }

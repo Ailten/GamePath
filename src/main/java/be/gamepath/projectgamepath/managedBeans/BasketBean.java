@@ -8,14 +8,11 @@ import be.gamepath.projectgamepath.utility.CrudManaging;
 import be.gamepath.projectgamepath.utility.FileManaging;
 import be.gamepath.projectgamepath.utility.MailManager;
 import be.gamepath.projectgamepath.utility.Utility;
-import org.eclipse.persistence.internal.jpa.transaction.EntityTransactionImpl;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,7 +38,7 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
      */
     public static void initListProductTheoric(Basket basket) {
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         ProductTheoricService productTheoricService = new ProductTheoricService();
 
         try{
@@ -70,13 +67,13 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             return null;
         }
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         OrderService orderService = new OrderService();
         ProductKeyService productKeyService = new ProductKeyService();
         BasketProductTheoricService basketProductTheoricService = new BasketProductTheoricService();
         BasketService basketService = new BasketService();
         UserProductTheoricService userProductTheoricService = new UserProductTheoricService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
         boolean isSuccess = false;
 
         try{
@@ -175,9 +172,9 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             );
 
             isSuccess = true;
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             Utility.debug("error into submitBasket : " + e.getMessage());
             popUpMessageBean.setPopUpMessage(
                     Utility.stringFromI18N("application.basket.titleErrorSubmit"),
@@ -187,7 +184,7 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             isSuccess = false;
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 
@@ -202,10 +199,10 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
     //load basket from DB (if is a fake basket empty)
     public void loadBasketFromDB(){
 
-        if(this.getElementCrudSelected().getId() != 0)
+        if(this.getElementCrudSelected().getId() != 0 && this.getElementCrudSelected().getListProductTheoric().size() != 0)
             return; //basket is already load.
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         BasketService basketService = new BasketService();
 
         try{

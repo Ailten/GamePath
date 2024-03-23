@@ -2,9 +2,7 @@ package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.Category;
-import be.gamepath.projectgamepath.entities.SocietyProducer;
 import be.gamepath.projectgamepath.service.CategoryService;
-import be.gamepath.projectgamepath.service.SocietyProducerService;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -23,7 +21,7 @@ public class CategoryBean implements Serializable {
         return this.allCategory;
     }
     public void initAllCategory(){
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         CategoryService categoryService = new CategoryService();
         try{
             this.allCategory = categoryService.selectMany(em);

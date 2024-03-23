@@ -36,19 +36,35 @@ import java.util.Objects;
                         "where ( " +
                         "  ( " +
                         "    ( lower(pt.title) like concat('%', :filter, '%') ) or " +
-                        "    ( lower(c.title) like concat('%', :filter, '%') ) or " +
+                        //"    ( lower(c.title) like concat('%', :filter, '%') ) or " + //move to filterCategoryId params.
                         "    ( lower(p.title) like concat('%', :filter, '%') ) or " +
-                        "    ( lower(l.title) like concat('%', :filter, '%') ) or " +
-                        "    ( lower(os.title) like concat('%', :filter, '%') ) or " +
+                        //"    ( lower(l.title) like concat('%', :filter, '%') ) or " + //move to filterLanguageId params.
+                        //"    ( lower(os.title) like concat('%', :filter, '%') ) or " + //move to filterOperatingSystemId params.
                         "    ( lower(sp.title) like concat('%', :filter, '%') ) " +
                         "  ) and ( " +
-                        "    ( :isShowEntityDisable = true or ( pt.isActive = true ) ) " +
+                        "    ( " +
+                        "      pt.priceHtva * ( 1 + (case " + //TVA enum.
+                        "        when (concat(pt.tva,'') = '0') then 0 " +
+                        "        when (concat(pt.tva,'') = '6') then 0.06 " +
+                        "        when (concat(pt.tva,'') = '12') then 0.12 " +
+                        "        when (concat(pt.tva,'') = '21') then 0.21 " +
+                        "        else 0.21 " +
+                        "      end)) * ( 1 - (pt.reduction/100)) " + //reduction in percent.
+                        "    ) < :filterPriceMax or :filterPriceMax = 0.0f" +
+                        "  ) and ( " +
+                        "    ( c.id = :filterCategoryId or :filterCategoryId = 0 ) " + //filterCategory.
+                        "  ) and ( " +
+                        "    ( l.id = :filterLanguageId or :filterLanguageId = 0 ) " + //filterLanguage.
+                        "  ) and ( " +
+                        "    ( os.id = :filterOperatingSystemId or :filterOperatingSystemId = 0 ) " + //filterOperatingSystemId.
+                        "  ) and ( " +
+                        "    ( :isShowEntityDisable = true or pt.isActive = true ) " +
                         "  ) " +
-                        ")"), // and pt.releaseDate <= current_date()
+                        ")"), // and pt.releaseDate <= current_date() //current_date not recognize.
         @NamedQuery(name= "ProductTheoric.SelectManyByIdBasket",
                 query = "select pt from BasketProductTheoric bpt " +
-                        "join ProductTheoric pt on (pt.id = bpt.productTheoric.id) " +
-                        "join Basket b on (b.id = bpt.basket.id) " +
+                        "join fetch bpt.productTheoric pt " +
+                        "join fetch bpt.basket b " +
                         "where (b.id = :idBasket)"),
 })
 @Entity

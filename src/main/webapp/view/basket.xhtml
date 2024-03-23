@@ -135,10 +135,12 @@
                             </p:outputPanel>
 
                             <!-- input checkbox for me -->
-                            <p:outputPanel class="panel-input panel-input-without-error">
+                            <p:outputPanel class="panel-input panel-input-without-error" rendered="#{basketBean.elementCrudSelected.listProductTheoric.size() != 0}">
                                 <p:outputLabel for="input-basket-forme" value="#{I18N['application.crudUserProductTheoric.labelBasketForMe']}"/>
                                 <p:selectBooleanCheckbox id="input-basket-forme"
-                                                         value="#{basketBean.elementCrudSelected.isForMe}"/>
+                                                         value="#{basketBean.elementCrudSelected.isForMe}">
+                                    <p:ajax event="change" action="#{basketBean.elementCrudSelected.setIsForMe(!basketBean.elementCrudSelected.isForMe)}" update="input-basket-forme"/>
+                                </p:selectBooleanCheckbox>
                             </p:outputPanel>
 
 

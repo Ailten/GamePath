@@ -1,11 +1,7 @@
 package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.Basket;
 import be.gamepath.projectgamepath.entities.Order;
-import be.gamepath.projectgamepath.entities.ProductKey;
-import be.gamepath.projectgamepath.entities.ProductTheoric;
-import be.gamepath.projectgamepath.service.CategoryService;
 import be.gamepath.projectgamepath.service.ProductKeyService;
 import be.gamepath.projectgamepath.utility.CrudManaging;
 import be.gamepath.projectgamepath.utility.Utility;
@@ -36,7 +32,7 @@ public class OrderBean extends CrudManaging<Order> implements Serializable {
      * Initialize list productKey into an order
      */
     public static void initListProductKey(Order order) {
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         ProductKeyService productKeyService = new ProductKeyService();
 
         try{

@@ -4,6 +4,7 @@ import be.gamepath.projectgamepath.enumeration.PayementType;
 import be.gamepath.projectgamepath.managedBeans.BasketBean;
 import be.gamepath.projectgamepath.managedBeans.ProductTheoricBean;
 import be.gamepath.projectgamepath.utility.EntityGenerique;
+import be.gamepath.projectgamepath.utility.Utility;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -108,4 +109,5 @@ public class Basket extends EntityGenerique {
         return this.isForMe;
     }
     public void setIsForMe(boolean isForMe){ this.isForMe = isForMe; }
+
 }

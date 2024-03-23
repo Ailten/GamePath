@@ -24,7 +24,10 @@ import java.util.Objects;
                         "join ProductKey pk on (pk.order.id = o.id) " +
                         "join fetch pk.productTheoric pt " +
                         "where ( " +
-                        "  ( lower(pt.title) like concat('%', :filter, '%') ) or " +
+                        "  ( " +
+                        "    lower(pt.title) like concat('%', :filter, '%') and " +
+                        "    (:filterDate is null or (o.validateBasketDate > :filterDate and o.validateBasketDate < :filterDateNextMonth)) " +
+                        "  ) or " +
                         "  ( lower(concat(u.lastName,' ',u.firstName)) like concat('%', :filter, '%') ) " +
                         ")"),
         @NamedQuery(name= "Order.SelectManyByFilterOneUser",
@@ -33,7 +36,10 @@ import java.util.Objects;
                         "join ProductKey pk on (pk.order.id = o.id) " +
                         "join fetch pk.productTheoric pt " +
                         "where ( u.id = :idUser and ( " +
-                        "  ( lower(pt.title) like concat('%', :filter, '%') ) " +
+                        "  ( " +
+                        "    lower(pt.title) like concat('%', :filter, '%') and " +
+                        "    (:filterDate is null or (o.validateBasketDate > :filterDate and o.validateBasketDate < :filterDateNextMonth)) " +
+                        "  ) " +
                         "))"),
 })
 @Entity

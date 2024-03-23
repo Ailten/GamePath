@@ -56,6 +56,30 @@
                                 </p:inputText>
                             </p:outputPanel>
                         </p:outputPanel>
+                        <p:outputPanel class="panel-table-header">
+
+                            <!-- pannel for research more precise -->
+                            <p:accordionPanel>
+                                <p:tab title="#{I18N['application.tablePage.placeHolderInputFilter']}">
+
+                                    <!-- input date -->
+                                    <p:outputPanel class="panel-input">
+                                        <p:outputLabel for="input-research-date" value="#{I18N['application.tableOrder.labelFilterDate']}"/>
+                                        <p:datePicker id="input-research-date"
+                                                      value="#{orderListBean.filterDate}"
+                                                      pattern="#{I18N['application.tableOrder.patternDate']}"
+                                                      validatorMessage="#{I18N['application.crudProductTheoric.errorRelease']}">
+                                            <p:ajax event="change" update="form-table-order"/>
+                                        </p:datePicker>
+                                    </p:outputPanel>
+                                    <p:outputPanel class="panel-input">
+                                        <p:message id="error-input-research-date" for="input-research-date"/>
+                                    </p:outputPanel>
+
+                                </p:tab>
+                            </p:accordionPanel>
+
+                        </p:outputPanel>
                     </f:facet>
 
 

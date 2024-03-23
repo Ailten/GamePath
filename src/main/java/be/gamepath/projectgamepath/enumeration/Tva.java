@@ -45,4 +45,9 @@ public enum Tva {
         return priceHtva * (((float)this.getNumValue()) / 100);
     }
 
+    @Override
+    public String toString(){
+        return this.getTxtValue();
+    }
+
 }

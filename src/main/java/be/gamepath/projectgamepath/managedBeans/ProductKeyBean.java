@@ -3,7 +3,6 @@ package be.gamepath.projectgamepath.managedBeans;
 import be.gamepath.projectgamepath.connexion.EMF;
 import be.gamepath.projectgamepath.entities.ProductKey;
 import be.gamepath.projectgamepath.entities.UserProductTheoric;
-import be.gamepath.projectgamepath.enumeration.Crud;
 import be.gamepath.projectgamepath.service.ProductKeyService;
 import be.gamepath.projectgamepath.service.UserProductTheoricService;
 import be.gamepath.projectgamepath.utility.Utility;
@@ -36,10 +35,10 @@ public class ProductKeyBean implements Serializable {
             return;
         }
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         UserProductTheoricService userProductTheoricService = new UserProductTheoricService();
         ProductKeyService productKeyService = new ProductKeyService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
 
         try{
             transaction.begin();
@@ -76,13 +75,13 @@ public class ProductKeyBean implements Serializable {
             userProduct.setUnlockDate(Utility.castLocalDateTimeToDate(LocalDateTime.now()));
             userProductTheoricService.insert(em, userProduct);
 
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             Utility.debug("error into useKey : " + e.getMessage());
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 

@@ -36,9 +36,9 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
     protected boolean insert() {
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         ProductTheoricService productTheoricService = new ProductTheoricService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
         boolean success;
 
         try{
@@ -61,13 +61,13 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             this.updateJoins(em);
 
             success = true;
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             success = false;
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 
@@ -76,9 +76,9 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
     protected boolean update() {
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         ProductTheoricService productTheoricService = new ProductTheoricService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
         boolean success;
 
         try{
@@ -102,13 +102,13 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             this.updateJoins(em);
 
             success = true;
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             success = false;
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 
@@ -128,9 +128,9 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
         this.elementCrudSelected = productTheoric;
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         ProductTheoricService productTheoricService = new ProductTheoricService();
-        EntityTransaction transaction = em.getTransaction();
+        EntityTransaction transaction = EMF.getTransaction(em);
 
         try{
             transaction.begin();
@@ -144,13 +144,13 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
             //clean var object selected.
             this.elementCrudSelected = null;
 
-            transaction.commit();
+            EMF.transactionCommit(em, transaction);
         }catch(Exception e){
-            transaction.rollback();
+            EMF.transactionRollback(em, transaction);
             Utility.debug("error into delete : " + e.getMessage());
         }finally{
             if(transaction.isActive()) //last security.
-                transaction.rollback();
+                EMF.transactionRollback(em, transaction);
             em.close();
         }
 
@@ -312,7 +312,7 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
      * Initialize list category into a productTheoric
      */
     public static void initListCategory(ProductTheoric productTheoric) {
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         CategoryService categoryService = new CategoryService();
 
         try{
@@ -332,7 +332,7 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
      * Initialize list pegi into a productTheoric
      */
     public static void initListPegi(ProductTheoric productTheoric) {
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         PegiService pegiService = new PegiService();
 
         try{
@@ -352,7 +352,7 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
      * Initialize list operatingSystem into a productTheoric
      */
     public static void initListOperatingSystem(ProductTheoric productTheoric) {
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         OperatingSystemService operatingSystemService = new OperatingSystemService();
 
         try{
@@ -372,7 +372,7 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
      * Initialize list language into a productTheoric
      */
     public static void initListLanguage(ProductTheoric productTheoric) {
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         LanguageService languageService = new LanguageService();
 
         try{
@@ -393,7 +393,7 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
      */
     public static void initListPictureProduct(ProductTheoric productTheoric) {
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         PictureProductService pictureProductService = new PictureProductService();
 
         try{

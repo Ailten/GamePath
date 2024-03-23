@@ -1,9 +1,7 @@
 package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.ProductTheoric;
 import be.gamepath.projectgamepath.entities.UserProductTheoric;
-import be.gamepath.projectgamepath.service.ProductTheoricService;
 import be.gamepath.projectgamepath.service.UserProductTheoricService;
 import be.gamepath.projectgamepath.utility.TableFilter;
 import be.gamepath.projectgamepath.utility.Utility;
@@ -20,7 +18,7 @@ public class UserProductTheoricListBean extends TableFilter<UserProductTheoric> 
 
     public void doResearch() {
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         UserProductTheoricService userProductTheoricService = new UserProductTheoricService();
 
         try{

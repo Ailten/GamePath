@@ -1,9 +1,7 @@
 package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
-import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.entities.Language;
-import be.gamepath.projectgamepath.service.CategoryService;
 import be.gamepath.projectgamepath.service.LanguageService;
 
 import javax.enterprise.context.SessionScoped;
@@ -23,7 +21,7 @@ public class LanguageBean implements Serializable {
         return this.allLanguage;
     }
     public void initAllLanguage(){
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         LanguageService languageService = new LanguageService();
         try{
             this.allLanguage = languageService.selectMany(em);

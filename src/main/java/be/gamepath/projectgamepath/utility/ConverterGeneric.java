@@ -18,7 +18,7 @@ public class ConverterGeneric<TEntity extends EntityGenerique, TService extends 
             return null;
         }
 
-        EntityManager em = EMF.getEM();
+        EntityManager em = EMF.createEM();
         TEntity entity;
         try{
             entity = this.service.selectById(em, Integer.parseInt(s));
