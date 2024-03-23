@@ -64,10 +64,13 @@
 
                                     <!-- input date -->
                                     <p:outputPanel class="panel-input">
-                                        <p:outputLabel for="input-research-date" value="#{I18N['application.tableOrder.labelFilterDate']}"/>
+                                        <p:outputLabel for="input-research-date" value="#{I18N['application.tableOrder.labelFilterMonth']}"/>
                                         <p:datePicker id="input-research-date"
                                                       value="#{orderListBean.filterDate}"
                                                       pattern="#{I18N['application.tableOrder.patternDate']}"
+                                                      view="month"
+                                                      yearNavigator="true"
+                                                      yearRange="#{orderListBean.rangeYearFilter()}"
                                                       validatorMessage="#{I18N['application.crudProductTheoric.errorRelease']}">
                                             <p:ajax event="change" update="form-table-order"/>
                                         </p:datePicker>

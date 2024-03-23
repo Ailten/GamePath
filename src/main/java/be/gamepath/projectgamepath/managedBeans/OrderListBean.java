@@ -49,4 +49,11 @@ public class OrderListBean extends TableFilter<Order> implements Serializable {
         this.filterDate = filterDate;
     }
 
+
+    public String rangeYearFilter() {
+        int yearNow = new Date().getYear() +1900;
+        int rangeYearFromNow = 10;
+        return ((yearNow-(rangeYearFromNow))+":"+(yearNow+(rangeYearFromNow)));
+    }
+
 }
