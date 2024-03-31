@@ -41,6 +41,17 @@ import java.util.Objects;
                         "    (:filterDate is null or (o.validateBasketDate > :filterDate and o.validateBasketDate < :filterDateNextMonth)) " +
                         "  ) " +
                         "))"),
+        @NamedQuery(name= "Order.SelectBestSellAnalytics",
+                query = "select " +
+                        "  pt.title as label, " +
+                        "  count(pk.id) as quantity " +
+                        "from ProductKey pk " +
+                        "join fetch pk.productTheoric pt " +
+                        "join fetch pk.order o " +
+                        "where ( " +
+                        "  (1 = 1) " +
+                        ") group by pt.title " +
+                        "order by count(pk.id) desc"),
 })
 @Entity
 @Table(name = "order", schema = "gamepath", catalog = "")

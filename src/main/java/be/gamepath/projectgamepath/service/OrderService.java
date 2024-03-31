@@ -3,6 +3,7 @@ package be.gamepath.projectgamepath.service;
 import be.gamepath.projectgamepath.entities.Order;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 import be.gamepath.projectgamepath.utility.Utility;
+import org.primefaces.shaded.json.JSONObject;
 
 import javax.persistence.EntityManager;
 import java.util.Date;
@@ -60,6 +61,17 @@ public class OrderService extends ServiceGeneric<Order> {
                 .setParameter("filterDate", filterDate)
                 .setParameter("filterDateNextMonth", filterDateNextMonth)
                 .setParameter("idUser", idUser)
+                .getResultList();
+    }
+
+
+    /**
+     * get list of json object (for analytics graphics).
+     * @param em entity manager.
+     * @return list of json object {label:"productTheoric.title", quantity:"count()"}.
+     */
+    public static List<JSONObject> selectBestSellAnalytics(EntityManager em){
+        return em.createNamedQuery("Order.SelectBestSellAnalytics", JSONObject.class)
                 .getResultList();
     }
 

@@ -228,6 +228,15 @@
     font-size: 1.3rem;
 }
 
+/* --- generic stats --- */
+
+#body .content .content-stats-body-center {
+    margin: 20px;
+}
+#body .content .content-stats-body-center .canvas-analytics {
+    width: 100%;
+}
+
 /* --- accueil --- */
 
 #content-bg-accueil {

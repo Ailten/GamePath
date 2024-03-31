@@ -16,7 +16,7 @@ function eventLoadPage(urlPath){
         focusOnComboBox(event.target.parentElement);
     });
 
-    //call function for loading page crud product (vueJS).
+    //call function for loading page crud product.
     if(document.getElementById('form-crud-product'))
         loadPageCrudProduct();
 
@@ -83,7 +83,6 @@ function reloadPage(){
 
 //function call when load page crud Product.
 function loadPageCrudProduct(){
-    console.log('load page crud product');
 
     //get all img of product.
     $('div[id="form-crud-product:panel-draw-picture"] img').on('click', function(event){
@@ -121,4 +120,17 @@ function eventClickZoomImg(imgClicked){
 //event call when click for exit modal zoom img.
 function eventCloseModalZoomImg(){
     $('.img-zoom-modal').remove();
+}
+
+
+//function call when load page order analytics.
+function loadAnalytics(orderAnalyticsData){
+
+    //get canvas and data.
+    let canvas = document.getElementById('canvas-analytics');
+    let objDataForCharJs = JSON.parse(orderAnalyticsData);
+
+    //make graphics.
+    new Chart(canvas, objDataForCharJs);
+
 }

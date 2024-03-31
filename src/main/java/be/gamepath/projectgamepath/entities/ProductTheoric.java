@@ -39,7 +39,7 @@ import java.util.Objects;
                         //"    ( lower(c.title) like concat('%', :filter, '%') ) or " + //move to filterCategoryId params.
                         //"    ( lower(p.title) like concat('%', :filter, '%') ) or " + //remove.
                         //"    ( lower(l.title) like concat('%', :filter, '%') ) or " + //move to filterLanguageId params.
-                        "    ( lower(os.title) like concat('%', :filter, '%') ) or " + //move to filterOperatingSystemId params.
+                        //"    ( lower(os.title) like concat('%', :filter, '%') ) or " + //move to filterOperatingSystemId params.
                         "    ( lower(sp.title) like concat('%', :filter, '%') ) " +
                         "  ) and ( " +
                         "    ( " +

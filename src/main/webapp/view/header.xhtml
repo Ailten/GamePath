@@ -128,6 +128,16 @@
                         action="#{connectionBean.redirectCrudPage('/view/unlockProductKey', userProductTheoricBean, null, 'create')}"/>
         </p:submenu>
 
+        <!-- analytics -->
+        <p:submenu label="#{I18N['application.header.menuListAnalytics']}"
+                   icon="pi pi-fw pi-chart-bar"
+                   rendered="#{connectionBean.isUserHasPermission('readList-order-bestSellAnalytics')}"> <!-- min permission for this submenu -->
+            <p:menuitem value="#{I18N['application.header.menuBestSellAnalytics']}"
+                        icon="pi pi-fw pi-chart-bar"
+                        action="#{connectionBean.redirectPage('/view/bestSellAnalytics')}"
+                        rendered="#{connectionBean.isUserHasPermission('readList-order-bestSellAnalytics')}"/>
+        </p:submenu>
+
 
 
     </p:menubar>

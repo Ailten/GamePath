@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
+    <ui:define name="title">
+        #{I18N['application.header.title']}
+    </ui:define>
+    <ui:define name="content">
+
+        <!-- save historic -->
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/bestSellAnalytics')}"/>
+        </f:metadata>
+
+        <!-- title page -->
+        <div class="h-content">
+            <h1>
+                <h:outputText value="#{I18N['application.header.menuBestSellAnalytics']}"/>
+            </h1>
+        </div>
+
+        <div class="content-stats-body-center">
+            <h:form id="form-stats-order">
+
+                <!-- params filter -->
+                <!-- TODO  -->
+
+                <!-- canvas chart js -->
+                <canvas id="canvas-analytics" class="canvas-analytics"> </canvas>
+                <script> loadAnalytics('#{analyticsBean.bestSellAnalyticsData}'); </script>
+
+            </h:form>
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>
