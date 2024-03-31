@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.managedBeans;
 
 import be.gamepath.projectgamepath.connexion.EMF;
+import be.gamepath.projectgamepath.entities.Category;
 import be.gamepath.projectgamepath.entities.UserProductTheoric;
 import be.gamepath.projectgamepath.service.UserProductTheoricService;
 import be.gamepath.projectgamepath.utility.TableFilter;
@@ -22,8 +23,14 @@ public class UserProductTheoricListBean extends TableFilter<UserProductTheoric> 
         UserProductTheoricService userProductTheoricService = new UserProductTheoricService();
 
         try{
-            this.entityFiltered = userProductTheoricService.selectManyByFilter(em, this.filter,
-                    connectionBean.getUser().getId());
+            int filterCategoryId = (this.filterCategory == null? 0: this.filterCategory.getId());
+
+            this.entityFiltered = userProductTheoricService.selectManyByFilter(
+                    em,
+                    this.filter,
+                    filterCategoryId,
+                    connectionBean.getUser().getId()
+            );
         }catch(Exception e){
             Utility.debug("error into doResearch : " + e.getMessage());
             this.entityFiltered = new ArrayList<>();
@@ -31,6 +38,15 @@ public class UserProductTheoricListBean extends TableFilter<UserProductTheoric> 
             em.close();
         }
 
+    }
+
+
+    private Category filterCategory = null;
+    public Category getFilterCategory() {
+        return filterCategory;
+    }
+    public void setFilterCategory(Category filterCategory) {
+        this.filterCategory = filterCategory;
     }
 
 }

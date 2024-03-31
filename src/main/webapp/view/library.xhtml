@@ -56,6 +56,42 @@
                                 </p:inputText>
                             </p:outputPanel>
                         </p:outputPanel>
+                        <p:outputPanel class="panel-table-header">
+
+                            <!-- pannel for research more precise -->
+                            <p:accordionPanel activeIndex="null">
+                                <p:tab title="#{I18N['application.tablePage.placeHolderInputFilter']}">
+
+                                    <!-- input category -->
+                                    <p:outputPanel class="panel-input">
+                                        <p:outputLabel for="input-research-category" value="#{I18N['application.crudProductTheoric.labelCategory']}"/>
+                                        <p:selectOneMenu id="input-research-category"
+                                                         value="#{userProductTheoricListBean.filterCategory}"
+                                                         converter="CategoryConverter"
+                                                         filter="true"
+                                                         filterMatchMode="startsWith"
+                                                         validatorMessage="#{I18N['application.crudProductTheoric.errorCategory']}">
+                                            <!-- reload list entity from db. -->
+                                            <f:metadata>
+                                                <f:event type="preRenderView" listener="#{categoryBean.initAllCategory()}"/>
+                                            </f:metadata>
+                                            <f:selectItem itemLabel="#{I18N['application.crudPage.emptyValuePlaceHolder']}"
+                                                          itemValue="#{null}"/>
+                                            <f:selectItems value="#{categoryBean.allCategory}"
+                                                           var="cateogry"
+                                                           itemLabel="#{cateogry.title}"
+                                                           itemValue="#{cateogry}"/>
+                                            <p:ajax event="change" update="form-table-userproduct"/>
+                                        </p:selectOneMenu >
+                                    </p:outputPanel>
+                                    <p:outputPanel class="panel-input">
+                                        <p:message id="error-input-research-category" for="input-research-category"/>
+                                    </p:outputPanel>
+
+                                </p:tab>
+                            </p:accordionPanel>
+
+                        </p:outputPanel>
                     </f:facet>
 
 

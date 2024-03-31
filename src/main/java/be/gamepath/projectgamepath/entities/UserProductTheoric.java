@@ -33,12 +33,14 @@ import java.util.Objects;
                         "join SocietyProducer sp on (sp.id = pt.societyProducer.id) " +
                         "where (upt.user.id = :idUser and (" +
                         "    (lower(pt.title) like concat('%', :filter, '%')) or " +
-                        "    ( lower(c.title) like concat('%', :filter, '%') ) or " +
-                        "    ( lower(p.title) like concat('%', :filter, '%') ) or " +
+                        //"    ( lower(c.title) like concat('%', :filter, '%') ) or " + //move to filterCategoryId params.
+                        //"    ( lower(p.title) like concat('%', :filter, '%') ) or " + //remove.
                         "    ( lower(l.title) like concat('%', :filter, '%') ) or " +
                         "    ( lower(os.title) like concat('%', :filter, '%') ) or " +
                         "    ( lower(sp.title) like concat('%', :filter, '%') ) " +
-                        "))"),
+                        ")) and ( " +
+                        "    ( c.id = :filterCategoryId or :filterCategoryId = 0 )" + //filterCategory.
+                        ") order by pt.title"),
 })
 @Entity
 @Table(name = "userproducttheoric", schema = "gamepath", catalog = "")

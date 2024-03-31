@@ -37,9 +37,9 @@ import java.util.Objects;
                         "  ( " +
                         "    ( lower(pt.title) like concat('%', :filter, '%') ) or " +
                         //"    ( lower(c.title) like concat('%', :filter, '%') ) or " + //move to filterCategoryId params.
-                        "    ( lower(p.title) like concat('%', :filter, '%') ) or " +
+                        //"    ( lower(p.title) like concat('%', :filter, '%') ) or " + //remove.
                         //"    ( lower(l.title) like concat('%', :filter, '%') ) or " + //move to filterLanguageId params.
-                        //"    ( lower(os.title) like concat('%', :filter, '%') ) or " + //move to filterOperatingSystemId params.
+                        "    ( lower(os.title) like concat('%', :filter, '%') ) or " + //move to filterOperatingSystemId params.
                         "    ( lower(sp.title) like concat('%', :filter, '%') ) " +
                         "  ) and ( " +
                         "    ( " +
@@ -60,7 +60,7 @@ import java.util.Objects;
                         "  ) and ( " +
                         "    ( :isShowEntityDisable = true or pt.isActive = true ) " +
                         "  ) " +
-                        ")"), // and pt.releaseDate <= current_date() //current_date not recognize.
+                        ") order by pt.title"), // and pt.releaseDate <= current_date() //current_date not recognize.
         @NamedQuery(name= "ProductTheoric.SelectManyByIdBasket",
                 query = "select pt from BasketProductTheoric bpt " +
                         "join fetch bpt.productTheoric pt " +

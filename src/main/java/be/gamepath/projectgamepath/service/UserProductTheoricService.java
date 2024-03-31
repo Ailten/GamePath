@@ -48,9 +48,15 @@ public class UserProductTheoricService extends ServiceGeneric<UserProductTheoric
     }
 
 
-    public List<UserProductTheoric> selectManyByFilter(EntityManager em, String filter, int idUser) {
+    public List<UserProductTheoric> selectManyByFilter(
+            EntityManager em,
+            String filter,
+            int filterCategoryId,
+            int idUser
+    ) {
         return em.createNamedQuery("UserProductTheoric.SelectManyByFilter", UserProductTheoric.class)
                 .setParameter("filter", filter)
+                .setParameter("filterCategoryId", filterCategoryId)
                 .setParameter("idUser", idUser)
                 .getResultList();
     }

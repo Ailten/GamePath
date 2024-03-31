@@ -16,13 +16,9 @@ function eventLoadPage(urlPath){
         focusOnComboBox(event.target.parentElement);
     });
 
-    //set event focus input text combo box tag with class.
-    //let checkBoxMenuOnFocus = document.getElementsByClassName('check-box-menu-on-focus');
-    //for(let i=0; i<checkBoxMenuOnFocus.length; i++){
-    //    checkBoxMenuOnFocus[i].addEventListener('click', function(event){
-    //        focusOnComboBox(event.target.parentElement);
-    //    });
-    //}
+    //call function for loading page crud product (vueJS).
+    if(document.getElementById('form-crud-product'))
+        loadPageCrudProduct();
 
 }
 
@@ -78,13 +74,51 @@ function focusOnComboBox(comboBoxFocused){
     //focus input text filter for user read on it.
     inputComboBoxFilter[0].focus();
 
-    //form-crud-...:input-..._*** //from this.
-    //form-crud-...:input-... //or from this.
-    //form-crud-...:input-..._panel .ui-inputtext //to that.
-
 }
 
 //function to reload current page.
 function reloadPage(){
     document.getElementById('reload-page').click();
+}
+
+//function call when load page crud Product.
+function loadPageCrudProduct(){
+    console.log('load page crud product');
+
+    //get all img of product.
+    $('div[id="form-crud-product:panel-draw-picture"] img').on('click', function(event){
+        eventClickZoomImg(event.target);
+    });
+}
+
+//event call when click on an image for zoom.
+function eventClickZoomImg(imgClicked){
+
+    //get data from img.
+    let urlImg = imgClicked.getAttribute('src');
+    let altImg = imgClicked.getAttribute('alt');
+
+    //build div modal.
+    let imgZoomModal = document.body.appendChild(document.createElement('div'));
+    imgZoomModal.classList.add('img-zoom-modal');
+    imgZoomModal.style.width = window.innerWidth +'px';
+    imgZoomModal.style.height = window.innerHeight +'px';
+
+    //build image into div modal.
+    let imgIntoZoomModal = imgZoomModal.appendChild(document.createElement('img'));
+    imgIntoZoomModal.setAttribute('src', urlImg);
+    imgIntoZoomModal.setAttribute('alt', altImg);
+
+    //add event click for exit modal.
+    imgZoomModal.addEventListener('click', function(){
+        eventCloseModalZoomImg();
+    });
+    imgIntoZoomModal.addEventListener('click', function(){
+        eventCloseModalZoomImg();
+    });
+}
+
+//event call when click for exit modal zoom img.
+function eventCloseModalZoomImg(){
+    $('.img-zoom-modal').remove();
 }
