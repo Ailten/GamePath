@@ -130,6 +130,9 @@ function loadAnalytics(orderAnalyticsData){
     let canvas = document.getElementById('canvas-analytics');
     let objDataForCharJs = JSON.parse(orderAnalyticsData);
 
+    console.log(canvas)
+    console.log(objDataForCharJs)
+
     //make graphics.
     new Chart(canvas, objDataForCharJs);
 

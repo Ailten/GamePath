@@ -136,6 +136,11 @@
                         icon="pi pi-fw pi-chart-bar"
                         action="#{connectionBean.redirectPage('/view/bestSellAnalytics')}"
                         rendered="#{connectionBean.isUserHasPermission('readList-order-bestSellAnalytics')}"/>
+            <p:menuitem value="#{I18N['application.header.menuStatsOfMonthAnalytics']}"
+                        icon="pi pi-fw pi-chart-bar"
+                        action="#{connectionBean.redirectPage('/view/statsOfMonthAnalytics')}"
+                        rendered="#{connectionBean.isUserHasPermission('readList-order-statsOfMonthAnalytics')}"/>
+            application.header.menuStatsOfMonthAnalytics
         </p:submenu>
 
 

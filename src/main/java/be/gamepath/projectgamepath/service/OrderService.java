@@ -1,6 +1,7 @@
 package be.gamepath.projectgamepath.service;
 
 import be.gamepath.projectgamepath.entities.Order;
+import be.gamepath.projectgamepath.utility.AnalyticsObj;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
 import be.gamepath.projectgamepath.utility.Utility;
 import org.primefaces.shaded.json.JSONObject;
@@ -8,6 +9,8 @@ import org.primefaces.shaded.json.JSONObject;
 import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
+import java.util.stream.Collectors;
 
 public class OrderService extends ServiceGeneric<Order> {
 
@@ -68,11 +71,39 @@ public class OrderService extends ServiceGeneric<Order> {
     /**
      * get list of json object (for analytics graphics).
      * @param em entity manager.
+     * @param filterDate date (for filter by month).
      * @return list of json object {label:"productTheoric.title", quantity:"count()"}.
      */
-    public static List<JSONObject> selectBestSellAnalytics(EntityManager em){
-        return em.createNamedQuery("Order.SelectBestSellAnalytics", JSONObject.class)
-                .getResultList();
+    public static List<AnalyticsObj> selectBestSellAnalytics(EntityManager em, Date filterDate){
+        Date filterDateNextMonth = null;
+        if(filterDate != null){
+            filterDateNextMonth = new Date(filterDate.getYear(),filterDate.getMonth(),filterDate.getDate());
+            filterDateNextMonth.setMonth(filterDateNextMonth.getMonth() + 1);
+        }
+        return em.createNamedQuery("Order.SelectBestSellAnalytics", Object[].class)
+                .setParameter("filterDate", filterDate)
+                .setParameter("filterDateNextMonth", filterDateNextMonth)
+                .getResultStream().map(objectArray -> new AnalyticsObj((String)objectArray[0], (int)((long)objectArray[1])))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * get list of json object (for analytics graphics).
+     * @param em entity manager.
+     * @param filterDate date (for filter by month).
+     * @return list of json object {label:"date day of month", quantity:"count()"}.
+     */
+    public static List<AnalyticsObj> selectStatsOfMonthAnalyticsData(EntityManager em, Date filterDate){
+        Date filterDateNextMonth = null;
+        if(filterDate != null){
+            filterDateNextMonth = new Date(filterDate.getYear(),filterDate.getMonth(),filterDate.getDate());
+            filterDateNextMonth.setMonth(filterDateNextMonth.getMonth() + 1);
+        }
+        return em.createNamedQuery("Order.SelectStatsOfMonthAnalyticsData", Object[].class)
+                .setParameter("filterDate", filterDate)
+                .setParameter("filterDateNextMonth", filterDateNextMonth)
+                .getResultStream().map(objectArray -> new AnalyticsObj((String)objectArray[0], (int)((long)objectArray[1])))
+                .collect(Collectors.toList());
     }
 
 

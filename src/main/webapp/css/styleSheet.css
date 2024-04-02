@@ -230,10 +230,10 @@
 
 /* --- generic stats --- */
 
-#body .content .content-stats-body-center {
-    margin: 20px;
+#body #content .content-stats-body-center {
+    margin: 20px 10%;
 }
-#body .content .content-stats-body-center .canvas-analytics {
+#body #content .content-stats-body-center .canvas-analytics {
     width: 100%;
 }
 

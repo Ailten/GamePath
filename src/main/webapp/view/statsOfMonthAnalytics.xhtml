@@ -14,13 +14,13 @@
 
         <!-- save historic -->
         <f:metadata>
-            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/bestSellAnalytics')}"/>
+            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/statsOfMonthAnalytics')}"/>
         </f:metadata>
 
         <!-- title page -->
         <div class="h-content">
             <h1>
-                <h:outputText value="#{I18N['application.header.menuBestSellAnalytics']}"/>
+                <h:outputText value="#{I18N['application.header.menuStatsOfMonthAnalytics']}"/>
             </h1>
         </div>
 
@@ -53,7 +53,7 @@
 
                 <!-- canvas chart js -->
                 <canvas id="canvas-analytics" class="canvas-analytics"> </canvas>
-                <script> loadAnalytics('#{analyticsBean.bestSellAnalyticsData}'); </script>
+                <script> loadAnalytics('#{analyticsBean.statsOfMonthAnalyticsData}'); </script>
 
             </h:form>
         </div>

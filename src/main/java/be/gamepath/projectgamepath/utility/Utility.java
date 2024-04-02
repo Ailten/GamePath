@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -116,6 +118,57 @@ public class Utility {
         }
 
         return out;
+    }
+
+
+    //make a date by sending year, month and day.
+    public static Date makeDate(int year, int month, int day){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DATE, day);
+        return calendar.getTime();
+    }
+
+    //return year of an object date.
+    public static int dateGetYear(Date date){
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+    //return month of an object date.
+    public static int dateGetMonth(Date date){
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        return calendar.get(Calendar.MONTH);
+    }
+    //return day of an object date.
+    public static int dateGetDay(Date date){
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    //add a day to an object date.
+    public static Date dateAddDay(Date date, int days){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, days);
+        return c.getTime();
+    }
+    public static Date dateAddDay(Date date){
+        return dateAddDay(date, 1);
+    }
+
+    //add a month to an object date.
+    public static Date dateAddMonth(Date date, int month){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.MONTH, month);
+        return c.getTime();
+    }
+    public static Date dateAddMonth(Date date){
+        return dateAddMonth(date, 1);
     }
 
 }

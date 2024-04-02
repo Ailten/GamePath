@@ -26,7 +26,7 @@ import java.util.Objects;
                         "where ( " +
                         "  ( " +
                         "    lower(pt.title) like concat('%', :filter, '%') and " +
-                        "    (:filterDate is null or (o.validateBasketDate > :filterDate and o.validateBasketDate < :filterDateNextMonth)) " +
+                        "    (:filterDate is null or (o.validateBasketDate >= :filterDate and o.validateBasketDate < :filterDateNextMonth)) " +
                         "  ) or " +
                         "  ( lower(concat(u.lastName,' ',u.firstName)) like concat('%', :filter, '%') ) " +
                         ")"),
@@ -38,7 +38,7 @@ import java.util.Objects;
                         "where ( u.id = :idUser and ( " +
                         "  ( " +
                         "    lower(pt.title) like concat('%', :filter, '%') and " +
-                        "    (:filterDate is null or (o.validateBasketDate > :filterDate and o.validateBasketDate < :filterDateNextMonth)) " +
+                        "    (:filterDate is null or (o.validateBasketDate >= :filterDate and o.validateBasketDate < :filterDateNextMonth)) " +
                         "  ) " +
                         "))"),
         @NamedQuery(name= "Order.SelectBestSellAnalytics",
@@ -49,9 +49,22 @@ import java.util.Objects;
                         "join fetch pk.productTheoric pt " +
                         "join fetch pk.order o " +
                         "where ( " +
-                        "  (1 = 1) " +
+                        "  (:filterDate is null or (o.validateBasketDate >= :filterDate and o.validateBasketDate < :filterDateNextMonth)) " +
                         ") group by pt.title " +
-                        "order by count(pk.id) desc"),
+                        "order by count(pk.id)"),
+        @NamedQuery(name= "Order.SelectStatsOfMonthAnalyticsData",
+                query = "select " +
+                        "  function('date_format', o.validateBasketDate, '%d/%m/%Y') as label, " +
+                        "  count(pk.id) as quantity " +
+                        "from ProductKey pk " +
+                        "join fetch pk.productTheoric pt " +
+                        "join fetch pk.order o " +
+                        "where ( " +
+                        "  (o.validateBasketDate >= :filterDate and o.validateBasketDate < :filterDateNextMonth) " +
+                        ") group by (" + //o.validateBasketDate
+                        "  function('date_format', o.validateBasketDate, '%d/%m/%Y')" +
+                        ") " +
+                        "order by function('date_format', o.validateBasketDate, '%d')"),
 })
 @Entity
 @Table(name = "order", schema = "gamepath", catalog = "")
