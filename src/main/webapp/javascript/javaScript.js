@@ -108,6 +108,19 @@ function eventClickZoomImg(imgClicked){
     imgIntoZoomModal.setAttribute('src', urlImg);
     imgIntoZoomModal.setAttribute('alt', altImg);
 
+    //image full size modal but stay ratio.
+    let imgRatio = imgIntoZoomModal.clientWidth/imgIntoZoomModal.clientHeight;
+    let modalRatio = imgZoomModal.clientWidth/imgZoomModal.clientHeight;
+    if(imgRatio > modalRatio){
+        let width = imgZoomModal.clientWidth - 30;
+        imgIntoZoomModal.style.width = width + 'px';
+        imgIntoZoomModal.style.height = (width * imgRatio) + 'px';
+    }else{
+        let height = imgZoomModal.clientHeight - 30;
+        imgIntoZoomModal.style.height = height + 'px';
+        imgIntoZoomModal.style.width = (height / imgRatio) + 'px';
+    }
+
     //add event click for exit modal.
     imgZoomModal.addEventListener('click', function(){
         eventCloseModalZoomImg();
@@ -129,9 +142,6 @@ function loadAnalytics(orderAnalyticsData){
     //get canvas and data.
     let canvas = document.getElementById('canvas-analytics');
     let objDataForCharJs = JSON.parse(orderAnalyticsData);
-
-    console.log(canvas)
-    console.log(objDataForCharJs)
 
     //make graphics.
     new Chart(canvas, objDataForCharJs);

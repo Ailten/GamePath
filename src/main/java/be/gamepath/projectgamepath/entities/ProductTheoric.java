@@ -58,9 +58,9 @@ import java.util.Objects;
                         "  ) and ( " +
                         "    ( os.id = :filterOperatingSystemId or :filterOperatingSystemId = 0 ) " + //filterOperatingSystemId.
                         "  ) and ( " +
-                        "    ( :isShowEntityDisable = true or pt.isActive = true ) " +
+                        "    ( :isShowEntityDisable = true or (pt.isActive = true and pt.releaseDate <= function('current_date')) ) " +
                         "  ) " +
-                        ") order by pt.title"), // and pt.releaseDate <= current_date() //current_date not recognize.
+                        ") order by pt.title"),
         @NamedQuery(name= "ProductTheoric.SelectManyByIdBasket",
                 query = "select pt from BasketProductTheoric bpt " +
                         "join fetch bpt.productTheoric pt " +

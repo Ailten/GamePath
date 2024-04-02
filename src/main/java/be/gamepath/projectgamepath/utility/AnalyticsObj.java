@@ -56,24 +56,29 @@ public class AnalyticsObj {
         List<AnalyticsObj> out = new ArrayList<>();
 
         int day = 1;
-        int month = Integer.parseInt(dateSplited[1]);
+        int month = Integer.parseInt(dateSplited[1])-1;
         int year = Integer.parseInt(dateSplited[2]);
-        Date currentDate = Utility.makeDate(year, month, 1);
+        Date currentDate = Utility.makeDate(year, month, day);
         AnalyticsObj currentAObj;
         while(Utility.dateGetMonth(currentDate) == month){ //loop on every day of month.
 
+            //build date string for find by label.
             day = Utility.dateGetDay(currentDate);
             String dateConcat = (
                     (day<10? "0": "")+day+"/"+
-                    (month<10? "0": "")+month+"/"+
+                    ((month+1)<10? "0": "")+(month+1)+"/"+
                     year
             );
 
+            //find by label if an analytics obj is set.
             currentAObj = listAnalyticsObj.stream()
                     .filter(aObj -> aObj.getLabel().equals(dateConcat))
                     .findFirst().orElse(null);
+
+            //push valid analytics obj or empty one.
             out.add(currentAObj != null? currentAObj: new AnalyticsObj(dateConcat, 0));
 
+            //add day for loop increment.
             currentDate = Utility.dateAddDay(currentDate);
         }
 

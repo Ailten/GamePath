@@ -73,10 +73,7 @@ public class ProductTheoricService extends ServiceGeneric<ProductTheoric> {
                 .setParameter("filterLanguageId", filterLanguageId)
                 .setParameter("filterOperatingSystemId", filterOperatingSystemId)
                 .setParameter("isShowEntityDisable", isShowEntityDisable)
-                .getResultList()
-                .stream().filter(pt -> isShowEntityDisable || LocalDateTime.now().isAfter(Utility.castDateToLocalDateTime(pt.getReleaseDate())))
-                //.filter(pt -> pt.getPrice() <= filterPriceMax || filterPriceMax == 0.0f) //move in query.
-                .collect(Collectors.toList());
+                .getResultList();
     }
 
 
