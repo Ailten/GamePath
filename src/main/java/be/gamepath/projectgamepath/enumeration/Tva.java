@@ -7,7 +7,7 @@ public enum Tva {
     A_ZERO ("0", 0),
     B_SIX ("6", 6),
     C_DOUZE ("12", 12),
-    D_VINGHTETUN ("21", 21);
+    D_VINGTETUN ("21", 21);
 
     //params.
     private String txtValue;

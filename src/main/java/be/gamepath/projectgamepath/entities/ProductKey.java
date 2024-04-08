@@ -15,7 +15,7 @@ import java.util.Objects;
                 query = "select pk from ProductKey pk "),
         @NamedQuery(name= "ProductKey.SelectManyByIdOrder",
                 query = "select pk from ProductKey pk " +
-                        "join Order o on (o.id = pk.order.id) " +
+                        "join fetch pk.order o " +
                         "where o.id = :idOrder"),
         @NamedQuery(name= "ProductKey.SelectByKeyCode",
                 query = "select pk from ProductKey pk " +

@@ -142,6 +142,10 @@
                                          update="form-table-productkey"
                                          icon="pi pi-download"/>
                     </p:column>
+                    <p:column headerText="#{I18N['application.crudProductTheoric.titlePageDetails']}">
+                        <p:commandButton action="#{connectionBean.redirectCrudPage('/view/crudProduct', productTheoricBean, productkey.productTheoric, 'read')}"
+                                         icon="pi pi-bars"/>
+                    </p:column>
 
                 </p:dataTable>
 

@@ -93,7 +93,7 @@ public class ProductTheoric extends EntityGenerique {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "TVA", nullable = false)
-    private Tva tva = Tva.D_VINGHTETUN;
+    private Tva tva = Tva.D_VINGTETUN;
     @NotNull
     @Min(0)
     @Max(90)
