@@ -37,7 +37,6 @@ public class ServiceGeneric<TEntity extends EntityGenerique> {
     public TEntity insert(EntityManager em, TEntity entityToInsert)
     {
         em.persist(entityToInsert);
-        em.flush();
         return entityToInsert;
     }
 
@@ -51,7 +50,6 @@ public class ServiceGeneric<TEntity extends EntityGenerique> {
     public TEntity update(EntityManager em, TEntity entityToUpdate)
     {
         em.merge(entityToUpdate);
-        em.flush();
         return entityToUpdate;
     }
 
@@ -65,7 +63,6 @@ public class ServiceGeneric<TEntity extends EntityGenerique> {
         if(!em.contains(entityToDelete))
             entityToDelete = em.merge(entityToDelete);
         em.remove(entityToDelete);
-        em.flush();
     }
 
 }

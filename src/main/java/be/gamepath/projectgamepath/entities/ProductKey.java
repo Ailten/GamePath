@@ -141,12 +141,12 @@ public class ProductKey extends EntityGenerique {
 
     //generate key.
     public void generateKey() throws Exception {
-        if((this.order == null || this.order.getId() == 0) ||
-            this.getId() == 0 ||
-            (this.productTheoric == null || this.productTheoric.getId() == 0)
-        ){
-            throw new Exception("error can't generate key with every id.");
-        }
+        if((this.order == null || this.order.getId() == 0))
+            throw new Exception("error can't generate key with every id, order is null or id is zero.");
+        if(this.getId() == 0)
+            throw new Exception("error can't generate key with every id, productKey id is zero.");
+        if((this.productTheoric == null || this.productTheoric.getId() == 0))
+            throw new Exception("error can't generate key with every id, productTheoric is null or id is zero.");
 
         StringBuilder orderNum = new StringBuilder(Integer.toString(this.order.getId(), 32));
         StringBuilder keyNum = new StringBuilder(Integer.toString(this.getId(), 32));

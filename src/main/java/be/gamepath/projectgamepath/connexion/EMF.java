@@ -23,6 +23,7 @@ public class EMF {
     }
 
     public static void transactionCommit(EntityManager em, EntityTransaction transaction) {
+        em.flush();
         transaction.commit();
     }
     public static void transactionRollback(EntityManager em, EntityTransaction transaction) {
