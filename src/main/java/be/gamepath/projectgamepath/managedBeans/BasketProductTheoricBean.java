@@ -16,6 +16,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Named
@@ -51,16 +52,30 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
             //get basket of user (or create it).
             Basket basket = basketService.selectByIdUser(em, connectionBean.getUser().getId());
             if(basket == null){
+
+                //make basket.
                 basket = new Basket();
                 basket.setUser(connectionBean.getUser());
-                basket = basketService.insert(em, basket);
-            }
 
-            //insert basketProductTheoric.
-            this.elementCrudSelected = new BasketProductTheoric();
-            this.elementCrudSelected.setBasket(basket);
-            this.elementCrudSelected.setProductTheoric(productTheoric);
-            basketProductTheoricService.insert(em, this.elementCrudSelected);
+                //add product (in cascade list).
+                basket.setListBasketProductTheoric(new ArrayList<>());
+                this.elementCrudSelected = new BasketProductTheoric();
+                this.elementCrudSelected.setBasket(basket);
+                this.elementCrudSelected.setProductTheoric(productTheoric);
+                basket.getListBasketProductTheoric().add(this.elementCrudSelected);
+
+                //insert basket.
+                basketService.insert(em, basket);
+
+            }else{
+
+                //insert basketProductTheoric.
+                this.elementCrudSelected = new BasketProductTheoric();
+                this.elementCrudSelected.setBasket(basket);
+                this.elementCrudSelected.setProductTheoric(productTheoric);
+                basketProductTheoricService.insert(em, this.elementCrudSelected);
+
+            }
 
             //success pop-up.
             popUpMessageBean.setPopUpMessage(

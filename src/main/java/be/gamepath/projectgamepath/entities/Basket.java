@@ -110,4 +110,15 @@ public class Basket extends EntityGenerique {
     }
     public void setIsForMe(boolean isForMe){ this.isForMe = isForMe; }
 
+
+
+    @OneToMany(mappedBy="basket", cascade=CascadeType.PERSIST)
+    private List<BasketProductTheoric> listBasketProductTheoric; //use for cascade persist in add basket.
+    public List<BasketProductTheoric> getListBasketProductTheoric() {
+        return this.listBasketProductTheoric;
+    }
+    public void setListBasketProductTheoric(List<BasketProductTheoric> listBasketProductTheoric) {
+        this.listBasketProductTheoric = listBasketProductTheoric;
+    }
+
 }
