@@ -89,8 +89,12 @@ public class Utility {
         return dateFormat.format(date);
     }
 
-
-    //cast a float to a string, and normalize the decimals.
+    /**
+     * cast a float to a string, and normalize the decimals.
+     * @param floatValue base value.
+     * @param decimalAsk quantity of decimal.
+     * @return string of value.
+     */
     public static String castFloatToString(float floatValue, int decimalAsk) {
         String out = Float.toString(floatValue);
 
@@ -121,7 +125,13 @@ public class Utility {
     }
 
 
-    //make a date by sending year, month and day.
+    /**
+     * make a date by sending year, month and day.
+     * @param year year of date.
+     * @param month month of date.
+     * @param day day of date.
+     * @return a Date.
+     */
     public static Date makeDate(int year, int month, int day){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
@@ -130,26 +140,37 @@ public class Utility {
         return calendar.getTime();
     }
 
-    //return year of an object date.
+    /**
+     * return year of an object date.
+     */
     public static int dateGetYear(Date date){
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         return calendar.get(Calendar.YEAR);
     }
-    //return month of an object date.
+    /**
+     * return month of an object date.
+     */
     public static int dateGetMonth(Date date){
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         return calendar.get(Calendar.MONTH);
     }
-    //return day of an object date.
+    /**
+     * return day of an object date.
+     */
     public static int dateGetDay(Date date){
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    //add a day to an object date.
+    /**
+     * add many days to an object date.
+     * @param date object date.
+     * @param days amount of days to add.
+     * @return object date incremented.
+     */
     public static Date dateAddDay(Date date, int days){
         Calendar c = Calendar.getInstance();
         c.setTime(date);
@@ -160,7 +181,12 @@ public class Utility {
         return dateAddDay(date, 1);
     }
 
-    //add a month to an object date.
+    /**
+     * add many days to an object date.
+     * @param date object date.
+     * @param month amount of months to add.
+     * @return object date incremented.
+     */
     public static Date dateAddMonth(Date date, int month){
         Calendar c = Calendar.getInstance();
         c.setTime(date);

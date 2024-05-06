@@ -26,10 +26,10 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
     @Inject
     ProductTheoricBean productTheoricBean;
 
+    //set name table for permission concatenation.
     public PictureProductBean(){
         this.nameEntityForPermission = "picture"; //send name of entity for check permission generic.
     }
-
 
 
     //for image file.
@@ -103,8 +103,10 @@ public class PictureProductBean extends CrudManaging<PictureProduct> implements 
 
     }
 
-
-
+    /**
+     * delete an image (in DB).
+     * @param pictureProduct the object image to delete.
+     */
     public void deletePictureProduct(PictureProduct pictureProduct) {
 
         if(!connectionBean.isUserHasPermission(Crud.DELETE.getTxtValue() + "-" + this.nameEntityForPermission)){

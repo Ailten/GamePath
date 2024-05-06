@@ -19,6 +19,9 @@ import java.util.Date;
 @SessionScoped
 public class OrderListBean extends TableFilter<Order> implements Serializable {
 
+    /**
+     * make research in order table (from DB), affect list in parent.
+     */
     public void doResearch() {
 
         EntityManager em = EMF.createEM();

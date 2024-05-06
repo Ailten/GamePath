@@ -11,6 +11,13 @@ public class ProductTheoricPegiService extends ServiceGeneric<ProductTheoricPegi
 
     //no need to override selectById and selectMany for join table.
 
+    /**
+     * select an element by sending two foreign key.
+     * @param em EntityManager.
+     * @param idProductTheoric first foreign key.
+     * @param idPegi second foreign key.
+     * @return a ProductTheoricPegi (or null).
+     */
     public ProductTheoricPegi selectByBothId(EntityManager em, int idProductTheoric, int idPegi) {
         return em.createNamedQuery("ProductTheoricPegi.SelectByBothId", ProductTheoricPegi.class)
                 .setParameter("idProductTheoric", idProductTheoric)

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 @SessionScoped
 public class BasketBean extends CrudManaging<Basket> implements Serializable {
 
+    //set name table for permission concatenation.
     public BasketBean(){
         this.nameEntityForPermission = "basket"; //send name of entity for check permission generic.
     }
@@ -54,8 +55,11 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
         }
     }
 
-
-/*/
+    /**
+     * submit a basket (insert order, delete basket, make PDF, send mail).
+     * @return string redirection if work.
+     */
+/*// ---> submitBasket version for transaction and rollback properly with id order insert (work in progress).
     public String submitBasket(){
 
         if(!connectionBean.isUserHasPermission(Crud.CREATE.getTxtValue() + "-order")){
@@ -196,7 +200,7 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
     }
 //*/
 
-//*/
+//*// ---> submitBasket. (work)
     public String submitBasket(){
 
         if(!connectionBean.isUserHasPermission(Crud.CREATE.getTxtValue() + "-order")){
@@ -386,8 +390,9 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
     }
 //*/
 
-
-    //load basket from DB (if is a fake basket empty)
+    /**
+     * Load basket from DB (if is a fake basket empty)
+     */
     public void loadBasketFromDB(){
 
         if(this.getElementCrudSelected().getId() != 0 && this.getElementCrudSelected().getListProductTheoric().size() != 0)
@@ -405,6 +410,5 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
         }
 
     }
-
 
 }

@@ -11,7 +11,7 @@ public class ConverterGeneric<TEntity extends EntityGenerique, TService extends 
 
     protected TService service;
 
-
+    //generique override of function getAsObject.
     @Override
     public TEntity getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
         if (s==null || s.equals("0") || s.equals("")) {
@@ -30,6 +30,7 @@ public class ConverterGeneric<TEntity extends EntityGenerique, TService extends 
         return entity;
     }
 
+    //generique override of function getAsString.
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, TEntity entity) {
         if(entity==null){

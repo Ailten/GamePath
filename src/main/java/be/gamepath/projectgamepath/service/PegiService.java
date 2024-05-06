@@ -36,8 +36,12 @@ public class PegiService extends ServiceGeneric<Pegi> {
                 .getResultList();
     }
 
-
-
+    /**
+     * select many Pegi, all assign to a productTheoric.
+     * @param em EntityManager.
+     * @param idProductTheoric id of productTheoric.
+     * @return list of Pegi find in DB.
+     */
     public List<Pegi> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
         return em.createNamedQuery("Pegi.SelectManyByIdProduct", Pegi.class)
                 .setParameter("idProductTheoric", idProductTheoric)

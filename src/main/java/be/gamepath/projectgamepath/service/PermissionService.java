@@ -35,7 +35,12 @@ public class PermissionService extends ServiceGeneric<Permission> {
                 .getResultList();
     }
 
-
+    /**
+     * select many Permissions, all assign to a Role.
+     * @param em EntityManager.
+     * @param idRole id of Role.
+     * @return list of Permissions find in DB.
+     */
     public List<Permission> selectManyByIdRole(EntityManager em, int idRole){
         return em.createNamedQuery("Permission.SelectManyByIdRole", Permission.class)
                 .setParameter("idRole", idRole)

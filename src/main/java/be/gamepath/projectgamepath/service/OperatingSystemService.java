@@ -36,7 +36,12 @@ public class OperatingSystemService extends ServiceGeneric<OperatingSystem> {
                 .getResultList();
     }
 
-
+    /**
+     * select many operatingSystem, all assign to a productTheoric.
+     * @param em EntityManager.
+     * @param idProductTheoric id of productTheoric.
+     * @return list of operatingSystem find in DB.
+     */
     public List<OperatingSystem> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
         return em.createNamedQuery("OperatingSystem.SelectManyByIdProduct", OperatingSystem.class)
                 .setParameter("idProductTheoric", idProductTheoric)

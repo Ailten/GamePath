@@ -13,8 +13,6 @@ public class EMF {
             Persistence.createEntityManagerFactory("gamepath");
 
     public static EntityManager createEM() {
-        //EntityManager em = emfInstance.createEntityManager();
-        //em.setFlushMode(FlushModeType.COMMIT);
         return emfInstance.createEntityManager();
     }
 

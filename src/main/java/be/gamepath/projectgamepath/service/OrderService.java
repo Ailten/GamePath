@@ -40,7 +40,13 @@ public class OrderService extends ServiceGeneric<Order> {
                 .getResultList();
     }
 
-
+    /**
+     * select many order from DB, by filter.
+     * @param em EntityManager.
+     * @param filter string filter.
+     * @param filterDate date filter.
+     * @return list of Order.
+     */
     public List<Order> selectManyByFilter(EntityManager em, String filter, Date filterDate){
         Date filterDateNextMonth = null;
         if(filterDate != null){
@@ -105,6 +111,5 @@ public class OrderService extends ServiceGeneric<Order> {
                 .getResultStream().map(objectArray -> new AnalyticsObj((String)objectArray[0], (int)((long)objectArray[1])))
                 .collect(Collectors.toList());
     }
-
 
 }

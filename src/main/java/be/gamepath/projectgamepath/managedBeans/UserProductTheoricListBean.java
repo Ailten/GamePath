@@ -17,6 +17,9 @@ import java.util.ArrayList;
 @SessionScoped
 public class UserProductTheoricListBean extends TableFilter<UserProductTheoric> implements Serializable {
 
+    /**
+     * make research in UserProductTheoric table (from DB), affect list in parent.
+     */
     public void doResearch() {
 
         EntityManager em = EMF.createEM();

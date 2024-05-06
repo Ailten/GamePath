@@ -36,8 +36,12 @@ public class UserService extends ServiceGeneric<User> {
                 .getResultList();
     }
 
-
-
+    /**
+     * select an user from DB, by login.
+     * @param em EntityManager.
+     * @param loginUser string login user.
+     * @return an User (or null).
+     */
     public User selectUserByLogin(EntityManager em, String loginUser){
         return em.createNamedQuery("User.SelectUserByLogin", User.class)
                 .setParameter("loginUser", loginUser)

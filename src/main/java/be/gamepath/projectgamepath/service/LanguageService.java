@@ -36,7 +36,12 @@ public class LanguageService extends ServiceGeneric<Language> {
                 .getResultList();
     }
 
-
+    /**
+     * select many Language, all assign to a productTheoric.
+     * @param em EntityManager.
+     * @param idProductTheoric id of productTheoric.
+     * @return list of Language find in DB.
+     */
     public List<Language> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
         return em.createNamedQuery("Language.SelectManyByIdProduct", Language.class)
                 .setParameter("idProductTheoric", idProductTheoric)

@@ -36,16 +36,24 @@ public class ProductKeyService extends ServiceGeneric<ProductKey> {
                 .getResultList();
     }
 
-
-
+    /**
+     * select many ProductKey, all assign to an Order.
+     * @param em EntityManager.
+     * @param idOrder id of Order.
+     * @return list of ProductKey find in DB.
+     */
     public List<ProductKey> selectManyByIdOrder(EntityManager em, int idOrder) {
         return em.createNamedQuery("ProductKey.SelectManyByIdOrder", ProductKey.class)
                 .setParameter("idOrder", idOrder)
                 .getResultList();
     }
 
-
-
+    /**
+     * select a ProductKey by sending a key.
+     * @param em EntityManager.
+     * @param key string of key (for unlock product).
+     * @return a ProductKey (or null).
+     */
     public ProductKey selectByKeyCode(EntityManager em, String key) {
         return em.createNamedQuery("ProductKey.SelectByKeyCode", ProductKey.class)
                 .setParameter("key", key)
@@ -53,6 +61,5 @@ public class ProductKeyService extends ServiceGeneric<ProductKey> {
                 .findFirst()
                 .orElse(null);
     }
-
 
 }

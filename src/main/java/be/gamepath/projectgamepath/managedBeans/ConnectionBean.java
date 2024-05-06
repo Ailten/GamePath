@@ -26,12 +26,12 @@ public class ConnectionBean implements Serializable {
     @Inject
     HistoricalBean historicalBean;
 
+    //string for redirection to home page.
     private static String pathHomePage = "/accueil";
     public String getPathHomePage() { return pathHomePage; }
 
     //user connected.
     private User user;
-
     public User getUser() {
         return user;
     }
@@ -96,7 +96,6 @@ public class ConnectionBean implements Serializable {
             return false;
         return this.user.getEmail().equals(login);
     }
-
 
 
     /**

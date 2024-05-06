@@ -16,6 +16,7 @@ import java.util.ArrayList;
 @SessionScoped
 public class OrderBean extends CrudManaging<Order> implements Serializable {
 
+    //set name table for permission concatenation.
     public OrderBean(){
         this.nameEntityForPermission = "order"; //send name of entity for check permission generic.
     }

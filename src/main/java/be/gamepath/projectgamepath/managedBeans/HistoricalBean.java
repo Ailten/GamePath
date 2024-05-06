@@ -12,6 +12,7 @@ import java.io.Serializable;
 @SessionScoped
 public class HistoricalBean implements Serializable {
 
+    //array of string of page previously visited.
     private String[] historic;
     private int index;
 
@@ -21,6 +22,10 @@ public class HistoricalBean implements Serializable {
         this.index = 20;
     }
 
+    /**
+     * save a page visited in array historic.
+     * @param url string of page visited.
+     */
     public void saveNewPageHistoric(String url){
         PrimeFaces.current().executeScript("eventLoadPage(\'"+url+"\')");
         if(url.equals(historic[index%historic.length]))
@@ -28,11 +33,18 @@ public class HistoricalBean implements Serializable {
         historic[(++index)%historic.length]=url;
     }
 
+    /**
+     * return the string of previous page saved (and decrement the index).
+     * @return string of previous page.
+     */
     public String backLastPageHistoric(){
         return historic[(--index)%historic.length];
     }
 
+    /**
+     * return string of the current page load.
+     * @return string of current page.
+     */
     public String currentPage() { return historic[(index)%historic.length]; }
-
 
 }

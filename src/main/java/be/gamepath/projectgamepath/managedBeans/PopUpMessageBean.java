@@ -12,6 +12,12 @@ import java.io.Serializable;
 @SessionScoped
 public class PopUpMessageBean implements Serializable {
 
+    /**
+     * make a pop-up in page.
+     * @param title title of information.
+     * @param message details about the information.
+     * @param isSuccess is a confirmation message (false is for error message).
+     */
     public void setPopUpMessage(String title, String message, boolean isSuccess){
 
         //send pop-up-message to facesMessage.

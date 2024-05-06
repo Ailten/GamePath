@@ -56,7 +56,17 @@ public class ProductTheoricService extends ServiceGeneric<ProductTheoric> {
                 .orElse(null);
     }
 
-
+    /**
+     * select many ProductTheoric from DB, by filter.
+     * @param em EntityManager.
+     * @param filter string filter.
+     * @param filterPriceMax max price.
+     * @param filterCategoryId filter Category.
+     * @param filterLanguageId filter Language.
+     * @param filterOperatingSystemId filter OperatingSystem.
+     * @param isShowEntityDisable filter param disable.
+     * @return list of ProductTheoric.
+     */
     public List<ProductTheoric> selectManyByFilter(
             EntityManager em,
             String filter,
@@ -76,7 +86,12 @@ public class ProductTheoricService extends ServiceGeneric<ProductTheoric> {
                 .getResultList();
     }
 
-
+    /**
+     * select many ProductTheoric, assign to a Basket.
+     * @param em EntityManager.
+     * @param idBasket basket send.
+     * @return list of ProductTheoric.
+     */
     public List<ProductTheoric> selectManyByIdBasket(EntityManager em, int idBasket){
         return em.createNamedQuery("ProductTheoric.SelectManyByIdBasket", ProductTheoric.class)
                 .setParameter("idBasket", idBasket)

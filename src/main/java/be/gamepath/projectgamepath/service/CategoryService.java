@@ -35,7 +35,12 @@ public class CategoryService extends ServiceGeneric<Category> {
                 .getResultList();
     }
 
-
+    /**
+     * select many categories, all assign to a productTheoric.
+     * @param em EntityManager.
+     * @param idProductTheoric id of productTheoric.
+     * @return list of catégorie find in DB.
+     */
     public List<Category> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
         return em.createNamedQuery("Category.SelectManyByIdProduct", Category.class)
                 .setParameter("idProductTheoric", idProductTheoric)

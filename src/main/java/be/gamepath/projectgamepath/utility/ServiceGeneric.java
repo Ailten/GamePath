@@ -7,7 +7,7 @@ import java.util.List;
 public class ServiceGeneric<TEntity extends EntityGenerique> {
 
     /**
-     * get one entity (find by primary key).
+     * get one entity find by primary key (need override).
      * @param em entity manager.
      * @param id primary key of entity.
      * @return entity find.
@@ -18,7 +18,7 @@ public class ServiceGeneric<TEntity extends EntityGenerique> {
     }
 
     /**
-     * get list of entity.
+     * get list of entity (need override).
      * @param em entity manager.
      * @return list entity match.
      */

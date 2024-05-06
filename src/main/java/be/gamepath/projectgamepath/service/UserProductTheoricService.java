@@ -36,8 +36,13 @@ public class UserProductTheoricService extends ServiceGeneric<UserProductTheoric
                 .getResultList();
     }
 
-
-
+    /**
+     * select many elements by two foreign key.
+     * @param em EntityManager.
+     * @param idUser first foreign key.
+     * @param idProductTheoric second foreign key.
+     * @return an UserProductTheoric (or null).
+     */
     public UserProductTheoric selectByBothId(EntityManager em, int idUser, int idProductTheoric){
         return em.createNamedQuery("UserProductTheoric.SelectByBothId", UserProductTheoric.class)
                 .setParameter("idUser", idUser)
@@ -47,7 +52,14 @@ public class UserProductTheoricService extends ServiceGeneric<UserProductTheoric
                 .orElse(null);
     }
 
-
+    /**
+     * select many UserProductTheoric from DB, by filter.
+     * @param em EntityManager.
+     * @param filter string filter.
+     * @param filterCategoryId Category filter.
+     * @param idUser User filter.
+     * @return a list of UserProductTheoric.
+     */
     public List<UserProductTheoric> selectManyByFilter(
             EntityManager em,
             String filter,

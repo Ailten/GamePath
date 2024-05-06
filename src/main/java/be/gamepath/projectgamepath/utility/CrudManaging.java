@@ -49,7 +49,10 @@ public class CrudManaging<TEntity extends EntityGenerique> {
     public void setElementCrudSelected(TEntity elementCrudSelected){ this.elementCrudSelected = elementCrudSelected; }
 
 
+    //string name of table for concatenation of permission.
     protected String nameEntityForPermission;
+
+    //generic function of submit crud form.
     private boolean trySubmitCrudForm(){
 
         //verify permission user.
@@ -98,9 +101,12 @@ public class CrudManaging<TEntity extends EntityGenerique> {
         return (trySubmitCrudForm()? connectionBean.getPathHomePage(): null);
     }
 
+    //function insert (need override for use trySubmitCrudForm with Create mode).
     protected boolean insert() throws Exception {
         throw new Exception("CrudManaging.insert was not override");
     }
+
+    //function update (need override for use trySubmitCrudForm with Update mode).
     protected boolean update() throws Exception {
         throw new Exception("CrudManaging.update was not override");
     }

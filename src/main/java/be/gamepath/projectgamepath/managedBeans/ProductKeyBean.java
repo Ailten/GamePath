@@ -24,6 +24,10 @@ public class ProductKeyBean implements Serializable {
     @Inject
     PopUpMessageBean popUpMessageBean;
 
+    /**
+     * function for use a key (make ProductKey used and insert UserProduct).
+     * @param productKey the productKey to use.
+     */
     public void useKey(ProductKey productKey){
 
         if(!connectionBean.isUserHasPermission("create-userproduct")){

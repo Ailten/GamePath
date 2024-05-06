@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @SessionScoped
 public class UserProductTheoricBean extends CrudManaging<UserProductTheoric> implements Serializable {
 
+    //set name table for permission concatenation.
     public UserProductTheoricBean(){
         this.nameEntityForPermission = "userproduct"; //send name of entity for check permission generic.
     }
@@ -33,6 +34,10 @@ public class UserProductTheoricBean extends CrudManaging<UserProductTheoric> imp
         return elementCrudSelected;
     }
 
+    /**
+     * override insert of parent (call in trySubmitCrudForm generic).
+     * @return true if insert successfully.
+     */
     protected boolean insert() {
 
         EntityManager em = EMF.createEM();

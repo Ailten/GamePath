@@ -26,10 +26,15 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
     @Inject
     BasketBean basketBean;
 
+    //set name table for permission concatenation.
     public BasketProductTheoricBean(){
         this.nameEntityForPermission = "basketproduct"; //send name of entity for check permission generic.
     }
 
+    /**
+     * Add a productTheoric in basket of user log (and create basket if no one).
+     * @param productTheoric product to add into basket.
+     */
     public void addBasket(ProductTheoric productTheoric){
 
         if(!connectionBean.isUserHasPermission(Crud.CREATE.getTxtValue() + "-" + this.nameEntityForPermission)){
@@ -101,7 +106,11 @@ public class BasketProductTheoricBean extends CrudManaging<BasketProductTheoric>
 
     }
 
-
+    /**
+     * Delete a product from a basket.
+     * @param basket basket.
+     * @param productTheoric product to delete.
+     */
     public void delete(Basket basket, ProductTheoric productTheoric){
 
         EntityManager em = EMF.createEM();

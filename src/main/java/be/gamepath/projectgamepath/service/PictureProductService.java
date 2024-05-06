@@ -36,12 +36,16 @@ public class PictureProductService extends ServiceGeneric<PictureProduct> {
                 .getResultList();
     }
 
-
+    /**
+     * select many PictureProduct, all assign to a ProductTheoric.
+     * @param em EntityManager.
+     * @param idProductTheoric id of ProductTheoric.
+     * @return list of PictureProduct find in DB.
+     */
     public List<PictureProduct> selectManyByIdProductTheoric(EntityManager em, int idProductTheoric) {
         return em.createNamedQuery("PictureProduct.SelectManyByIdProduct", PictureProduct.class)
                 .setParameter("idProductTheoric", idProductTheoric)
                 .getResultList();
     }
-
 
 }

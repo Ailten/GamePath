@@ -11,6 +11,13 @@ public class ProductTheoricOperatingSystemService extends ServiceGeneric<Product
 
     //no need to override selectById and selectMany for join table.
 
+    /**
+     * select an element by sending two foreign key.
+     * @param em EntityManager.
+     * @param idProductTheoric first foreign key.
+     * @param idOperatingSystem second foreign key.
+     * @return a ProductTheoricOperatingSystem (or null).
+     */
     public ProductTheoricOperatingSystem selectByBothId(EntityManager em, int idProductTheoric, int idOperatingSystem) {
         return em.createNamedQuery("ProductTheoricOperatingSystem.SelectByBothId", ProductTheoricOperatingSystem.class)
                 .setParameter("idProductTheoric", idProductTheoric)

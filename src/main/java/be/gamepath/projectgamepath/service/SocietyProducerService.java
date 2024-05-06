@@ -35,5 +35,4 @@ public class SocietyProducerService extends ServiceGeneric<SocietyProducer> {
                 .getResultList();
     }
 
-
 }

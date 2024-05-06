@@ -20,6 +20,10 @@ import java.util.List;
 @SessionScoped
 public class AnalyticsBean implements Serializable {
 
+    /**
+     * get data for a graphics stats (from DB).
+     * @return string json of data stats for chartJs.
+     */
     public String getBestSellAnalyticsData(){
 
         EntityManager em = EMF.createEM();
@@ -66,6 +70,10 @@ public class AnalyticsBean implements Serializable {
 
     }
 
+    /**
+     * get data for a graphics stats (from DB).
+     * @return string json of data stats for chartJs.
+     */
     public String getStatsOfMonthAnalyticsData(){
 
         EntityManager em = EMF.createEM();

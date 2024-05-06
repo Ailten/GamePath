@@ -107,7 +107,6 @@ public class MailManager {
     }
 
 
-
     /*
      * function to send an email (without file attachment).
      */

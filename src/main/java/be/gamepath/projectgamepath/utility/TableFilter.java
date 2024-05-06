@@ -27,35 +27,12 @@ public class TableFilter<TEntity extends EntityGenerique> {
     }
 
 
-
     /**
      * make a research in db for list entity with filter.
      */
     public void doResearch() throws Exception {
         throw new Exception("TableFilter.doResearch was not override");
     }
-
-
-    /*
-    protected String order = "id";
-    protected boolean orderAsc = false;
-    public void editOrderTable(String order){
-
-        if(this.order.equals(order)){
-            orderAsc = !orderAsc;
-        }else{
-            orderAsc = true;
-            this.order = order;
-        }
-
-    }
-    //public String getOrderIcon(String order){
-    //    if(!this.order.equals(order))
-    //        return "pi pi-circle-off";
-    //    return ((orderAsc)? "pi pi-chevron-circle-down": "pi pi-chevron-circle-up");
-    //}
-    */
-
 
 
     @Pattern(regexp = "^[a-zA-Z0-9 çéâêîôûàèìòùëïü.]{0,60}$")
@@ -68,18 +45,8 @@ public class TableFilter<TEntity extends EntityGenerique> {
     }
 
 
-
-    //call JS for apply class research word in a table list.
-    //public void applyResearchWordClass(){
-    //    PrimeFaces.current().executeScript("applyClassWordResearch(\""+this.filter+"\")");
-    //}
-
-
-
-    //reset filter (call before an insert db, for apply last insert on the top of list).
+    //reset filter.
     public void resetFilter(){
-        //this.order = "id";
-        //this.orderAsc = false;
         this.filter = "";
     }
 

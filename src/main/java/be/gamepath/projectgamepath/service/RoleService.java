@@ -37,5 +37,4 @@ public class RoleService extends ServiceGeneric<Role> {
                 .getResultList();
     }
 
-
 }

@@ -11,7 +11,13 @@ public class BasketProductTheoricService extends ServiceGeneric<BasketProductThe
 
     //no need to override selectById and selectMany for join table.
 
-
+    /**
+     * select one element by sending two foreign key.
+     * @param em EntityManager.
+     * @param idBasket is of first foreign key.
+     * @param idProductTheoric is of first foreign key.
+     * @return element find in DB (or null).
+     */
     public BasketProductTheoric selectByBothId(EntityManager em, int idBasket, int idProductTheoric) {
         return em.createNamedQuery("BasketProductTheoric.SelectByBothId", BasketProductTheoric.class)
                 .setParameter("idBasket", idBasket)

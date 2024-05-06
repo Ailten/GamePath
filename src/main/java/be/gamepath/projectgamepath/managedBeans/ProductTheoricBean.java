@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @SessionScoped
 public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements Serializable {
 
+    //set name table for permission concatenation.
     public ProductTheoricBean(){
         this.nameEntityForPermission = "product"; //send name of entity for check permission generic.
     }
@@ -34,6 +35,10 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         return elementCrudSelected;
     }
 
+    /**
+     * override insert of parent (call in trySubmitCrudForm generic).
+     * @return true if insert successfully.
+     */
     protected boolean insert() {
 
         EntityManager em = EMF.createEM();
@@ -74,6 +79,10 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         return success;
     }
 
+    /**
+     * override update of parent (call in trySubmitCrudForm generic).
+     * @return true if update successfully.
+     */
     protected boolean update() {
 
         EntityManager em = EMF.createEM();
@@ -115,6 +124,9 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         return success;
     }
 
+    /**
+     * delete an element ProductTheoric.
+     */
     public void delete(ProductTheoric productTheoric) {
 
         if(!connectionBean.isUserHasPermission(Crud.DELETE.getTxtValue() + "-" + nameEntityForPermission)){
@@ -156,6 +168,11 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
 
     }
 
+    /**
+     * insert, update, delete all table joins of ProductTheoric.
+     * @param em EntityManager.
+     * @throws Exception can return an exception (need to be handle).
+     */
     private void updateJoins(EntityManager em) throws Exception {
 
         //--- Category joins.
@@ -305,7 +322,6 @@ public class ProductTheoricBean extends CrudManaging<ProductTheoric> implements 
         }
 
     }
-
 
 
     /**
