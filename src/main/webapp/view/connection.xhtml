@@ -27,39 +27,56 @@
         <!-- Users to connect -->
         <div class="content-form-body-center">
 
-            <p:outputPanel class="panel-input">
-                <p:outputLabel for="button-connection-client"
-                               value="Connexion client :"/>
-                <p:commandButton value="Client"
-                                 action="#{connectionBean.connection('Client@gmail.com', 'Client')}"
-                                 id="button-connection-client"
-                                 icon="pi pi-sign-in"
-                                 class="ui-button-info"
-                                 disabled="#{connectionBean.isUserHasThisLogin('Client@gmail.com')}"
-                                 iconPos="right"/>
-            </p:outputPanel>
-            <p:outputPanel class="panel-input">
-                <p:outputLabel for="button-connection-employe"
-                               value="Connexion employé :"/>
-                <p:commandButton value="Employé"
-                                 action="#{connectionBean.connection('faouzi.benabbas@promsocatc.net', 'Employe')}"
-                                 id="button-connection-employe"
-                                 icon="pi pi-sign-in"
-                                 class="ui-button-info"
-                                 disabled="#{connectionBean.isUserHasThisLogin('Employe@gmail.com')}"
-                                 iconPos="right"/>
-            </p:outputPanel>
-            <p:outputPanel class="panel-input">
-                <p:outputLabel for="button-connection-admin"
-                               value="Connexion admin :"/>
-                <p:commandButton value="Admin"
-                                 action="#{connectionBean.connection('Admin@gmail.com', 'Admin')}"
-                                 id="button-connection-admin"
-                                 icon="pi pi-sign-in"
-                                 class="ui-button-info"
-                                 disabled="#{connectionBean.isUserHasThisLogin('Admin@gmail.com')}"
-                                 iconPos="right"/>
-            </p:outputPanel>
+            <!-- form connection -->
+            <h:form id="form-connection" class="form-crud">
+
+                <!-- input String login -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-login" value="#{I18N['application.connexion.labelLogin']}"/>
+                    <p:inputText id="input-login"
+                                 required="true"
+                                 value="#{connectionBean.userConnection.email}"
+                                 placeholder="#{I18N['application.connexion.placeHolderLogin']}"
+                                 validatorMessage="#{I18N['application.connexion.errorLogin']}">
+                        <p:ajax event="change" update="input-login, error-input-login"/>
+                    </p:inputText>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-login" for="input-login"/>
+                </p:outputPanel>
+
+                <!-- input String password -->
+                <p:outputPanel class="panel-input">
+                    <p:outputLabel for="input-password" value="#{I18N['application.connexion.labelPassword']}"/>
+                    <p:password id="input-password"
+                                required="true"
+                                value="#{connectionBean.userConnection.passwordVania}"
+                                validatorMessage="#{I18N['application.connexion.errorPassword']}">
+                        <!--<p:ajax event="blur" update="input-password, error-input-password"/>-->
+                    </p:password>
+                </p:outputPanel>
+                <p:outputPanel class="panel-input">
+                    <p:message id="error-input-password" for="input-password"/>
+                </p:outputPanel>
+
+                <!-- button submit form -->
+                <p:outputPanel class="panel-input panel-submit-crud">
+                    <p:commandButton value="#{I18N['application.crudPage.buttonBackLastPage']}"
+                                     rendered="true"
+                                     ajax="false"
+                                     validateClient="false"
+                                     immediate="true"
+                                     class="ui-button-secondary"
+                                     action="#{historicalBean.backLastPageHistoric()}"/>
+
+                    <p:commandButton value="#{I18N['application.header.loginButton']}"
+                                     ajax="false"
+                                     validateClient="true"
+                                     class="ui-button-success"
+                                     action="#{connectionBean.connection()}"/>
+                </p:outputPanel>
+
+            </h:form>
 
         </div>
 

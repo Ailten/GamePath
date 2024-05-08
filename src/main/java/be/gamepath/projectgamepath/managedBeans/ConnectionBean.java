@@ -78,6 +78,17 @@ public class ConnectionBean implements Serializable {
 
         return this.redirectPage(pathHomePage);
     }
+    public String connection(User userConnection) {
+        String login = userConnection.getEmail();
+        String password = userConnection.getPasswordVania();
+        if(login == null || password == null){
+            return null;
+        }
+        return this.connection(login, password);
+    }
+    public String connection() {
+        return this.connection(this.getUserConnection());
+    }
 
     /**
      * Deconnect an user.
@@ -155,5 +166,15 @@ public class ConnectionBean implements Serializable {
         PrimeFaces.current().executeScript("reloadPage()");
     }
 
+
+    //object user for form connection.
+    private User userConnection;
+    public User getUserConnection(){
+        if(this.userConnection == null){
+            this.userConnection = new User();
+        }
+        return this.userConnection;
+    }
+    public void setUserConnection(User userConnection){ this.userConnection = userConnection; }
 
 }

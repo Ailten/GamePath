@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="/WEB-INF/templates/headerContentFooter.xhtml">
+    <ui:define name="title">
+        #{I18N['application.header.title']}
+    </ui:define>
+    <ui:define name="content">
+
+        <!-- save historic -->
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{historicalBean.saveNewPageHistoric('/view/connection')}"/>
+        </f:metadata>
+
+        <!-- title page -->
+        <div class="h-content">
+            <h1>
+                <h:outputText value="#{I18N['application.header.loginButton']}"/>
+            </h1>
+        </div>
+
+        <!-- Users to connect -->
+        <div class="content-form-body-center">
+
+            <p:outputPanel class="panel-input">
+                <p:outputLabel for="button-connection-client"
+                               value="Connexion client :"/>
+                <p:commandButton value="Client"
+                                 action="#{connectionBean.connection('Client@gmail.com', 'Client')}"
+                                 id="button-connection-client"
+                                 icon="pi pi-sign-in"
+                                 class="ui-button-info"
+                                 disabled="#{connectionBean.isUserHasThisLogin('Client@gmail.com')}"
+                                 iconPos="right"/>
+            </p:outputPanel>
+            <p:outputPanel class="panel-input">
+                <p:outputLabel for="button-connection-employe"
+                               value="Connexion employé :"/>
+                <p:commandButton value="Employé"
+                                 action="#{connectionBean.connection('faouzi.benabbas@promsocatc.net', 'Employe')}"
+                                 id="button-connection-employe"
+                                 icon="pi pi-sign-in"
+                                 class="ui-button-info"
+                                 disabled="#{connectionBean.isUserHasThisLogin('Employe@gmail.com')}"
+                                 iconPos="right"/>
+            </p:outputPanel>
+            <p:outputPanel class="panel-input">
+                <p:outputLabel for="button-connection-admin"
+                               value="Connexion admin :"/>
+                <p:commandButton value="Admin"
+                                 action="#{connectionBean.connection('Admin@gmail.com', 'Admin')}"
+                                 id="button-connection-admin"
+                                 icon="pi pi-sign-in"
+                                 class="ui-button-info"
+                                 disabled="#{connectionBean.isUserHasThisLogin('Admin@gmail.com')}"
+                                 iconPos="right"/>
+            </p:outputPanel>
+
+        </div>
+
+    </ui:define>
+</ui:composition>
+</html>

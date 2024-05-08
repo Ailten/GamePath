@@ -194,8 +194,8 @@ public class User extends EntityGenerique {
 
     @Transient
     @NotNull
-    @Size(min = 9)
-    @Pattern(regexp = "^.{9,60}$")
+    @Size(min = 5)
+    @Pattern(regexp = "^.{5,60}$") //can add a regex for password restriction.
     private String passwordVania; //use this one for form crud user.
 
     public String getPasswordVania(){
