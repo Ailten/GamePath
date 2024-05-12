@@ -56,6 +56,7 @@ public class ConnectionBean implements Serializable {
             this.user = userService.selectUserByLogin(em, login);
 
             if(this.user == null || //no user with this login was found in DB.
+                !this.user.getIsActive() || //user is blocked.
                 !Utility.passwordEqualsHash(password, this.user.getPassword()) //the password was not matching to password in DB.
             ){
                 popUpMessageBean.setPopUpMessage(
