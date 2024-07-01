@@ -79,9 +79,20 @@ public class ProductKeyBean implements Serializable {
             userProduct.setUnlockDate(Utility.castLocalDateTimeToDate(LocalDateTime.now()));
             userProductTheoricService.insert(em, userProduct);
 
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.crudUserProductTheoric.successTitle"),
+                    Utility.stringFromI18N("application.crudUserProductTheoric.successMessage"),
+                    true
+            );
+
             EMF.transactionCommit(em, transaction);
         }catch(Exception e){
             EMF.transactionRollback(em, transaction);
+            popUpMessageBean.setPopUpMessage(
+                    Utility.stringFromI18N("application.crudUserProductTheoric.errorTitle"),
+                    Utility.stringFromI18N("application.crudUserProductTheoric.errorMessage"),
+                    false
+            );
             Utility.debug("error into useKey : " + e.getMessage());
         }finally{
             if(transaction.isActive()) //last security.
