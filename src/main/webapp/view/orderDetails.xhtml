@@ -118,13 +118,13 @@
                     <p:column headerText="#{I18N['application.tableProductTheoric.labelPrice']}">
                         <p:outputPanel class=" #{(productkey.hasReduction()? 'text-line-through': '')} panel-align-right">
                             <h:outputText value="#{productkey.price}">
-                                <f:convertNumber minFractionDigits="2"/>
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                             </h:outputText>
                             <span>€</span>
                         </p:outputPanel>
                         <p:outputPanel rendered="#{productkey.hasReduction()}" class="price-reduction panel-align-right">
                             <h:outputText value="#{productkey.priceWithReduction}">
-                                <f:convertNumber minFractionDigits="2"/>
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                             </h:outputText>
                             <span>€</span>
                         </p:outputPanel>

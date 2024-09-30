@@ -106,7 +106,7 @@
                               sortBy="#{order.totalPrice}">
                         <p:outputPanel class="panel-align-right">
                             <h:outputText value="#{order.totalPrice}">
-                                <f:convertNumber minFractionDigits="2"/>
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                             </h:outputText>
                             <span>€</span>
                         </p:outputPanel>

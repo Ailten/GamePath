@@ -188,13 +188,13 @@
                               sortBy="#{product.priceWithReduction}">
                         <p:outputPanel class=" #{(product.hasReduction()? 'text-line-through': '')} panel-align-right">
                             <h:outputText value="#{product.price}">
-                                <f:convertNumber minFractionDigits="2"/>
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                             </h:outputText>
                             <span>€</span>
                         </p:outputPanel>
                         <p:outputPanel rendered="#{product.hasReduction()}" class="price-reduction panel-align-right">
                             <h:outputText value="#{product.priceWithReduction}">
-                                <f:convertNumber minFractionDigits="2"/>
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                             </h:outputText>
                             <span>€</span>
                         </p:outputPanel>
