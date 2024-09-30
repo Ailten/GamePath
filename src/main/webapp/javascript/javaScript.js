@@ -112,13 +112,14 @@ function eventClickZoomImg(imgClicked){
     let imgRatio = imgIntoZoomModal.clientWidth/imgIntoZoomModal.clientHeight;
     let modalRatio = imgZoomModal.clientWidth/imgZoomModal.clientHeight;
     if(imgRatio > modalRatio){
+        console.log('t')
         let width = imgZoomModal.clientWidth - 30;
         imgIntoZoomModal.style.width = width + 'px';
         imgIntoZoomModal.style.height = (width * imgRatio) + 'px';
     }else{
         let height = imgZoomModal.clientHeight - 30;
         imgIntoZoomModal.style.height = height + 'px';
-        imgIntoZoomModal.style.width = (height / imgRatio) + 'px';
+        imgIntoZoomModal.style.width = (height * imgRatio) + 'px';
     }
 
     //add event click for exit modal.
