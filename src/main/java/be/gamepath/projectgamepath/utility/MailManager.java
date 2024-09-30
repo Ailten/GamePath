@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 public class MailManager {
 
     //email account for sending an email.
-    private final static String MAIL_ACCOUNT_ADDRESS_SENDER = "projectgamepath@outlook.com";
-    private final static String MAIL_ACCOUNT_PASSWORD_SENDER = "mail1234";
+    private final static String MAIL_ACCOUNT_ADDRESS_SENDER = "gamepath.project@gmail.com";
+    private final static String MAIL_ACCOUNT_PASSWORD_SENDER = "mail1234@@";
     private final static String MAIL_ACCOUNT_NICK_NAME = "GamePath";
 
 
@@ -38,7 +38,8 @@ public class MailManager {
 
         //properties.
         Properties properties = System.getProperties();
-        properties.put("mail.smtp.host", "smtp-mail.outlook.com");
+        //properties.put("mail.smtp.host", "smtp-mail.outlook.com");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
@@ -101,7 +102,8 @@ public class MailManager {
 
         }catch(Exception e){
             Utility.debug("error catch in sendMail : " + e.getMessage());
-            throw e; //throw the error before catch, only catch for print in console if the error is from sendMail function.
+            //active "throw e" for cancel action when mail is not send.
+            //throw e; //throw the error before catch, only catch for print in console if the error is from sendMail function.
         }
 
     }
