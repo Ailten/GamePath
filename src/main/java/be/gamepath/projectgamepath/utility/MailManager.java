@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 public class MailManager {
 
     //email account for sending an email.
-    private final static String MAIL_ACCOUNT_ADDRESS_SENDER = "gamepath.project@gmail.com";
-    private final static String MAIL_ACCOUNT_PASSWORD_SENDER = "mail1234@@";
+    private final static String MAIL_ACCOUNT_ADDRESS_SENDER = "gamepath.project@outlook.com";
+    private final static String MAIL_ACCOUNT_PASSWORD_SENDER = "mail1234";
     private final static String MAIL_ACCOUNT_NICK_NAME = "GamePath";
 
 
@@ -38,12 +38,12 @@ public class MailManager {
 
         //properties.
         Properties properties = System.getProperties();
-        //properties.put("mail.smtp.host", "smtp-mail.outlook.com");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.host", "smtp-mail.outlook.com");
+        //properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.ssl.trust","*");
+        properties.put("mail.smtp.ssl.trust", "*");
         properties.put("mail.transport.protocol", "smtp");
 
         //session (for connect to the mail account), (need pom dependency com.sun.mail, javax.mail).
@@ -102,7 +102,7 @@ public class MailManager {
 
         }catch(Exception e){
             Utility.debug("error catch in sendMail : " + e.getMessage());
-            //active "throw e" for cancel action when mail is not send.
+            //unable throw e, for rollback all transaction DB when sendMail find error.
             //throw e; //throw the error before catch, only catch for print in console if the error is from sendMail function.
         }
 

@@ -8,15 +8,20 @@ import be.gamepath.projectgamepath.utility.CrudManaging;
 import be.gamepath.projectgamepath.utility.FileManaging;
 import be.gamepath.projectgamepath.utility.MailManager;
 import be.gamepath.projectgamepath.utility.Utility;
+import be.gamepath.projectgamepath.utility.mail.Mail;
+import be.gamepath.projectgamepath.utility.mail.MailSender;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.FlushModeType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Named
 @SessionScoped
@@ -355,6 +360,27 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
                             "L'équipe de GamePath vous remercie.",
                     pathPDF
             );
+
+            //email olf version (for test).
+            /*
+            try {
+                Mail email = new Mail();
+                email.setFrom("projectgamepath@outlook.com");
+                email.setMsgBody("Votre commande à bien été passée ! \n\n" +
+                    "Vous trouverez ci-dessous les détailles de votre commande. \n\n" +
+                    "L'équipe de GamePath vous remercie.");
+                email.setSubject("Votre commande");
+                List<String> listEMail = new ArrayList<String>();
+                email.setListTo(listEMail);
+                email.getListTo().add(order.getUser().getEmail());
+                email.setReplyTo("projectgamepath@outlook.com");
+                email.setNick("GamePath");
+                email.setEncodeUTF8(true);
+
+                MailSender.sendMail(email);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
 
             for(ProductTheoric product : this.elementCrudSelected.getListProductTheoric()){
                 basketProductTheoricService.delete(em,
