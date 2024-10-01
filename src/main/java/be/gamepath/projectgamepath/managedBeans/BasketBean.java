@@ -351,7 +351,8 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
             //create PDF file.
             String pathPDF = FileManaging.createPDFOrder(order);
 
-            //email to the user.
+            //email to the user (proper waie).
+            /*
             MailManager.sendMail(
                     order.getUser().getEmail(),
                     "Votre commande",
@@ -360,6 +361,7 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
                             "L'équipe de GamePath vous remercie.",
                     pathPDF
             );
+            */
 
             //email olf version (for test).
             /*

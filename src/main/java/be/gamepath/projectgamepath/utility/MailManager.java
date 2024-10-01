@@ -102,8 +102,7 @@ public class MailManager {
 
         }catch(Exception e){
             Utility.debug("error catch in sendMail : " + e.getMessage());
-            //unable throw e, for rollback all transaction DB when sendMail find error.
-            //throw e; //throw the error before catch, only catch for print in console if the error is from sendMail function.
+            throw e; //throw the error before catch, only catch for print in console if the error is from sendMail function.
         }
 
     }
