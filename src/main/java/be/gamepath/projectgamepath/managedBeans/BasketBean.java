@@ -314,6 +314,7 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
 
                 //generate key.
                 currentProducKey.generateKey();
+                em.flush();
 
                 //auto assign to my library.
                 if(this.elementCrudSelected.getIsForMe()){
@@ -421,7 +422,9 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
 
                             UserProductTheoric userProductTheoric = userProductTheoricService.selectByKeyCode(em,
                                     currentProducKey.getKey());
-                            userProductTheoricService.delete(em, userProductTheoric);
+                            Utility.debug("userProductTheoric find for undo basketsubmit : "+userProductTheoric);
+                            if(userProductTheoric != null)
+                                userProductTheoricService.delete(em, userProductTheoric);
 
                         }
                         productKeyService.delete(em, currentProducKey); //delete productKey.
