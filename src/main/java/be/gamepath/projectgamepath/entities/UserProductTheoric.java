@@ -41,6 +41,9 @@ import java.util.Objects;
                         ")) and ( " +
                         "    ( c.id = :filterCategoryId or :filterCategoryId = 0 )" + //filterCategory.
                         ") order by pt.title"),
+        @NamedQuery(name= "UserProductTheoric.SelectByKeyCode",
+                query = "select upt from UserProductTheoric upt " +
+                        "where (upt.keyUsed = :key)"),
 })
 @Entity
 @Table(name = "userproducttheoric", schema = "gamepath", catalog = "")

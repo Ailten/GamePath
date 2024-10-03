@@ -413,9 +413,16 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
                     //foreach delete productKey (and join library).
                     for(ProductKey currentProducKey : order.getListProductKey()){
                         if(this.elementCrudSelected.getIsForMe()){ //delete join library.
-                            UserProductTheoric userProductTheoric = userProductTheoricService.selectByBothId(em,
-                                    connectionBean.getUser().getId(), currentProducKey.getProductTheoric().getId());
+
+                            //old version for delete userProductTheoric validate.
+                            //UserProductTheoric userProductTheoric = userProductTheoricService.selectByBothId(em,
+                            //        connectionBean.getUser().getId(), currentProducKey.getProductTheoric().getId());
+                            //userProductTheoricService.delete(em, userProductTheoric);
+
+                            UserProductTheoric userProductTheoric = userProductTheoricService.selectByKeyCode(em,
+                                    currentProducKey.getKey());
                             userProductTheoricService.delete(em, userProductTheoric);
+
                         }
                         productKeyService.delete(em, currentProducKey); //delete productKey.
                     }
@@ -458,8 +465,10 @@ public class BasketBean extends CrudManaging<Basket> implements Serializable {
      */
     public void loadBasketFromDB(){
 
-        if(this.getElementCrudSelected().getId() != 0 && this.getElementCrudSelected().getListProductTheoric().size() != 0)
+        if(this.getElementCrudSelected().getId() != 0 && this.getElementCrudSelected().getListProductTheoric().size() != 0) {
+            BasketBean.initListProductTheoric(this.getElementCrudSelected()); //reload basket list productTheoric from db.
             return; //basket is already load.
+        }
 
         EntityManager em = EMF.createEM();
         BasketService basketService = new BasketService();

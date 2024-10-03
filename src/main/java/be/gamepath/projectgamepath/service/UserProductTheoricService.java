@@ -1,5 +1,6 @@
 package be.gamepath.projectgamepath.service;
 
+import be.gamepath.projectgamepath.entities.ProductKey;
 import be.gamepath.projectgamepath.entities.User;
 import be.gamepath.projectgamepath.entities.UserProductTheoric;
 import be.gamepath.projectgamepath.utility.ServiceGeneric;
@@ -71,6 +72,20 @@ public class UserProductTheoricService extends ServiceGeneric<UserProductTheoric
                 .setParameter("filterCategoryId", filterCategoryId)
                 .setParameter("idUser", idUser)
                 .getResultList();
+    }
+
+    /**
+     * select a UserProductTheoric by sending a key.
+     * @param em EntityManager.
+     * @param key string of key (for unlock product).
+     * @return a UserProductTheoric (or null).
+     */
+    public UserProductTheoric selectByKeyCode(EntityManager em, String key) {
+        return em.createNamedQuery("UserProductTheoric.SelectByKeyCode", UserProductTheoric.class)
+                .setParameter("key", key)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
     }
 
 }
