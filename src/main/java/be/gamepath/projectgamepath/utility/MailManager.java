@@ -16,11 +16,12 @@ import java.util.regex.Pattern;
 
 public class MailManager {
 
-    //email account for sending an email.
-    private final static String MAIL_ACCOUNT_ADDRESS_SENDER = "gamepath.project@outlook.com";
-    private final static String MAIL_ACCOUNT_PASSWORD_SENDER = "mail1234";
-    private final static String MAIL_ACCOUNT_NICK_NAME = "GamePath";
+    //MailManager : version with google app token : https://youtu.be/Ug_8d12LNc8?si=8SaYSdbxvSzBoe63
 
+    //email account for sending an email.
+    private final static String MAIL_ACCOUNT_ADDRESS_SENDER = "gamepath.project@gmail.com";
+    private final static String MAIL_ACCOUNT_PASSWORD = "jygw kmeh helc oyce"; //the token from google app.
+    private final static String MAIL_ACCOUNT_SMTP_HOST = "smtp.gmail.com";
 
     /**
      * function to send an email.
@@ -38,37 +39,37 @@ public class MailManager {
 
         //properties.
         Properties properties = System.getProperties();
-        properties.put("mail.smtp.host", "smtp-mail.outlook.com");
-        //properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.ssl.trust", "*");
-        properties.put("mail.transport.protocol", "smtp");
+        properties.put("mail.smtp.host", MAIL_ACCOUNT_SMTP_HOST);
+        properties.put("mail.smtp.port", "587");
 
-        //session (for connect to the mail account), (need pom dependency com.sun.mail, javax.mail).
-        Session session = Session.getInstance(properties, new Authenticator() { //second param, send obj Authenticator.
-            protected PasswordAuthentication getPasswordAuthentication() { //override function getter.
-                 return new PasswordAuthentication( //return password authentication with mailAddress and password.
-                         MAIL_ACCOUNT_ADDRESS_SENDER,
-                         MAIL_ACCOUNT_PASSWORD_SENDER
-                 );
+        //authenticator to the email (using token of google app).
+        Authenticator authenticator = new Authenticator(){
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(MAIL_ACCOUNT_ADDRESS_SENDER, MAIL_ACCOUNT_PASSWORD);
             }
-        });
+        };
+        Session session = Session.getInstance(properties, authenticator);
 
         try{
 
             //mime message.
             MimeMessage mimeMessage = new MimeMessage(session);
+            mimeMessage.setFrom(new InternetAddress(MAIL_ACCOUNT_ADDRESS_SENDER)); //sender.
+            if(mailAccountAddressesToSend.size() == 1){ //mail to (one).
+                mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailAccountAddressesToSend.get(0)));
+            }else{
+                for(String emailAddressToSend : mailAccountAddressesToSend) { //mail to (many).
+                    mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailAddressToSend));
+                }
+            }
+
             mimeMessage.setSubject(titleEmail); //title.
+            mimeMessage.setContent(bodyEmail, "text/html"); //email content (txt).
+
             mimeMessage.setHeader("Content-Type", "text/html;charset=\"UTF-8\""); //format utf8.
             mimeMessage.setHeader("Content-Transfert-Encoding", "8bit");
-            mimeMessage.setFrom(new InternetAddress(MAIL_ACCOUNT_ADDRESS_SENDER, MAIL_ACCOUNT_NICK_NAME)); //sender.
-            for(String emailAddressToSend : mailAccountAddressesToSend) { //mail to.
-                mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailAddressToSend));
-            }
-            mimeMessage.setReplyTo(new Address[]{new InternetAddress(MAIL_ACCOUNT_ADDRESS_SENDER)});
-            mimeMessage.setText(bodyEmail);
 
             //mime body part.
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
@@ -102,7 +103,9 @@ public class MailManager {
 
         }catch(Exception e){
             Utility.debug("error catch in sendMail : " + e.getMessage());
-            throw e; //throw the error before catch, only catch for print in console if the error is from sendMail function.
+
+            //FIXME: the throw exception is temporary disable for prevent bug in mail sender (so the PDF is still generate and order validate).
+            //throw e; //throw the error before catch, only catch for print in console if the error is from sendMail function.
         }
 
     }
